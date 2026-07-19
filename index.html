@@ -700,6 +700,541 @@
     .data-card { display: none; }
     .butterfly { display: none; }
   }
+
+  /* ============================================================ */
+  /* ===== PAGE SYSTEM (hero <-> chapters menu) ===== */
+  /* ============================================================ */
+  .page:not(.active) { display: none; }
+
+  /* ===== CHAPTERS MENU ===== */
+  .page-chapters {
+    position: fixed; inset: 0; overflow-y: auto; z-index: 15;
+    background: radial-gradient(ellipse at 50% 0%, #2a3a1a 0%, #142c0d 45%, #0a1a06 100%);
+    padding: 80px 24px 60px;
+  }
+  .chapters-container { max-width: 1100px; margin: 0 auto; }
+  .chapters-header {
+    text-align: center; margin-bottom: 56px;
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+  .chapters-header.revealed { opacity: 1; transform: translateY(0); }
+  .chapters-label {
+    font-family: 'Cinzel', serif; font-size: 0.75rem; text-transform: uppercase;
+    letter-spacing: 5px; color: var(--rose-gold); margin-bottom: 14px;
+  }
+  .chapters-title {
+    font-family: 'Cinzel', serif; font-size: 2.6rem; color: var(--cream);
+    text-shadow: 0 0 20px rgba(201,162,39,0.25);
+  }
+  .chapters-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+  }
+  .chapter-card {
+    background: rgba(10, 25, 6, 0.55); border: 1px solid rgba(201,162,39,0.15);
+    border-radius: 18px; padding: 28px 24px; cursor: none;
+    backdrop-filter: blur(10px);
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .chapter-card.revealed { opacity: 1; transform: translateY(0); }
+  .chapter-card:hover {
+    border-color: rgba(201,162,39,0.4);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.35), 0 0 30px rgba(201,162,39,0.1);
+    transform: translateY(-4px);
+  }
+  .chapter-icon { font-size: 1.8rem; display: block; margin-bottom: 14px; }
+  .chapter-number {
+    font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--rose-gold); margin-bottom: 6px;
+  }
+  .chapter-name {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600;
+    color: var(--cream); margin-bottom: 10px;
+  }
+  .chapter-preview { font-size: 0.85rem; line-height: 1.6; color: rgba(245,230,211,0.65); }
+
+  /* ===== CHAPTER DETAIL (shared chrome) ===== */
+  .chapter-detail {
+    display: none; position: fixed; inset: 0; z-index: 400; overflow-y: auto;
+    background: radial-gradient(ellipse at 50% 0%, #2a3a1a 0%, #142c0d 45%, #0a1a06 100%);
+    padding: 90px 24px 60px;
+  }
+  .chapter-detail.active { display: block; }
+  .back-btn {
+    position: fixed; top: 24px; left: 24px; z-index: 410;
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(10,25,6,0.6); border: 1px solid rgba(201,162,39,0.25);
+    color: var(--cream); font-family: 'Cinzel', serif; font-size: 0.75rem;
+    letter-spacing: 1px; padding: 10px 18px; border-radius: 24px; cursor: none;
+    backdrop-filter: blur(8px); transition: all 0.3s ease;
+  }
+  .back-btn:hover { border-color: var(--rose-gold); background: rgba(201,162,39,0.12); }
+  .back-btn span { font-size: 1.1rem; line-height: 1; }
+  .chapter-content { max-width: 900px; margin: 0 auto; }
+  .chapter-detail-header { text-align: center; margin-bottom: 44px; }
+  .chapter-detail-number {
+    font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--rose-gold); margin-bottom: 10px;
+  }
+  .chapter-detail-title {
+    font-family: 'Cinzel', serif; font-size: 2.4rem; color: var(--cream);
+    text-shadow: 0 0 20px rgba(201,162,39,0.25);
+  }
+  .lab-subtitle {
+    font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.1rem;
+    color: var(--rose-gold); margin-top: 8px;
+  }
+  .chapter-detail-body p {
+    font-size: 1.05rem; line-height: 1.9; color: rgba(245,230,211,0.85);
+    margin-bottom: 22px; font-weight: 300;
+  }
+  .chapter-detail-body p.lead {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-style: italic;
+    color: var(--soft-pink); line-height: 1.6; margin-bottom: 28px;
+  }
+  .chapter-detail-body p strong { color: var(--cream); font-weight: 600; }
+
+  /* ===== CHAPTER 2: EDUCATION ===== */
+  .plane-journey {
+    position: relative; display: flex; align-items: center; justify-content: space-between;
+    max-width: 500px; margin: 50px auto; height: 60px;
+  }
+  .location-marker { display: flex; flex-direction: column; align-items: center; z-index: 2; }
+  .location-dot {
+    width: 14px; height: 14px; border-radius: 50%; background: var(--rose-gold);
+    box-shadow: 0 0 14px rgba(201,162,39,0.5); margin-bottom: 8px;
+  }
+  .location-label { font-family: 'Cinzel', serif; font-size: 0.85rem; color: var(--cream); }
+  .location-sub { font-size: 0.7rem; color: rgba(245,230,211,0.55); }
+  .dashed-line {
+    position: absolute; top: 7px; left: 50px; right: 50px; height: 0;
+    border-top: 2px dashed rgba(201,162,39,0.3);
+  }
+  .plane {
+    position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
+    font-size: 1.4rem; animation: planeFly 4s ease-in-out infinite;
+  }
+  .edu-cards {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px; margin: 30px 0;
+  }
+  .edu-card {
+    background: rgba(10,25,6,0.5); border: 1px solid rgba(201,162,39,0.15);
+    border-radius: 16px; padding: 26px; text-align: center;
+  }
+  .edu-icon { font-size: 1.6rem; display: block; margin-bottom: 10px; }
+  .edu-degree { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; color: var(--cream); font-weight: 600; }
+  .edu-school { color: var(--rose-gold); font-size: 0.85rem; margin: 4px 0; }
+  .edu-year { font-size: 0.75rem; color: rgba(245,230,211,0.55); font-family: 'Cinzel', serif; }
+
+  /* ===== CHAPTER 3: CHRONICLES (scroll) ===== */
+  .scroll-container { position: relative; margin-top: 30px; }
+  .scroll-top-roller, .scroll-bottom-roller { display: flex; align-items: center; height: 16px; }
+  .roller-bar {
+    flex: 1; height: 8px; background: linear-gradient(180deg, #6b4423, #3d2817);
+    border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  }
+  .roller-end {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #8b6a3e, #3d2817);
+  }
+  .scroll-parchment {
+    background: rgba(245,230,211,0.04); border-left: 1px solid rgba(201,162,39,0.15);
+    border-right: 1px solid rgba(201,162,39,0.15);
+    padding: 10px 4px;
+  }
+  .scroll-content { padding: 20px 10px; }
+  .chronicle-entry {
+    display: flex; gap: 20px; align-items: flex-start; padding: 20px 10px;
+    opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .chronicle-entry.revealed { opacity: 1; transform: translateY(0); }
+  .wax-seal {
+    flex-shrink: 0; width: 48px; height: 48px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+    box-shadow: inset -4px -4px 8px rgba(0,0,0,0.35), 0 4px 10px rgba(0,0,0,0.3);
+  }
+  .seal-gold { background: radial-gradient(circle at 35% 35%, #e0b84a, #8b6914); }
+  .seal-crimson { background: radial-gradient(circle at 35% 35%, #e05a5a, #7a1f1f); }
+  .seal-indigo { background: radial-gradient(circle at 35% 35%, #6a6ae0, #2a2a7a); }
+  .seal-emerald { background: radial-gradient(circle at 35% 35%, #5ae08a, #1f7a3f); }
+  .chronicle-header { display: flex; flex-direction: column; margin-bottom: 10px; }
+  .chronicle-title { font-family: 'Cinzel', serif; font-size: 1.2rem; color: var(--cream); }
+  .chronicle-company { color: var(--rose-gold); font-size: 0.85rem; margin-top: 4px; }
+  .chronicle-role { font-size: 0.8rem; color: rgba(245,230,211,0.7); }
+  .chronicle-dates { font-size: 0.72rem; color: rgba(245,230,211,0.45); font-family: 'Cinzel', serif; margin-top: 2px; }
+  .chronicle-tale {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; line-height: 1.75;
+    color: rgba(245,230,211,0.8); margin-bottom: 14px;
+  }
+  .chronicle-spells { display: flex; flex-wrap: wrap; gap: 8px; }
+  .spell-tag {
+    font-size: 0.7rem; padding: 4px 12px; border-radius: 14px;
+    background: rgba(201,162,39,0.1); border: 1px solid rgba(201,162,39,0.25);
+    color: var(--rose-gold);
+  }
+  .chronicle-divider { text-align: center; color: rgba(201,162,39,0.3); font-size: 1.2rem; margin: 4px 0; }
+
+  /* ===== CHAPTER 4: ALCHEMY LAB ===== */
+  .alchemy-lab { position: relative; }
+  .workbench {
+    display: flex; justify-content: center; gap: 60px; flex-wrap: wrap;
+    padding: 40px 0;
+  }
+  .experiment-flask { display: flex; flex-direction: column; align-items: center; cursor: none; }
+  .flask-glass { position: relative; width: 70px; height: 90px; }
+  .flask-neck {
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    width: 18px; height: 16px; background: rgba(200,220,255,0.12);
+    border: 2px solid rgba(200,220,255,0.25); border-bottom: none;
+  }
+  .flask-rim {
+    position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
+    width: 26px; height: 6px; border-radius: 3px;
+    background: rgba(200,220,255,0.3);
+  }
+  .flask-liquid {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 70%;
+    border-radius: 0 0 35px 35px; overflow: hidden;
+    border: 2px solid rgba(200,220,255,0.25); border-top: none;
+  }
+  .liquid-crimson { background: linear-gradient(180deg, #e05a5a, #7a1f1f); }
+  .liquid-gold { background: linear-gradient(180deg, #e0b84a, #8b6914); }
+  .liquid-azure { background: linear-gradient(180deg, #5ab4e0, #1f4f7a); }
+  .bubble {
+    position: absolute; bottom: 0; width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(255,255,255,0.5); animation: flaskBubble 3s ease-in infinite;
+  }
+  .bubble:nth-child(1) { left: 15%; animation-delay: 0s; }
+  .bubble:nth-child(2) { left: 35%; animation-delay: 0.6s; width: 4px; height: 4px; }
+  .bubble:nth-child(3) { left: 55%; animation-delay: 1.2s; }
+  .bubble:nth-child(4) { left: 70%; animation-delay: 1.8s; width: 5px; height: 5px; }
+  .bubble:nth-child(5) { left: 45%; animation-delay: 2.4s; }
+  .flask-glow {
+    position: absolute; inset: -14px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,162,39,0.15) 0%, transparent 70%);
+    z-index: -1;
+  }
+  .flask-label { text-align: center; margin-top: 16px; }
+  .flask-icon { font-size: 1.3rem; display: block; margin-bottom: 6px; }
+  .flask-name { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--cream); }
+  .lab-parchment {
+    display: none; position: fixed; inset: 0; z-index: 420;
+    align-items: center; justify-content: center;
+    background: rgba(5,10,3,0.75); backdrop-filter: blur(6px);
+  }
+  .lab-parchment.active { display: flex; }
+  .parchment-close {
+    position: absolute; top: 24px; right: 24px; font-size: 1.4rem; cursor: none;
+    color: var(--rose-gold); width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(201,162,39,0.3);
+  }
+  .parchment-content {
+    max-width: 500px; width: 90%; background: rgba(20,44,13,0.9);
+    border: 1px solid rgba(201,162,39,0.25); border-radius: 20px; padding: 40px;
+  }
+  .parchment-content h3 { font-family: 'Cinzel', serif; color: var(--cream); font-size: 1.5rem; margin-bottom: 6px; }
+  .parchment-subtitle { color: var(--rose-gold); font-size: 0.85rem; }
+  .parchment-tale {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; line-height: 1.8;
+    color: rgba(245,230,211,0.85); margin: 18px 0;
+  }
+  .parchment-metrics { display: flex; gap: 14px; margin-bottom: 18px; flex-wrap: wrap; }
+  .metric-chip {
+    background: rgba(201,162,39,0.08); border: 1px solid rgba(201,162,39,0.2);
+    border-radius: 10px; padding: 10px 16px; text-align: center;
+  }
+  .metric-value { display: block; font-family: 'Cinzel', serif; color: var(--rose-gold); font-size: 0.95rem; }
+  .metric-label { font-size: 0.65rem; color: rgba(245,230,211,0.55); text-transform: uppercase; }
+  .parchment-spells { display: flex; flex-wrap: wrap; gap: 8px; }
+  .lab-steam { position: absolute; inset: 0; pointer-events: none; }
+  .steam-puff {
+    position: absolute; bottom: 30%; width: 4px; height: 4px; border-radius: 50%;
+    background: rgba(255,255,255,0.15); animation: labSteam 5s ease-in-out infinite;
+  }
+  .steam-puff:nth-child(1) { left: 20%; animation-delay: 0s; }
+  .steam-puff:nth-child(2) { left: 40%; animation-delay: 1s; }
+  .steam-puff:nth-child(3) { left: 55%; animation-delay: 2s; }
+  .steam-puff:nth-child(4) { left: 70%; animation-delay: 3s; }
+  .steam-puff:nth-child(5) { left: 85%; animation-delay: 4s; }
+
+  /* ===== CHAPTER 5: ARSENAL ===== */
+  .arsenal-section { margin-bottom: 40px; }
+  .arsenal-school {
+    font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--cream);
+    margin-bottom: 18px; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+  }
+  .school-desc { font-size: 0.75rem; color: rgba(245,230,211,0.5); font-family: 'Inter', sans-serif; }
+  .weapon-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
+  .weapon-item {
+    background: rgba(10,25,6,0.5); border: 1px solid rgba(201,162,39,0.12);
+    border-radius: 14px; padding: 18px; opacity: 0; transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .weapon-item.revealed { opacity: 1; transform: translateY(0); }
+  .weapon-icon { font-size: 1.3rem; margin-bottom: 8px; }
+  .weapon-name { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--cream); font-weight: 600; }
+  .weapon-type { font-size: 0.7rem; color: var(--rose-gold); margin-bottom: 10px; }
+  .charge-bar { height: 5px; background: rgba(201,162,39,0.1); border-radius: 3px; overflow: hidden; }
+  .charge-fill {
+    height: 100%; width: 0%; border-radius: 3px;
+    background: linear-gradient(90deg, var(--rose-gold), var(--soft-pink));
+    transition: width 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .weapon-item.revealed .charge-fill { width: var(--level, 0%); }
+
+  /* ===== CHAPTER 6: RIDDLE CAULDRON ===== */
+  .cauldron-room { display: flex; flex-direction: column; align-items: center; gap: 30px; }
+  .cauldron-container { position: relative; }
+  .cauldron { position: relative; width: 140px; height: 100px; }
+  .cauldron-rim { position: absolute; top: 0; left: -10px; right: -10px; height: 12px; border-radius: 50%; background: linear-gradient(180deg, #3a3a3a, #1a1a1a); }
+  .cauldron-body {
+    position: absolute; top: 8px; left: 0; right: 0; bottom: 10px;
+    border-radius: 0 0 60px 60px; background: linear-gradient(180deg, #2a2a2a, #0f0f0f);
+    overflow: hidden; box-shadow: inset 0 -10px 20px rgba(0,0,0,0.5);
+  }
+  .cauldron-liquid {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 65%;
+    background: linear-gradient(180deg, #7b2cbf, #3a1258); transition: background 0.5s ease;
+  }
+  .cauldron-liquid.correct { background: linear-gradient(180deg, #4ade80, #166534); }
+  .cauldron-liquid.wrong { background: linear-gradient(180deg, #f87171, #7f1d1d); }
+  .cauldron-bubble {
+    position: absolute; bottom: 0; width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(255,255,255,0.4); animation: flaskBubble 2.5s ease-in infinite;
+  }
+  .cauldron-bubble:nth-child(1) { left: 10%; animation-delay: 0s; }
+  .cauldron-bubble:nth-child(2) { left: 25%; animation-delay: 0.4s; }
+  .cauldron-bubble:nth-child(3) { left: 45%; animation-delay: 0.8s; }
+  .cauldron-bubble:nth-child(4) { left: 60%; animation-delay: 1.2s; }
+  .cauldron-bubble:nth-child(5) { left: 75%; animation-delay: 1.6s; }
+  .cauldron-bubble:nth-child(6) { left: 90%; animation-delay: 2s; }
+  .cauldron-feet { display: flex; justify-content: space-between; padding: 0 20px; }
+  .foot { width: 10px; height: 14px; background: #1a1a1a; border-radius: 0 0 4px 4px; }
+  .cauldron-glow {
+    position: absolute; inset: -30px; z-index: -1; border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(123,44,191,0.25) 0%, transparent 70%);
+    transition: background 0.5s ease;
+  }
+  .cauldron-steam { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); }
+  .c-steam {
+    position: absolute; width: 4px; height: 20px; border-radius: 50%;
+    background: linear-gradient(180deg, rgba(201,162,39,0.4), transparent);
+    animation: magicSteamC 3s ease-in-out infinite;
+  }
+  .c-steam:nth-child(1) { left: -20px; animation-delay: 0s; }
+  .c-steam:nth-child(2) { left: 0px; animation-delay: 1s; }
+  .c-steam:nth-child(3) { left: 20px; animation-delay: 2s; }
+  .quiz-card {
+    background: rgba(10,25,6,0.6); border: 1px solid rgba(201,162,39,0.2);
+    border-radius: 20px; padding: 32px; max-width: 560px; width: 90%;
+    backdrop-filter: blur(10px);
+  }
+  .quiz-progress { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-size: 0.8rem; color: rgba(245,230,211,0.6); }
+  .quiz-dots { display: flex; gap: 6px; }
+  .q-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(201,162,39,0.2); }
+  .q-dot.active { background: var(--rose-gold); }
+  .q-dot.correct-dot { background: #4ade80; }
+  .q-dot.wrong-dot { background: #f87171; }
+  .question-rune { font-size: 1.6rem; text-align: center; margin-bottom: 10px; }
+  .question-text { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; text-align: center; color: var(--cream); line-height: 1.6; margin-bottom: 20px; }
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-option {
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(245,230,211,0.04); border: 1px solid rgba(201,162,39,0.15);
+    border-radius: 12px; padding: 14px 16px; font-size: 0.85rem; color: rgba(245,230,211,0.85);
+    cursor: none; transition: all 0.3s ease;
+  }
+  .quiz-option:hover:not(.disabled) { border-color: var(--rose-gold); background: rgba(201,162,39,0.08); }
+  .quiz-option.correct { border-color: #4ade80; background: rgba(74,222,128,0.1); color: #4ade80; }
+  .quiz-option.wrong { border-color: #f87171; background: rgba(248,113,113,0.1); color: #f87171; }
+  .quiz-option.disabled { pointer-events: none; }
+  .option-letter {
+    width: 22px; height: 22px; border-radius: 50%; background: rgba(201,162,39,0.15);
+    display: flex; align-items: center; justify-content: center; font-size: 0.7rem;
+    flex-shrink: 0; font-family: 'Cinzel', serif;
+  }
+  .quiz-feedback { display: none; text-align: center; }
+  .quiz-feedback.active { display: block; }
+  .feedback-icon { font-size: 1.6rem; margin-bottom: 10px; }
+  .feedback-text { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: rgba(245,230,211,0.85); line-height: 1.6; margin-bottom: 20px; }
+  .next-potion-btn, .restart-quiz-btn, .goto-chapters-btn {
+    font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 1px;
+    background: rgba(201,162,39,0.15); border: 1px solid rgba(201,162,39,0.3);
+    color: var(--cream); padding: 12px 24px; border-radius: 24px; cursor: none;
+    transition: all 0.3s ease;
+  }
+  .next-potion-btn:hover, .restart-quiz-btn:hover, .goto-chapters-btn:hover { background: rgba(201,162,39,0.3); }
+  .quiz-complete { display: none; text-align: center; }
+  .quiz-complete.active { display: block; }
+  .complete-trophy { margin-bottom: 14px; }
+  .complete-title { font-family: 'Cinzel', serif; font-size: 1.3rem; color: var(--cream); margin-bottom: 10px; }
+  .complete-score { color: var(--rose-gold); font-size: 0.95rem; margin-bottom: 10px; }
+  .complete-message { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: rgba(245,230,211,0.8); margin-bottom: 24px; }
+  .quiz-end-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* ===== CHAPTER 7: CONSERVATORY ===== */
+  .conservatory-v2 { position: relative; padding: 20px 0 60px; }
+  .conservatory-light {
+    position: absolute; top: -40px; left: 50%; transform: translateX(-50%);
+    width: 300px; height: 200px;
+    background: radial-gradient(ellipse, rgba(201,162,39,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hanging-vine { position: absolute; top: -10px; }
+  .vine-1 { left: 10%; } .vine-2 { left: 50%; } .vine-3 { right: 10%; }
+  .vine-stem { width: 2px; height: 50px; background: var(--sage-dark); margin: 0 auto; }
+  .vine-leaf {
+    width: 14px; height: 20px; background: var(--sage); border-radius: 50% 50% 50% 0;
+    margin: -4px auto; animation: leafSway 3s ease-in-out infinite;
+  }
+  .vine-dewdrop { width: 4px; height: 4px; border-radius: 50%; background: rgba(200,220,255,0.6); margin: 0 auto; }
+  .plant-arc {
+    display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;
+    margin-top: 70px; position: relative; z-index: 2;
+  }
+  .plant-pedestal { display: flex; flex-direction: column; align-items: center; cursor: none; width: 140px; }
+  .pedestal-glow {
+    position: absolute; width: 80px; height: 80px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,162,39,0.15) 0%, transparent 70%);
+    top: -10px;
+  }
+  .pedestal-column { width: 8px; height: 30px; background: linear-gradient(180deg, #6b4423, #3d2817); margin: 0 auto; }
+  .pedestal-platform { display: flex; align-items: center; justify-content: center; margin-top: -4px; }
+  .plant-orb {
+    position: relative; width: 56px; height: 56px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(122,148,114,0.15); border: 1px solid rgba(201,162,39,0.2);
+  }
+  .orb-inner { color: var(--rose-gold); }
+  .orb-icon { width: 22px; height: 22px; }
+  .orb-ring { position: absolute; border-radius: 50%; border: 1px solid rgba(201,162,39,0.15); animation: orbRingPulse 3s ease-in-out infinite; }
+  .ring-1 { inset: -8px; }
+  .ring-2 { inset: -16px; animation-delay: 0.5s; }
+  .pedestal-label { text-align: center; margin-top: 12px; }
+  .pedestal-name { display: block; font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--cream); }
+  .pedestal-desc { font-size: 0.68rem; color: rgba(245,230,211,0.5); line-height: 1.4; display: block; margin-top: 4px; }
+  .conservatory-floor {
+    height: 40px; margin-top: 30px;
+    background: linear-gradient(180deg, rgba(201,162,39,0.04), transparent);
+  }
+  .conservatory-detail-v2 {
+    display: none; position: fixed; inset: 0; z-index: 420;
+    align-items: center; justify-content: center;
+    background: rgba(5,10,3,0.75); backdrop-filter: blur(6px);
+  }
+  .conservatory-detail-v2.active { display: flex; }
+  .detail-close {
+    position: absolute; top: 24px; right: 24px; font-size: 1.2rem; cursor: none;
+    color: var(--rose-gold); width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(201,162,39,0.3);
+  }
+  .detail-content {
+    max-width: 480px; width: 90%; background: rgba(20,44,13,0.9);
+    border: 1px solid rgba(201,162,39,0.25); border-radius: 20px; padding: 40px;
+  }
+
+  /* ===== CHAPTER 8: THE MAP ===== */
+  .map-realm { display: flex; justify-content: center; }
+  .ancient-map { position: relative; width: 100%; max-width: 640px; }
+  .map-parchment {
+    position: relative; background: rgba(212,196,168,0.06);
+    border: 1px solid rgba(201,162,39,0.25); border-radius: 16px;
+    padding: 40px; min-height: 420px; overflow: hidden;
+  }
+  .compass-rose { position: absolute; top: 20px; right: 20px; width: 50px; height: 50px; }
+  .compass-inner {
+    width: 100%; height: 100%; border-radius: 50%; border: 1px solid rgba(201,162,39,0.3);
+    display: flex; align-items: center; justify-content: center; position: relative;
+  }
+  .compass-n { position: absolute; top: 2px; font-family: 'Cinzel', serif; font-size: 0.6rem; color: var(--rose-gold); }
+  .compass-star { width: 16px; height: 16px; background: conic-gradient(from 0deg, var(--rose-gold), transparent, var(--rose-gold), transparent); border-radius: 50%; opacity: 0.5; }
+  .map-paths { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .map-location { position: absolute; text-align: center; cursor: none; }
+  .map-location:nth-of-type(1) { top: 18%; left: 15%; }
+  .map-location:nth-of-type(2) { top: 15%; left: 60%; }
+  .map-location:nth-of-type(3) { top: 62%; left: 20%; }
+  .map-location:nth-of-type(4) { top: 62%; left: 62%; }
+  .loc-marker { position: relative; width: 30px; height: 30px; margin: 0 auto 8px; }
+  .marker-pulse {
+    position: absolute; inset: 0; border-radius: 50%; background: rgba(201,162,39,0.2);
+    animation: markerPulse 2s ease-in-out infinite;
+  }
+  .marker-icon {
+    position: absolute; inset: 4px; border-radius: 50%; background: rgba(10,25,6,0.8);
+    border: 1px solid var(--rose-gold); display: flex; align-items: center; justify-content: center;
+    color: var(--rose-gold);
+  }
+  .map-svg-icon { width: 14px; height: 14px; }
+  .loc-label { font-family: 'Cinzel', serif; font-size: 0.75rem; color: var(--cream); }
+  .loc-sublabel { font-size: 0.62rem; color: rgba(245,230,211,0.5); }
+  .you-are-here { position: absolute; bottom: 8%; left: 50%; transform: translateX(-50%); text-align: center; }
+  .yah-marker { color: var(--rose-gold); animation: markerPulse 2s ease-in-out infinite; }
+  .yah-svg { width: 22px; height: 22px; }
+  .yah-label { font-family: 'Cinzel', serif; font-size: 0.65rem; color: var(--rose-gold); margin-top: 2px; }
+  .terrain-mountain {
+    position: absolute; bottom: 0; left: 5%; width: 0; height: 0;
+    border-left: 40px solid transparent; border-right: 40px solid transparent;
+    border-bottom: 50px solid rgba(122,148,114,0.08);
+  }
+  .mountain-2 { left: auto; right: 8%; border-bottom-width: 35px; }
+  .terrain-forest {
+    position: absolute; bottom: 4%; right: 30%; width: 30px; height: 30px;
+    background: rgba(90,122,82,0.15); border-radius: 50%;
+  }
+  .forest-2 { right: 40%; bottom: 6%; width: 20px; height: 20px; }
+  .terrain-water {
+    position: absolute; bottom: 2%; left: 35%; width: 80px; height: 20px;
+    background: rgba(96,165,250,0.1); border-radius: 50%;
+  }
+  .location-card {
+    display: none; position: fixed; inset: 0; z-index: 420;
+    align-items: center; justify-content: center;
+    background: rgba(5,10,3,0.75); backdrop-filter: blur(6px);
+  }
+  .location-card.active { display: flex; }
+  .loc-card-close {
+    position: absolute; top: 24px; right: 24px; font-size: 1.2rem; cursor: none;
+    color: var(--rose-gold); width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(201,162,39,0.3);
+  }
+  .loc-card-content {
+    max-width: 380px; width: 90%; background: rgba(20,44,13,0.9);
+    border: 1px solid rgba(201,162,39,0.25); border-radius: 20px; padding: 40px;
+    text-align: center;
+  }
+  .loc-card-icon { width: 40px; height: 40px; margin: 0 auto 14px; color: var(--rose-gold); }
+  .loc-card-title { font-family: 'Cinzel', serif; color: var(--cream); font-size: 1.2rem; margin-bottom: 8px; }
+  .loc-card-value { color: rgba(245,230,211,0.7); font-size: 0.9rem; margin-bottom: 20px; word-break: break-word; }
+  .loc-card-btn {
+    display: inline-block; font-family: 'Cinzel', serif; font-size: 0.8rem;
+    background: rgba(201,162,39,0.15); border: 1px solid rgba(201,162,39,0.3);
+    color: var(--cream); padding: 12px 28px; border-radius: 24px; text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  .loc-card-btn:hover { background: rgba(201,162,39,0.3); }
+
+  /* ===== NEW ANIMATIONS ===== */
+  @keyframes planeFly { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-4px); } }
+  @keyframes flaskBubble { 0% { opacity: 0; transform: translateY(0) scale(0.6); } 20% { opacity: 0.8; } 100% { opacity: 0; transform: translateY(-60px) scale(1.1); } }
+  @keyframes labSteam { 0% { opacity: 0; transform: translateY(0) scale(1); } 40% { opacity: 0.5; } 100% { opacity: 0; transform: translateY(-40px) scale(2); } }
+  @keyframes magicSteamC { 0% { opacity: 0; transform: translateY(0); } 50% { opacity: 0.6; } 100% { opacity: 0; transform: translateY(-25px); } }
+  @keyframes orbRingPulse { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.08); } }
+  @keyframes markerPulse { 0%, 100% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.15); } }
+
+  @media (max-width: 768px) {
+    .chapters-grid { grid-template-columns: 1fr; }
+    .plant-arc { gap: 16px; }
+    .plant-pedestal { width: 110px; }
+    .ancient-map { max-width: 100%; }
+    .map-parchment { padding: 24px; min-height: 500px; }
+    .workbench { gap: 30px; }
+  }
 </style>
 </head>
 <body>
@@ -733,7 +1268,7 @@
 <div id="youtubePlayer" style="display:none;"></div>
 
 <!-- MAIN CASTLE ROOM -->
-<div class="castle-room" id="castleRoom">
+<div class="castle-room page page-hero active" id="castleRoom">
 
   <!-- Canopy Glow -->
   <div class="canopy-glow"></div>
@@ -1002,8 +1537,7 @@
     document.getElementById('castleRoom').style.transition = 'opacity 1s ease';
     document.getElementById('castleRoom').style.opacity = '0';
     setTimeout(() => {
-      alert("Welcome to Niki's World! 🌲✨\n\n(Connect this to your chapters menu!)");
-      document.getElementById('castleRoom').style.opacity = '1';
+      goToPage('pageChapters');
     }, 1000);
   }
 
@@ -1054,6 +1588,1271 @@
       toggleMusic();
     }
   });
+</script>
+
+<!-- PAGE 2: CHAPTERS MENU -->
+<div class="page page-chapters" id="pageChapters">
+  <div class="chapters-container">
+    <div class="chapters-header" id="chaptersHeader">
+      <div class="chapters-label">Choose Your Path</div>
+      <h2 class="chapters-title">The Story So Far</h2>
+    </div>
+
+    <div class="chapters-grid">
+      <div class="chapter-card" id="chapterCard1" onclick="openChapter('chapter1')">
+        <span class="chapter-icon">📖</span>
+        <div class="chapter-number">Chapter I</div>
+        <div class="chapter-name">About Me</div>
+        <div class="chapter-preview">The curious beginning. Who I am, what drives me, and why I chase the "why" behind every number.</div>
+      </div>
+
+      <div class="chapter-card" id="chapterCard2" onclick="openChapter('chapter2')">
+        <span class="chapter-icon">🎓</span>
+        <div class="chapter-number">Chapter II</div>
+        <div class="chapter-name">Education</div>
+        <div class="chapter-preview">From Mumbai to Boston. A journey across oceans to turn curiosity into expertise.</div>
+      </div>
+
+      <div class="chapter-card" id="chapterCard3" onclick="openChapter('chapter3')">
+        <span class="chapter-icon">⚔️</span>
+        <div class="chapter-number">Chapter III</div>
+        <div class="chapter-name">Experience</div>
+        <div class="chapter-preview">The battles fought and won. Enterprise BI, startup chaos, and everything in between.</div>
+      </div>
+
+      <div class="chapter-card" id="chapterCard4" onclick="openChapter('chapter4')">
+        <span class="chapter-icon">🔮</span>
+        <div class="chapter-number">Chapter IV</div>
+        <div class="chapter-name">Projects</div>
+        <div class="chapter-preview">Spells cast in code. Fraud detection, AI trading, and FIFA predictions.</div>
+      </div>
+
+      <div class="chapter-card" id="chapterCard5" onclick="openChapter('chapter5')">
+        <span class="chapter-icon">🛡️</span>
+        <div class="chapter-number">Chapter V</div>
+        <div class="chapter-name">The Arsenal</div>
+        <div class="chapter-preview">Every tool in the armory. Runes, spells, and instruments of data warfare.</div>
+      </div>
+
+      <div class="chapter-card" id="chapterCard6" onclick="openChapter('chapter6')">
+        <span class="chapter-icon">🧪</span>
+        <div class="chapter-number">Chapter VI</div>
+        <div class="chapter-name">The Riddle Cauldron</div>
+        <div class="chapter-preview">Brew SQL potions for fun. A playful quiz for fellow query-weavers.</div>
+      </div>
+
+      <div class="chapter-card" id="chapterCard7" onclick="openChapter('chapter7')">
+        <span class="chapter-icon">🌿</span>
+        <div class="chapter-number">Chapter VII</div>
+        <div class="chapter-name">The Conservatory</div>
+        <div class="chapter-preview">What grows in the greenhouse when the screens go dark. Passions beyond the pipeline.</div>
+      </div>
+
+      <div class="chapter-card" id="chapterCard8" onclick="openChapter('chapter8')">
+        <span class="chapter-icon">🗺️</span>
+        <div class="chapter-number">Chapter VIII</div>
+        <div class="chapter-name">The Map</div>
+        <div class="chapter-preview">Send a raven. Cast a message. Find me across the realms.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHAPTER 1: ABOUT ME -->
+<div class="chapter-detail" id="chapter1">
+  <button class="back-btn" onclick="closeChapter()">
+    <span>&#8249;</span> Back to Chapters
+  </button>
+  <div class="chapter-content">
+    <div class="chapter-detail-header">
+      <div class="chapter-detail-number">Chapter I</div>
+      <h2 class="chapter-detail-title">About Me</h2>
+    </div>
+    <div class="chapter-detail-body">
+      <p class="lead">I don't just analyze data. I chase the "why" behind every number, every anomaly, every dashboard that doesn't tell the full story.</p>
+      <p>Growing up on fairy tales and video games taught me that every world has hidden patterns waiting to be discovered. That curiosity never left me. It evolved into a career built on asking better questions and building better systems to answer them.</p>
+      <p>With 4+ years across enterprise BI, startup analytics, and modern data stacks, I have built pipelines that process 40M+ records, cut reporting latency by 30%, and turned raw chaos into dashboards that actually make sense.</p>
+      <p>But here is the thing: I am never satisfied with "it works." I am the person who stays up optimizing a query from minutes to seconds, who builds a RAG chatbot just to make project context instantly accessible, who automates tedious manual workflows because repetition feels like a broken system begging to be fixed.</p>
+      <p>I believe data should feel human: clear, beautiful, and purposeful. Whether I am modeling dimensions in Snowflake, scraping 80K records with Python, or designing a Power BI dashboard with drill-throughs that make stakeholders say "oh, I get it now" - I am always learning, always building, always curious.</p>
+      <p><strong>Currently based in Denver, CO. Open to opportunities where data meets impact.</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- CHAPTER 2: EDUCATION -->
+<div class="chapter-detail" id="chapter2">
+  <button class="back-btn" onclick="closeChapter()">
+    <span>&#8249;</span> Back to Chapters
+  </button>
+  <div class="chapter-content">
+    <div class="chapter-detail-header">
+      <div class="chapter-detail-number">Chapter II</div>
+      <h2 class="chapter-detail-title">Education</h2>
+    </div>
+    <div class="chapter-detail-body">
+      <p class="lead">From the bustling streets of Mumbai to the snowy campuses of Boston. A journey of 8,000 miles driven by one simple belief: the best investment is the one you make in yourself.</p>
+
+      <div class="plane-journey">
+        <div class="location-marker start">
+          <div class="location-dot"></div>
+          <div class="location-label">Mumbai</div>
+          <div class="location-sub">India</div>
+        </div>
+        <div class="dashed-line"></div>
+        <div class="plane">✈️</div>
+        <div class="location-marker end">
+          <div class="location-dot"></div>
+          <div class="location-label">Boston</div>
+          <div class="location-sub">USA</div>
+        </div>
+      </div>
+
+      <div class="edu-cards">
+        <div class="edu-card">
+          <span class="edu-icon">🎓</span>
+          <div class="edu-degree">Master of Science</div>
+          <div class="edu-school">Information Systems</div>
+          <div class="edu-year">Northeastern University | 2023 - 2025</div>
+        </div>
+        <div class="edu-card">
+          <span class="edu-icon">🎓</span>
+          <div class="edu-degree">Bachelor of Science</div>
+          <div class="edu-school">Information Technology</div>
+          <div class="edu-year">University of Mumbai | 2017 - 2020</div>
+        </div>
+      </div>
+
+      <p style="margin-top: 40px;">My time at the University of Mumbai gave me the foundation: databases, programming, and the realization that data is the language of the future. But I wanted more. I wanted to see how the world builds at scale.</p>
+      <p>So I packed my bags, crossed the ocean, and landed at Northeastern University in Boston. There, I deepened my craft in information systems, worked on real-world projects, and discovered that the gap between "academic knowledge" and "industry impact" is exactly where I thrive.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CHAPTER 3: EXPERIENCE -->
+<div class="chapter-detail" id="chapter3">
+  <button class="back-btn" onclick="closeChapter()">
+    <span>&#8249;</span> Back to Chapters
+  </button>
+  <div class="chapter-content">
+    <div class="chapter-detail-header">
+      <div class="chapter-detail-number">Chapter III</div>
+      <h2 class="chapter-detail-title">The Chronicles</h2>
+    </div>
+
+    <div class="scroll-container">
+      <div class="scroll-top-roller">
+        <div class="roller-end left"></div>
+        <div class="roller-bar"></div>
+        <div class="roller-end right"></div>
+      </div>
+
+      <div class="scroll-parchment" id="scrollParchment">
+        <div class="scroll-content">
+
+          <!-- Entry 1 -->
+          <div class="chronicle-entry" data-index="0">
+            <div class="wax-seal seal-gold">
+              <span class="seal-icon">🏛️</span>
+            </div>
+            <div class="chronicle-header">
+              <h3 class="chronicle-title">The Trust Keeper</h3>
+              <span class="chronicle-company">Rebecca Everlene Trust Company</span>
+              <span class="chronicle-role">Data Analyst</span>
+              <span class="chronicle-dates">Feb 2026 – Present</span>
+            </div>
+            <div class="chronicle-body">
+              <p class="chronicle-tale">In the halls of the Trust, I guard the ledgers of many. Through Amazon Redshift I query the flows of gold and trust, weaving QuickSight dashboards that reveal the hidden patterns of customer kinship. My incantations in SQL have quickened the oracles, reducing the wait for prophecy by thirtyfold.</p>
+              <div class="chronicle-spells">
+                <span class="spell-tag">Redshift</span>
+                <span class="spell-tag">QuickSight</span>
+                <span class="spell-tag">SQL</span>
+                <span class="spell-tag">Customer Segmentation</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="chronicle-divider">
+            <span class="divider-ornament">✦</span>
+          </div>
+
+          <!-- Entry 2 -->
+          <div class="chronicle-entry" data-index="1">
+            <div class="wax-seal seal-crimson">
+              <span class="seal-icon">🤖</span>
+            </div>
+            <div class="chronicle-header">
+              <h3 class="chronicle-title">The AI Smith</h3>
+              <span class="chronicle-company">Crewasis AI</span>
+              <span class="chronicle-role">Data Scientist</span>
+              <span class="chronicle-dates">Jan 2025 – Apr 2025</span>
+            </div>
+            <div class="chronicle-body">
+              <p class="chronicle-tale">At the forge of Crewasis, I built the great ingestion engines that swallowed eighty thousand records whole, automated and unbroken. I breathed life into a RAG-powered familiar that served seven masters across their domains. From the churning seas of data, I surfaced the omens of departure, shaping the very strategy of retention.</p>
+              <div class="chronicle-spells">
+                <span class="spell-tag">RAG</span>
+                <span class="spell-tag">Python</span>
+                <span class="spell-tag">Churn Analysis</span>
+                <span class="spell-tag">Automation</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="chronicle-divider">
+            <span class="divider-ornament">✦</span>
+          </div>
+
+          <!-- Entry 3 -->
+          <div class="chronicle-entry" data-index="2">
+            <div class="wax-seal seal-indigo">
+              <span class="seal-icon">🏗️</span>
+            </div>
+            <div class="chronicle-header">
+              <h3 class="chronicle-title">The Pipeline Architect</h3>
+              <span class="chronicle-company">Infosys Limited</span>
+              <span class="chronicle-role">Senior BI Systems Analyst</span>
+              <span class="chronicle-dates">Nov 2020 – Sep 2023</span>
+            </div>
+            <div class="chronicle-body">
+              <p class="chronicle-tale">For three winters at Infosys, I raised monuments of data. I architected dbt models that processed forty million records without faltering. Ten ETL pipelines I built into the Snowflake citadel, each one a bridge between chaos and clarity. I forged data quality wards that caught errors before they could spread, and delivered fifteen Power BI grimoires, each bound with row-level security spells.</p>
+              <div class="chronicle-spells">
+                <span class="spell-tag">dbt</span>
+                <span class="spell-tag">Snowflake</span>
+                <span class="spell-tag">ETL</span>
+                <span class="spell-tag">Power BI</span>
+                <span class="spell-tag">Data Quality</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="chronicle-divider">
+            <span class="divider-ornament">✦</span>
+          </div>
+
+          <!-- Entry 4 -->
+          <div class="chronicle-entry" data-index="3">
+            <div class="wax-seal seal-emerald">
+              <span class="seal-icon">📜</span>
+            </div>
+            <div class="chronicle-header">
+              <h3 class="chronicle-title">The First Scribe</h3>
+              <span class="chronicle-company">Fasttrack Software</span>
+              <span class="chronicle-role">Data Analyst</span>
+              <span class="chronicle-dates">Feb 2020 – Oct 2020</span>
+            </div>
+            <div class="chronicle-body">
+              <p class="chronicle-tale">My first quest at Fasttrack: to read the bones of product usage and find where the gold leaked. I replaced the old Excel scrolls with living Tableau visions, and strengthened the wards of data quality until accuracy reached ninety-eight percent.</p>
+              <div class="chronicle-spells">
+                <span class="spell-tag">Tableau</span>
+                <span class="spell-tag">Excel</span>
+                <span class="spell-tag">KPI Tracking</span>
+                <span class="spell-tag">Data Quality</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="scroll-bottom-roller">
+        <div class="roller-end left"></div>
+        <div class="roller-bar"></div>
+        <div class="roller-end right"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHAPTER 4: THE ALCHEMY LAB -->
+<div class="chapter-detail" id="chapter4">
+  <button class="back-btn" onclick="closeChapter()">
+    <span>&#8249;</span> Back to Chapters
+  </button>
+  <div class="chapter-content">
+    <div class="chapter-detail-header">
+      <div class="chapter-detail-number">Chapter IV</div>
+      <h2 class="chapter-detail-title">The Alchemy Lab</h2>
+      <p class="lab-subtitle">Where experiments become elixirs</p>
+    </div>
+
+    <div class="alchemy-lab">
+      <div class="workbench">
+
+        <div class="experiment-flask" data-flask="0" onclick="openFlask(0)">
+          <div class="flask-glass">
+            <div class="flask-liquid liquid-crimson">
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+            </div>
+            <div class="flask-neck"></div>
+            <div class="flask-rim"></div>
+            <div class="flask-glow"></div>
+          </div>
+          <div class="flask-label">
+            <span class="flask-icon">🛡️</span>
+            <span class="flask-name">The Warding Brew</span>
+          </div>
+        </div>
+
+        <div class="experiment-flask" data-flask="1" onclick="openFlask(1)">
+          <div class="flask-glass">
+            <div class="flask-liquid liquid-gold">
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+            </div>
+            <div class="flask-neck"></div>
+            <div class="flask-rim"></div>
+            <div class="flask-glow"></div>
+          </div>
+          <div class="flask-label">
+            <span class="flask-icon">⚖️</span>
+            <span class="flask-name">The Golden Ratio</span>
+          </div>
+        </div>
+
+        <div class="experiment-flask" data-flask="2" onclick="openFlask(2)">
+          <div class="flask-glass">
+            <div class="flask-liquid liquid-azure">
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+            </div>
+            <div class="flask-neck"></div>
+            <div class="flask-rim"></div>
+            <div class="flask-glow"></div>
+          </div>
+          <div class="flask-label">
+            <span class="flask-icon">🔮</span>
+            <span class="flask-name">The Oracle's Draught</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="lab-parchment" id="labParchment">
+        <div class="parchment-close" onclick="closeParchment()">✕</div>
+        <div class="parchment-content" id="parchmentContent"></div>
+      </div>
+
+      <div class="lab-steam">
+        <div class="steam-puff"></div>
+        <div class="steam-puff"></div>
+        <div class="steam-puff"></div>
+        <div class="steam-puff"></div>
+        <div class="steam-puff"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHAPTER 5: THE ARSENAL -->
+<div class="chapter-detail" id="chapter5">
+  <button class="back-btn" onclick="closeChapter()">
+    <span>&#8249;</span> Back to Chapters
+  </button>
+  <div class="chapter-content">
+    <div class="chapter-detail-header">
+      <div class="chapter-detail-number">Chapter V</div>
+      <h2 class="chapter-detail-title">The Arsenal</h2>
+      <p class="lab-subtitle">Every instrument, every rune, every spell at my command</p>
+    </div>
+
+    <div class="arsenal-room">
+      <div class="weapon-rack">
+
+        <div class="arsenal-section">
+          <h3 class="arsenal-school">⚔️ Battle Magic <span class="school-desc">Analytics & Visualization</span></h3>
+          <div class="weapon-grid">
+            <div class="weapon-item" data-level="95">
+              <div class="weapon-icon">📊</div>
+              <div class="weapon-name">Power BI</div>
+              <div class="weapon-type">Scrying Mirror</div>
+              <div class="charge-bar"><div class="charge-fill"></div></div>
+            </div>
+            <div class="weapon-item" data-level="90">
+              <div class="weapon-icon">📈</div>
+              <div class="weapon-name">Tableau</div>
+              <div class="weapon-type">Crystal Lens</div>
+              <div class="charge-bar"><div class="charge-fill"></div></div>
+            </div>
+            <div class="weapon-item" data-level="92">
+              <div class="weapon-icon">🔍</div>
+              <div class="weapon-name">QuickSight</div>
+              <div class="weapon-type">Oracle Glass</div>
+              <div class="charge-bar"><div class="charge-fill"></div></div>
+            </div>
+            <div class="weapon-item" data-level="88">
+              <div class="weapon-icon">📗</div>
+              <div class="weapon-name">Excel</div>
+              <div class="weapon-type">Apprentice Slate</div>
+              <div class="charge-bar"><div class="charge-fill"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="arsenal-section">
+          <h3 class="arsenal-school">🔮 Summoning <span class="school-desc">Engineering & Pipelines</span></h3>
+          <div class="weapon-grid">
+            <div class="weapon-item" data-level="93">
+              <div class="weapon-icon">🐍</div>
+              <div class="weapon-name">Python</div>
+              <div class="weapon-type">Serpent Staff</div>
+              <div class="charge-bar"><div class="charge-fill"></div></div>
+            </div>
+            <div class="weapon-item" data-level="95">
+              <div class="weapon-icon">⚡</div>
+              <div class="weapon-name">SQL</div>
+              <div class="weapon-type">Lightning Rod</div>
+              <div class="charge-bar"><div class="charge-fill"></div></div>
+            </div>
+            <div class="weapon-item" data-level="85">
+              <div class="weapon-icon">❄️</div>
+              <div class="weapon-name">Snowflake</div>
+              <div class="weapon-type">Frost Compass</div>
+              <div class="charge-bar"><div class="charge-fill"></div></div>
+            </div>
+            <div class="weapon-item" data-level="82">
+              <div class="weapon-icon">🏗️</div>
+              <div class="weapon-name">dbt</div>
+              <div class="weapon-type">Builder's Hammer</div>
+              <div class="charge-bar"><div class="charge-fill"></div></div>
+            </div>
+            <div class="weapon-item" data-level="80">
+              <div class="weapon-icon">📦</div>
+              <div class="weapon-name">AWS</div>
+              <div class="weapon-type">Cloud Sigil</div>
+              <div class="charge-bar"><div class="charge-fill"></div></div>
+            </div>
+            <div class="weapon-item" data-level="78">
+              <div class="weapon-icon">🐘</div>
+              <div class="weapon-name">PostgreSQL</div>
+              <div class="weapon-type">Stone Tablet</div>
+              <div class="charge-bar"><div class="charge-fill"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="arsenal-section">
+          <h3 class="arsenal-school">👁️ Divination <span class="school-desc">Machine Learning & AI</span></h3>
+          <div class="weapon-grid">
+            <div class="weapon-item" data-level="75">
+              <div class="weapon-icon">🤖</div>
+              <div class="weapon-name">Scikit-learn</div>
+              <div class="weapon-type">Prophecy Deck</div>
+              <div class="charge-bar"><div class="charge-fill"></div></div>
+            </div>
+            <div class="weapon-item" data-level="72">
+              <div class="weapon-icon">🧠</div>
+              <div class="weapon-name">TensorFlow</div>
+              <div class="weapon-type">Neural Grimoire</div>
+              <div class="charge-bar"><div class="charge-fill"></div></div>
+            </div>
+            <div class="weapon-item" data-level="85">
+              <div class="weapon-icon">🗣️</div>
+              <div class="weapon-name">RAG / LLMs</div>
+              <div class="weapon-type">Whisper Charm</div>
+              <div class="charge-bar"><div class="charge-fill"></div></div>
+            </div>
+            <div class="weapon-item" data-level="80">
+              <div class="weapon-icon">🐼</div>
+              <div class="weapon-name">Pandas</div>
+              <div class="weapon-type">Shape Shifter</div>
+              <div class="charge-bar"><div class="charge-fill"></div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHAPTER 6: THE RIDDLE CAULDRON -->
+<div class="chapter-detail" id="chapter6">
+  <button class="back-btn" onclick="closeChapter()">
+    <span>&#8249;</span> Back to Chapters
+  </button>
+  <div class="chapter-content">
+    <div class="chapter-detail-header">
+      <div class="chapter-detail-number">Chapter VI</div>
+      <h2 class="chapter-detail-title">The Riddle Cauldron</h2>
+      <p class="lab-subtitle">Brew SQL potions for fun. Test your query-weaving skills.</p>
+    </div>
+
+    <div class="cauldron-room">
+      <div class="cauldron-container">
+        <div class="cauldron">
+          <div class="cauldron-rim"></div>
+          <div class="cauldron-body">
+            <div class="cauldron-liquid" id="cauldronLiquid">
+              <div class="cauldron-bubble"></div>
+              <div class="cauldron-bubble"></div>
+              <div class="cauldron-bubble"></div>
+              <div class="cauldron-bubble"></div>
+              <div class="cauldron-bubble"></div>
+              <div class="cauldron-bubble"></div>
+            </div>
+          </div>
+          <div class="cauldron-feet">
+            <div class="foot"></div>
+            <div class="foot"></div>
+            <div class="foot"></div>
+          </div>
+          <div class="cauldron-glow" id="cauldronGlow"></div>
+        </div>
+
+        <div class="cauldron-steam">
+          <div class="c-steam"></div>
+          <div class="c-steam"></div>
+          <div class="c-steam"></div>
+        </div>
+      </div>
+
+      <div class="quiz-card" id="quizCard">
+        <div class="quiz-progress">
+          <span id="quizCounter">Question 1 of 5</span>
+          <div class="quiz-dots" id="quizDots">
+            <span class="q-dot active"></span>
+            <span class="q-dot"></span>
+            <span class="q-dot"></span>
+            <span class="q-dot"></span>
+            <span class="q-dot"></span>
+          </div>
+        </div>
+
+        <div class="quiz-question" id="quizQuestion">
+          <div class="question-rune">🔮</div>
+          <p class="question-text" id="questionText">Loading...</p>
+        </div>
+
+        <div class="quiz-options" id="quizOptions"></div>
+
+        <div class="quiz-feedback" id="quizFeedback">
+          <div class="feedback-icon" id="feedbackIcon"></div>
+          <p class="feedback-text" id="feedbackText"></p>
+          <button class="next-potion-btn" id="nextPotionBtn" onclick="nextQuestion()">Brew Next Potion →</button>
+        </div>
+
+        <div class="quiz-complete" id="quizComplete">
+          <div class="complete-trophy">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:48px;height:48px;color:var(--rose-gold);">
+              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+              <path d="M4 22h16"/>
+              <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 19.8 7 21"/>
+              <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 19.8 17 21"/>
+              <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+            </svg>
+          </div>
+          <h3 class="complete-title">All Potions Brewed!</h3>
+          <p class="complete-score" id="completeScore"></p>
+          <p class="complete-message" id="completeMessage"></p>
+          <div class="quiz-end-buttons">
+            <button class="restart-quiz-btn" onclick="restartQuiz()">Brew Again</button>
+            <button class="goto-chapters-btn" onclick="closeChapter(); goToPage('pageChapters');">Return to Chapters</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHAPTER 7: THE CONSERVATORY -->
+<div class="chapter-detail" id="chapter7">
+  <button class="back-btn" onclick="closeChapter()">
+    <span>&#8249;</span> Back to Chapters
+  </button>
+  <div class="chapter-content">
+    <div class="chapter-detail-header">
+      <div class="chapter-detail-number">Chapter VII</div>
+      <h2 class="chapter-detail-title">The Conservatory</h2>
+      <p class="lab-subtitle">What grows when the screens go dark</p>
+    </div>
+
+    <div class="conservatory-v2">
+      <div class="conservatory-light"></div>
+
+      <div class="hanging-vine vine-1">
+        <div class="vine-stem"></div>
+        <div class="vine-leaf"></div>
+        <div class="vine-leaf"></div>
+        <div class="vine-dewdrop"></div>
+      </div>
+      <div class="hanging-vine vine-2">
+        <div class="vine-stem"></div>
+        <div class="vine-leaf"></div>
+        <div class="vine-dewdrop"></div>
+      </div>
+      <div class="hanging-vine vine-3">
+        <div class="vine-stem"></div>
+        <div class="vine-leaf"></div>
+        <div class="vine-leaf"></div>
+        <div class="vine-leaf"></div>
+      </div>
+
+      <div class="plant-arc">
+
+        <div class="plant-pedestal" data-plant="0" onclick="openPlantDetail(0)">
+          <div class="pedestal-glow"></div>
+          <div class="pedestal-base">
+            <div class="pedestal-column"></div>
+            <div class="pedestal-platform">
+              <div class="plant-orb racing-orb">
+                <div class="orb-inner">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="orb-icon">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                    <path d="M2 17l10 5 10-5"/>
+                    <path d="M2 12l10 5 10-5"/>
+                  </svg>
+                </div>
+                <div class="orb-ring ring-1"></div>
+                <div class="orb-ring ring-2"></div>
+              </div>
+            </div>
+          </div>
+          <div class="pedestal-label">
+            <span class="pedestal-name">The Speed Vine</span>
+            <span class="pedestal-desc">Racing simulators & track days</span>
+          </div>
+        </div>
+
+        <div class="plant-pedestal" data-plant="1" onclick="openPlantDetail(1)">
+          <div class="pedestal-glow"></div>
+          <div class="pedestal-base">
+            <div class="pedestal-column"></div>
+            <div class="pedestal-platform">
+              <div class="plant-orb reading-orb">
+                <div class="orb-inner">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="orb-icon">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                  </svg>
+                </div>
+                <div class="orb-ring ring-1"></div>
+                <div class="orb-ring ring-2"></div>
+              </div>
+            </div>
+          </div>
+          <div class="pedestal-label">
+            <span class="pedestal-name">The Wisdom Fern</span>
+            <span class="pedestal-desc">Fantasy novels & data stories</span>
+          </div>
+        </div>
+
+        <div class="plant-pedestal" data-plant="2" onclick="openPlantDetail(2)">
+          <div class="pedestal-glow"></div>
+          <div class="pedestal-base">
+            <div class="pedestal-column"></div>
+            <div class="pedestal-platform">
+              <div class="plant-orb travel-orb">
+                <div class="orb-inner">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="orb-icon">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M2 12h20"/>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                  </svg>
+                </div>
+                <div class="orb-ring ring-1"></div>
+                <div class="orb-ring ring-2"></div>
+              </div>
+            </div>
+          </div>
+          <div class="pedestal-label">
+            <span class="pedestal-name">The Wanderlust Moss</span>
+            <span class="pedestal-desc">New cities, new cultures, new data</span>
+          </div>
+        </div>
+
+        <div class="plant-pedestal" data-plant="3" onclick="openPlantDetail(3)">
+          <div class="pedestal-glow"></div>
+          <div class="pedestal-base">
+            <div class="pedestal-column"></div>
+            <div class="pedestal-platform">
+              <div class="plant-orb cooking-orb">
+                <div class="orb-inner">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="orb-icon">
+                    <path d="M12 2a8 8 0 0 0-8 8c0 3.866 3.582 7 8 7s8-3.134 8-7a8 8 0 0 0-8-8z"/>
+                    <path d="M9 17v4"/>
+                    <path d="M15 17v4"/>
+                    <path d="M5 11h14"/>
+                  </svg>
+                </div>
+                <div class="orb-ring ring-1"></div>
+                <div class="orb-ring ring-2"></div>
+              </div>
+            </div>
+          </div>
+          <div class="pedestal-label">
+            <span class="pedestal-name">The Spice Bloom</span>
+            <span class="pedestal-desc">Kitchen experiments & flavor alchemy</span>
+          </div>
+        </div>
+
+        <div class="plant-pedestal" data-plant="4" onclick="openPlantDetail(4)">
+          <div class="pedestal-glow"></div>
+          <div class="pedestal-base">
+            <div class="pedestal-column"></div>
+            <div class="pedestal-platform">
+              <div class="plant-orb sql-orb">
+                <div class="orb-inner">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="orb-icon">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                  </svg>
+                </div>
+                <div class="orb-ring ring-1"></div>
+                <div class="orb-ring ring-2"></div>
+              </div>
+            </div>
+          </div>
+          <div class="pedestal-label">
+            <span class="pedestal-name">The Query Cactus</span>
+            <span class="pedestal-desc">SQL puzzles & late-night optimizations</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="conservatory-floor">
+        <div class="floor-reflection"></div>
+      </div>
+
+      <div class="conservatory-detail-v2" id="conservatoryDetail">
+        <div class="detail-close" onclick="closePlantDetail()">&#10005;</div>
+        <div class="detail-content" id="plantDetailContent"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHAPTER 8: THE MAP -->
+<div class="chapter-detail" id="chapter8">
+  <button class="back-btn" onclick="closeChapter()">
+    <span>&#8249;</span> Back to Chapters
+  </button>
+  <div class="chapter-content">
+    <div class="chapter-detail-header">
+      <div class="chapter-detail-number">Chapter VIII</div>
+      <h2 class="chapter-detail-title">The Map</h2>
+      <p class="lab-subtitle">Send a message. Find me across the realms.</p>
+    </div>
+
+    <div class="map-realm">
+      <div class="ancient-map">
+        <div class="map-parchment">
+
+          <div class="compass-rose">
+            <div class="compass-inner">
+              <span class="compass-n">N</span>
+              <div class="compass-star"></div>
+            </div>
+          </div>
+
+          <svg class="map-paths" viewBox="0 0 600 400" preserveAspectRatio="none">
+            <path d="M120 100 Q 200 80 280 90" stroke="rgba(201,162,39,0.25)" stroke-width="1.5" stroke-dasharray="6,4" fill="none"/>
+            <path d="M120 100 Q 180 200 150 280" stroke="rgba(201,162,39,0.2)" stroke-width="1.5" stroke-dasharray="4,6" fill="none"/>
+            <path d="M280 90 Q 350 150 420 280" stroke="rgba(201,162,39,0.2)" stroke-width="1.5" stroke-dasharray="5,5" fill="none"/>
+            <path d="M150 280 Q 280 320 420 280" stroke="rgba(201,162,39,0.15)" stroke-width="1.5" stroke-dasharray="3,7" fill="none"/>
+          </svg>
+
+          <div class="map-location" data-loc="linkedin" onclick="openLocation('linkedin')">
+            <div class="loc-marker">
+              <div class="marker-pulse"></div>
+              <div class="marker-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="map-svg-icon">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                  <rect x="2" y="9" width="4" height="12"/>
+                  <circle cx="4" cy="4" r="2"/>
+                </svg>
+              </div>
+            </div>
+            <div class="loc-label">LinkedIn</div>
+            <div class="loc-sublabel">Professional Profile</div>
+          </div>
+
+          <div class="map-location" data-loc="github" onclick="openLocation('github')">
+            <div class="loc-marker">
+              <div class="marker-pulse"></div>
+              <div class="marker-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="map-svg-icon">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                </svg>
+              </div>
+            </div>
+            <div class="loc-label">GitHub</div>
+            <div class="loc-sublabel">Code Repository</div>
+          </div>
+
+          <div class="map-location" data-loc="email" onclick="openLocation('email')">
+            <div class="loc-marker">
+              <div class="marker-pulse"></div>
+              <div class="marker-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="map-svg-icon">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </div>
+            </div>
+            <div class="loc-label">Email</div>
+            <div class="loc-sublabel">Send a Message</div>
+          </div>
+
+          <div class="map-location" data-loc="phone" onclick="openLocation('phone')">
+            <div class="loc-marker">
+              <div class="marker-pulse"></div>
+              <div class="marker-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="map-svg-icon">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.56 12.56 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.56 12.56 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="loc-label">Phone</div>
+            <div class="loc-sublabel">Call Directly</div>
+          </div>
+
+          <div class="you-are-here">
+            <div class="yah-marker">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="yah-svg">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+            </div>
+            <div class="yah-label">You Are Here</div>
+          </div>
+
+          <div class="terrain-mountain"></div>
+          <div class="terrain-mountain mountain-2"></div>
+          <div class="terrain-forest"></div>
+          <div class="terrain-forest forest-2"></div>
+          <div class="terrain-water"></div>
+
+        </div>
+      </div>
+
+      <div class="location-card" id="locationCard">
+        <div class="loc-card-close" onclick="closeLocationCard()">&#10005;</div>
+        <div class="loc-card-content" id="locCardContent"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ===== PAGE NAVIGATION =====
+  function goToPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+    document.getElementById('castleRoom').style.opacity = '1';
+
+    if (pageId === 'pageChapters') {
+      setTimeout(() => {
+        document.getElementById('chaptersHeader').classList.add('revealed');
+        document.querySelectorAll('.chapter-card').forEach((card, i) => {
+          setTimeout(() => card.classList.add('revealed'), i * 150);
+        });
+      }, 100);
+    }
+  }
+
+  // ===== SCROLL CHRONICLES REVEAL =====
+  function initChronicleReveal() {
+    const entries = document.querySelectorAll('.chronicle-entry');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+        }
+      });
+    }, { threshold: 0.2 });
+    entries.forEach(entry => observer.observe(entry));
+  }
+
+  // ===== CHAPTER NAVIGATION =====
+  function openChapter(chapterId) {
+    document.querySelectorAll('.chapter-detail').forEach(c => c.classList.remove('active'));
+    document.getElementById(chapterId).classList.add('active');
+    document.getElementById(chapterId).scrollTop = 0;
+    if (chapterId === 'chapter3') setTimeout(initChronicleReveal, 300);
+    if (chapterId === 'chapter5') setTimeout(initArsenal, 300);
+    if (chapterId === 'chapter6') setTimeout(initQuiz, 300);
+  }
+
+  function closeChapter() {
+    document.querySelectorAll('.chapter-detail').forEach(c => c.classList.remove('active'));
+  }
+
+  // ===== ALCHEMY LAB =====
+  const experiments = [
+    {
+      title: "The Warding Brew",
+      subtitle: "AI Insurance Claims Fraud Detection Pipeline",
+      tale: "In the dark corners of the insurance realm, false claims lurked like shadows. I brewed a detection elixir — an end-to-end pipeline of Python and SQL that ingested, processed, and flagged the anomalous. The anomaly detection spirits I summoned improved the fraud hunters' workflow and reduced the cries of false alarms.",
+      metrics: [
+        { value: "End-to-End", label: "Pipeline" },
+        { value: "Reduced", label: "False Positives" }
+      ],
+      spells: ["Python", "SQL", "Anomaly Detection", "Data Pipeline"]
+    },
+    {
+      title: "The Golden Ratio",
+      subtitle: "Portfolio Trading Platform with AI Agents",
+      tale: "I forged a trading sanctum where GPT-4 spirits and PostgreSQL grimoires converged. Multi-agent conversational analysis workflows parsed the whispers of the market, generating actionable visions. The merchants who used my platform made their decisions forty percent faster, their gold multiplying in the light of AI.",
+      metrics: [
+        { value: "40%", label: "Faster Decisions" },
+        { value: "Multi-Agent", label: "AI Workflow" }
+      ],
+      spells: ["GPT-4", "PostgreSQL", "Full-Stack", "AI Agents"]
+    },
+    {
+      title: "The Oracle's Draught",
+      subtitle: "FIFA World Cup Predictor",
+      tale: "A passion born of love for the beautiful game. I scraped the histories of a thousand battles on the pitch, fed them to predictive spirits, and distilled an interactive oracle. Match outcomes and player performance trends revealed themselves to those who dared to drink from the cup of data.",
+      metrics: [
+        { value: "ML", label: "Predictive Models" },
+        { value: "Interactive", label: "Dashboard" }
+      ],
+      spells: ["Web Scraping", "Machine Learning", "Sports Analytics", "Visualization"]
+    }
+  ];
+
+  function openFlask(index) {
+    const parchment = document.getElementById('labParchment');
+    const content = document.getElementById('parchmentContent');
+    const exp = experiments[index];
+
+    content.innerHTML = `
+      <h3>${exp.title}</h3>
+      <span class="parchment-subtitle">${exp.subtitle}</span>
+      <p class="parchment-tale">${exp.tale}</p>
+      <div class="parchment-metrics">
+        ${exp.metrics.map(m => `
+          <div class="metric-chip">
+            <span class="metric-value">${m.value}</span>
+            <span class="metric-label">${m.label}</span>
+          </div>
+        `).join('')}
+      </div>
+      <div class="parchment-spells">
+        ${exp.spells.map(s => `<span class="spell-tag">${s}</span>`).join('')}
+      </div>
+    `;
+    parchment.classList.add('active');
+  }
+
+  function closeParchment() {
+    document.getElementById('labParchment').classList.remove('active');
+  }
+
+  // ===== ARSENAL: charge bars =====
+  function initArsenal() {
+    const weapons = document.querySelectorAll('.weapon-item');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const item = entry.target;
+          const level = item.dataset.level;
+          item.classList.add('revealed');
+          item.style.setProperty('--level', level + '%');
+        }
+      });
+    }, { threshold: 0.3 });
+    weapons.forEach(w => observer.observe(w));
+  }
+
+  // ===== RIDDLE CAULDRON: SQL Quiz =====
+  const quizQuestions = [
+    {
+      question: "A wizard has a table of spells. He wants only the UNIQUE spells. Which incantation does he cast?",
+      options: [
+        { text: "SELECT DISTINCT spell_name FROM spells", correct: true },
+        { text: "SELECT UNIQUE spell_name FROM spells", correct: false },
+        { text: "SELECT spell_name FROM spells WHERE unique = true", correct: false },
+        { text: "SELECT spell_name FROM spells GROUP BY spell_name HAVING COUNT(*) = 1", correct: false }
+      ],
+      wittyCorrect: "Correct! DISTINCT is the spell for uniqueness. No duplicates shall pass these gates! ✨",
+      wittyWrong: "Oof! That potion fizzled. DISTINCT is the one true spell for uniqueness. Try again, apprentice! 💨"
+    },
+    {
+      question: "Two guilds — warriors and mages — each have their own table. The archmage wants EVERY warrior and EVERY mage in one scroll. Which JOIN does he weave?",
+      options: [
+        { text: "INNER JOIN — only those in both guilds", correct: false },
+        { text: "FULL OUTER JOIN — all from both guilds", correct: true },
+        { text: "LEFT JOIN — only warriors with mage companions", correct: false },
+        { text: "CROSS JOIN — every warrior paired with every mage", correct: false }
+      ],
+      wittyCorrect: "FULL OUTER JOIN! You truly understand the union of realms. All shall be counted! 🤝",
+      wittyWrong: "Not quite! INNER JOIN would leave some guild members in the shadows. FULL OUTER JOIN is the path of inclusivity. 📜"
+    },
+    {
+      question: "The treasury keeper wants the TOP 5 richest merchants, ordered by gold. Which clause does he append?",
+      options: [
+        { text: "LIMIT 5 ORDER BY gold DESC", correct: false },
+        { text: "ORDER BY gold DESC LIMIT 5", correct: true },
+        { text: "TOP 5 ORDER BY gold DESC", correct: false },
+        { text: "FETCH FIRST 5 ROWS ONLY ORDER BY gold", correct: false }
+      ],
+      wittyCorrect: "ORDER BY first, then LIMIT! You know the sacred order of operations. The rich shall be revealed! 💰",
+      wittyWrong: "Almost! Remember: sort the treasure first, THEN take the top. Order matters in both magic and SQL! 📜"
+    },
+    {
+      question: "A curse has duplicated every record in the spells table! How does the wizard DELETE the duplicates while keeping ONE of each?",
+      options: [
+        { text: "DELETE FROM spells WHERE id NOT IN (SELECT MIN(id) FROM spells GROUP BY spell_name)", correct: true },
+        { text: "DELETE DUPLICATES FROM spells", correct: false },
+        { text: "REMOVE DUPLICATE spell_name FROM spells", correct: false },
+        { text: "TRUNCATE spells WHERE COUNT(*) > 1", correct: false }
+      ],
+      wittyCorrect: "Brilliant! A subquery to find the first of each kind, then purge the rest. The curse is lifted! 🛡️",
+      wittyWrong: "That spell doesn't exist in any grimoire I know! Subqueries are your friend when curses strike. 🧙‍♂️"
+    },
+    {
+      question: "The oracle wants to know: how many spells does EACH wizard know? She groups by wizard. What function does she invoke?",
+      options: [
+        { text: "SUM(spell_name)", correct: false },
+        { text: "TOTAL(spell_name)", correct: false },
+        { text: "COUNT(spell_name)", correct: true },
+        { text: "NUMBER(spell_name)", correct: false }
+      ],
+      wittyCorrect: "COUNT! The oracle smiles upon you. Numbers are the language of the universe, after all. 🔢",
+      wittyWrong: "SUM would add the spells together — imagine trying to add 'Fireball' and 'Ice Shard'! COUNT is the way. ❄️🔥"
+    }
+  ];
+
+  let currentQuestion = 0;
+  let score = 0;
+
+  function initQuiz() {
+    currentQuestion = 0;
+    score = 0;
+    document.getElementById('quizComplete').classList.remove('active');
+    document.getElementById('quizFeedback').classList.remove('active');
+    document.getElementById('quizOptions').style.display = 'flex';
+    document.getElementById('quizQuestion').style.display = 'block';
+    loadQuestion();
+    updateDots();
+  }
+
+  function loadQuestion() {
+    const q = quizQuestions[currentQuestion];
+    document.getElementById('quizCounter').textContent = `Question ${currentQuestion + 1} of ${quizQuestions.length}`;
+    document.getElementById('questionText').textContent = q.question;
+
+    const optionsContainer = document.getElementById('quizOptions');
+    optionsContainer.innerHTML = '';
+
+    const letters = ['A', 'B', 'C', 'D'];
+    q.options.forEach((opt, i) => {
+      const btn = document.createElement('div');
+      btn.className = 'quiz-option';
+      btn.innerHTML = `<span class="option-letter">${letters[i]}</span>${opt.text}`;
+      btn.onclick = () => selectAnswer(i, opt.correct);
+      optionsContainer.appendChild(btn);
+    });
+  }
+
+  function selectAnswer(index, isCorrect) {
+    const options = document.querySelectorAll('.quiz-option');
+    const q = quizQuestions[currentQuestion];
+    const cauldronLiquid = document.getElementById('cauldronLiquid');
+    const cauldronGlow = document.getElementById('cauldronGlow');
+
+    options.forEach((opt, i) => {
+      opt.classList.add('disabled');
+      if (quizQuestions[currentQuestion].options[i].correct) {
+        opt.classList.add('correct');
+      }
+    });
+
+    if (isCorrect) {
+      score++;
+      options[index].classList.add('correct');
+      cauldronLiquid.classList.add('correct');
+      cauldronGlow.style.background = 'radial-gradient(ellipse, rgba(74,222,128,0.4) 0%, transparent 70%)';
+      showFeedback(true, q.wittyCorrect);
+    } else {
+      options[index].classList.add('wrong');
+      cauldronLiquid.classList.add('wrong');
+      cauldronGlow.style.background = 'radial-gradient(ellipse, rgba(239,68,68,0.4) 0%, transparent 70%)';
+      showFeedback(false, q.wittyWrong);
+    }
+    updateDots();
+  }
+
+  function showFeedback(isCorrect, text) {
+    const feedback = document.getElementById('quizFeedback');
+    const icon = document.getElementById('feedbackIcon');
+    const msg = document.getElementById('feedbackText');
+    const nextBtn = document.getElementById('nextPotionBtn');
+
+    icon.textContent = isCorrect ? '✨' : '💨';
+    msg.textContent = text;
+    nextBtn.textContent = currentQuestion < quizQuestions.length - 1 ? 'Brew Next Potion →' : 'See Your Fortune →';
+
+    document.getElementById('quizOptions').style.display = 'none';
+    feedback.classList.add('active');
+  }
+
+  function nextQuestion() {
+    const cauldronLiquid = document.getElementById('cauldronLiquid');
+    const cauldronGlow = document.getElementById('cauldronGlow');
+
+    cauldronLiquid.classList.remove('correct', 'wrong');
+    cauldronGlow.style.background = '';
+    document.getElementById('quizFeedback').classList.remove('active');
+
+    currentQuestion++;
+
+    if (currentQuestion >= quizQuestions.length) {
+      showComplete();
+    } else {
+      document.getElementById('quizOptions').style.display = 'flex';
+      loadQuestion();
+      updateDots();
+    }
+  }
+
+  function updateDots() {
+    const dots = document.querySelectorAll('.q-dot');
+    dots.forEach((dot, i) => {
+      dot.classList.remove('active', 'correct-dot', 'wrong-dot');
+      if (i < currentQuestion) {
+        dot.classList.add('correct-dot');
+      } else if (i === currentQuestion) {
+        dot.classList.add('active');
+      }
+    });
+  }
+
+  function showComplete() {
+    document.getElementById('quizQuestion').style.display = 'none';
+    document.getElementById('quizFeedback').classList.remove('active');
+    document.getElementById('quizOptions').style.display = 'none';
+
+    const complete = document.getElementById('quizComplete');
+    const scoreText = document.getElementById('completeScore');
+    const msgText = document.getElementById('completeMessage');
+
+    scoreText.textContent = `${score} of ${quizQuestions.length} potions brewed correctly`;
+
+    if (score === quizQuestions.length) {
+      msgText.textContent = "Perfection! You are a true SQL Archmage. The cauldron bows to your wisdom. 🧙‍♂️✨";
+    } else if (score >= 3) {
+      msgText.textContent = "Solid brewing! A few more practice rounds and you'll be brewing legendary queries. 🔮";
+    } else {
+      msgText.textContent = "Every master was once an apprentice. Keep stirring the cauldron! 🌱";
+    }
+    complete.classList.add('active');
+  }
+
+  function restartQuiz() {
+    const cauldronLiquid = document.getElementById('cauldronLiquid');
+    cauldronLiquid.classList.remove('correct', 'wrong');
+    document.getElementById('cauldronGlow').style.background = '';
+    initQuiz();
+  }
+
+  // ===== CONSERVATORY: plant details =====
+  const plantDetails = [
+    {
+      title: "The Speed Vine",
+      icon: "🏎️",
+      desc: "When the workday ends, the Speed Vine takes over. Racing simulators, track days, and the endless pursuit of the perfect lap time. There's something meditative about finding the racing line — much like optimizing a SQL query, it's about shaving milliseconds until perfection."
+    },
+    {
+      title: "The Wisdom Fern",
+      icon: "📚",
+      desc: "Fantasy novels, data journalism, and the occasional deep-dive into a technical paper. The Wisdom Fern grows best in quiet corners with warm light. Currently reading: anything that blends storytelling with systems thinking."
+    },
+    {
+      title: "The Wanderlust Moss",
+      icon: "✈️",
+      desc: "From Mumbai to Boston to Denver — the moss has traveled far. Next destinations on the map: national parks, coastal drives, and any city with a good data meetup. Travel is the best data collection there is."
+    },
+    {
+      title: "The Spice Bloom",
+      icon: "🍳",
+      desc: "The kitchen is my second laboratory. Experimenting with flavors, failing gloriously, and occasionally creating something worth repeating. Cooking teaches patience, timing, and the art of tasting as you go — not unlike debugging a pipeline."
+    },
+    {
+      title: "The Query Cactus",
+      icon: "⚡",
+      desc: "Yes, this is a real hobby. SQL puzzles on LeetCode, HackerRank brain teasers, and the occasional late-night optimization challenge. Some people do crosswords. I do CTEs. No regrets."
+    }
+  ];
+
+  function openPlantDetail(index) {
+    const detail = plantDetails[index];
+    const content = document.getElementById('plantDetailContent');
+    const panel = document.getElementById('conservatoryDetail');
+
+    content.innerHTML = `
+      <div style="text-align:center; margin-bottom:20px;">
+        <h3 style="font-family:'Cinzel',serif; font-size:1.3rem; color:var(--rose-gold); margin-bottom:8px;">${detail.title}</h3>
+      </div>
+      <p style="font-family:'Cormorant Garamond',serif; font-size:1.15rem; color:rgba(245,230,211,0.75); line-height:1.8;">${detail.desc}</p>
+    `;
+    panel.classList.add('active');
+  }
+
+  function closePlantDetail() {
+    document.getElementById('conservatoryDetail').classList.remove('active');
+  }
+
+  // ===== MAP: location cards =====
+  const locationData = {
+    linkedin: {
+      icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>`,
+      title: "LinkedIn",
+      value: "linkedin.com/in/nikichoksi",
+      btnText: "Open Profile",
+      btnLink: "https://linkedin.com/in/nikichoksi"
+    },
+    github: {
+      icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>`,
+      title: "GitHub",
+      value: "github.com/nikichoksi",
+      btnText: "View Code",
+      btnLink: "https://github.com/nikichoksi"
+    },
+    email: {
+      icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>`,
+      title: "Email",
+      value: "nikichoksi03@gmail.com",
+      btnText: "Send Email",
+      btnLink: "mailto:nikichoksi03@gmail.com"
+    },
+    phone: {
+      icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.56 12.56 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.56 12.56 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>`,
+      title: "Phone",
+      value: "+1 (857) 763-9904",
+      btnText: "Call Now",
+      btnLink: "tel:+18577639904"
+    }
+  };
+
+  function openLocation(loc) {
+    const data = locationData[loc];
+    const card = document.getElementById('locationCard');
+    const content = document.getElementById('locCardContent');
+
+    content.innerHTML = `
+      <div class="loc-card-icon">${data.icon}</div>
+      <h3 class="loc-card-title">${data.title}</h3>
+      <p class="loc-card-value">${data.value}</p>
+      <a href="${data.btnLink}" class="loc-card-btn" target="${loc === 'email' || loc === 'phone' ? '_self' : '_blank'}">${data.btnText}</a>
+    `;
+    card.classList.add('active');
+  }
+
+  function closeLocationCard() {
+    document.getElementById('locationCard').classList.remove('active');
+  }
 </script>
 
 </body>
