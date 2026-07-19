@@ -608,50 +608,6 @@
     box-shadow: 0 0 15px rgba(74, 222, 128, 0.1);
   }
 
-  /* Squirrel climbing along the walls/arch */
-  .squirrel {
-    position: absolute;
-    width: 20px;
-    height: 14px;
-    z-index: 7;
-    pointer-events: none;
-    animation: squirrelJourney 24s ease-in-out infinite 5s;
-  }
-  .squirrel-body {
-    position: absolute;
-    left: 0; bottom: 0;
-    width: 15px; height: 10px;
-    background: linear-gradient(180deg, #c17a3d, #8b4513);
-    border-radius: 50% 50% 45% 45%;
-    box-shadow: 0 0 6px rgba(0,0,0,0.2);
-  }
-  .squirrel-head {
-    position: absolute;
-    left: -3px; top: -3px;
-    width: 9px; height: 9px;
-    background: #c17a3d;
-    border-radius: 50%;
-  }
-  .squirrel-ear-l, .squirrel-ear-r {
-    position: absolute;
-    top: -6px;
-    width: 3px; height: 4px;
-    background: #8b4513;
-    border-radius: 50% 50% 0 0;
-  }
-  .squirrel-ear-l { left: -2px; }
-  .squirrel-ear-r { left: 3px; }
-  .squirrel-tail {
-    position: absolute;
-    right: -7px; top: -9px;
-    width: 14px; height: 18px;
-    background: linear-gradient(135deg, #b5651d, #7a3d1a);
-    border-radius: 60% 40% 70% 30% / 60% 50% 50% 40%;
-    transform-origin: bottom left;
-    animation: tailSwish 1.2s ease-in-out infinite;
-    box-shadow: 0 0 8px rgba(160,82,45,0.25);
-  }
-
   /* ===== ANIMATIONS ===== */
   @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(20px); }
@@ -764,23 +720,6 @@
     50% { transform: translate(-10px, -15px); opacity: 0.7; }
     75% { transform: translate(15px, -40px); opacity: 0.8; }
   }
-  @keyframes squirrelJourney {
-    0%   { left: -6%;  top: 58%; transform: rotate(0deg); opacity: 0; }
-    4%   { opacity: 1; }
-    15%  { left: 4%;   top: 42%; transform: rotate(-20deg); }
-    30%  { left: 7%;   top: 24%; transform: rotate(-8deg); }
-    45%  { left: 28%;  top: 15%; transform: rotate(6deg); }
-    50%  { left: 50%;  top: 11%; transform: rotate(0deg); }
-    55%  { left: 72%;  top: 15%; transform: rotate(-6deg); }
-    70%  { left: 93%;  top: 24%; transform: rotate(8deg); }
-    85%  { left: 96%;  top: 42%; transform: rotate(20deg); }
-    96%  { opacity: 1; }
-    100% { left: 106%; top: 58%; transform: rotate(0deg); opacity: 0; }
-  }
-  @keyframes tailSwish {
-    0%, 100% { transform: rotate(-6deg); }
-    50% { transform: rotate(10deg); }
-  }
   @keyframes beamSway {
     0%, 100% { opacity: 0.7; }
     50% { opacity: 1; }
@@ -813,7 +752,6 @@
     .music-toggle { bottom: 15px; right: 15px; padding: 8px 14px; font-size: 0.65rem; }
     .light-beam { display: none; }
     .data-card { display: none; }
-    .squirrel { display: none; }
     .butterfly { display: none; }
   }
 </style>
@@ -924,15 +862,6 @@
   <div class="data-card" style="top: 20%; left: 30%; animation-delay: 0s;">SELECT * FROM magic;</div>
   <div class="data-card" style="top: 45%; right: 30%; animation-delay: 8s;">fraud_score: 0.87</div>
   <div class="data-card" style="top: 30%; left: 70%; animation-delay: 16s;">pipeline: running</div>
-
-  <!-- Squirrel: climbs the left column, across the arch, down the right column, on a loop -->
-  <div class="squirrel">
-    <div class="squirrel-tail"></div>
-    <div class="squirrel-body"></div>
-    <div class="squirrel-head"></div>
-    <div class="squirrel-ear-l"></div>
-    <div class="squirrel-ear-r"></div>
-  </div>
 
   <!-- Hero Name -->
   <div class="hero-name" id="heroName">
