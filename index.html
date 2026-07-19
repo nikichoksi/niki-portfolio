@@ -7,30 +7,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --midnight: #0a0518;
-    --deep-purple: #1a0f2e;
-    --royal-purple: #2d1b4e;
-    --rose-gold: #c9a227;
-    --soft-pink: #e8b4b8;
-    --dusty-rose: #c49a9a;
-    --cream: #f5e6d3;
-    --sage: #7a9472;
-    --sage-dark: #5a7a52;
-    --wood-dark: #3d2817;
-    --wood-light: #6b4423;
+    --midnight: #050210; --deep-purple: #0a0518; --royal-purple: #1a0f2e;
+    --rose-gold: #c9a227; --soft-pink: #e8b4b8; --dusty-rose: #c49a9a;
+    --cream: #f5e6d3; --sage: #7a9472; --sage-dark: #5a7a52;
+    --wood-dark: #3d2817; --wood-light: #6b4423;
     --fairy-light: rgba(255, 215, 100, 0.6);
     --screen-glow: rgba(100, 200, 255, 0.15);
-    --chart-green: #4ade80;
-    --chart-blue: #60a5fa;
-    --code-green: #6ee7b7;
-    --castle-gold: #d4af37;
-    --magic-purple: #7b2cbf;
+    --chart-green: #4ade80; --chart-blue: #60a5fa; --code-green: #6ee7b7;
+    --castle-gold: #d4af37; --magic-purple: #7b2cbf;
     --starlight: rgba(255, 255, 220, 0.8);
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-
   body {
     font-family: 'Inter', sans-serif;
     background: var(--midnight);
@@ -39,263 +27,145 @@
     min-height: 100vh;
     cursor: none;
   }
-
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: var(--midnight); }
   ::-webkit-scrollbar-thumb { background: var(--wood-light); border-radius: 3px; }
 
   /* ===== FAIRY CURSOR ===== */
   .fairy-cursor {
-    position: fixed;
-    width: 24px;
-    height: 24px;
-    pointer-events: none;
-    z-index: 99999;
+    position: fixed; width: 24px; height: 24px;
+    pointer-events: none; z-index: 99999;
     transform: translate(-50%, -50%);
     transition: transform 0.08s ease-out;
     filter: drop-shadow(0 0 8px rgba(255, 215, 100, 0.8));
   }
   .fairy-body {
-    position: absolute;
-    width: 8px;
-    height: 12px;
+    position: absolute; width: 8px; height: 12px;
     background: linear-gradient(180deg, var(--soft-pink) 0%, var(--dusty-rose) 100%);
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    left: 50%; top: 50%; transform: translate(-50%, -50%);
   }
   .fairy-wing {
-    position: absolute;
-    width: 14px;
-    height: 18px;
+    position: absolute; width: 14px; height: 18px;
     background: linear-gradient(135deg, rgba(255, 215, 100, 0.4) 0%, rgba(232, 180, 184, 0.2) 100%);
-    border-radius: 50% 50% 50% 0;
-    top: 50%;
-    transform-origin: bottom center;
+    border-radius: 50% 50% 50% 0; top: 50%; transform-origin: bottom center;
     animation: fairyFlap 0.15s ease-in-out infinite;
   }
-  .fairy-wing.left {
-    left: -2px;
-    transform: translateY(-50%) rotate(-20deg);
-  }
-  .fairy-wing.right {
-    right: -2px;
-    transform: translateY(-50%) rotate(20deg) scaleX(-1);
-    animation-delay: 0.05s;
-  }
+  .fairy-wing.left { left: -2px; transform: translateY(-50%) rotate(-20deg); }
+  .fairy-wing.right { right: -2px; transform: translateY(-50%) rotate(20deg) scaleX(-1); animation-delay: 0.05s; }
   .fairy-glow {
-    position: absolute;
-    width: 40px;
-    height: 40px;
+    position: absolute; width: 40px; height: 40px;
     background: radial-gradient(circle, rgba(255, 215, 100, 0.3) 0%, transparent 70%);
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    left: 50%; top: 50%; transform: translate(-50%, -50%);
     animation: fairyPulse 1.5s ease-in-out infinite;
   }
   .fairy-trail {
-    position: fixed;
-    width: 4px;
-    height: 4px;
-    background: var(--fairy-light);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 99998;
+    position: fixed; width: 4px; height: 4px;
+    background: var(--fairy-light); border-radius: 50%;
+    pointer-events: none; z-index: 99998;
     box-shadow: 0 0 6px var(--fairy-light), 0 0 12px rgba(255, 215, 100, 0.3);
     animation: trailFade 1s ease-out forwards;
   }
 
   /* ===== LOADING SCREEN ===== */
   .loading-screen {
-    position: fixed;
-    inset: 0;
-    background: linear-gradient(180deg, #050210 0%, #0a0518 50%, #1a0f2e 100%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    position: fixed; inset: 0;
+    background: linear-gradient(180deg, #02010a 0%, #0a0518 50%, #1a0f2e 100%);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
     z-index: 10000;
     transition: opacity 2s ease, visibility 2s ease;
   }
-  .loading-screen.hidden {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-  }
+  .loading-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
   .loading-tagline {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.6rem;
-    color: var(--cream);
-    text-align: center;
-    max-width: 500px;
-    line-height: 1.6;
-    opacity: 0;
+    font-family: 'Cormorant Garamond', serif; font-size: 1.6rem;
+    color: var(--cream); text-align: center; max-width: 500px;
+    line-height: 1.6; opacity: 0;
     animation: fadeInUp 1.2s ease forwards 0.3s;
   }
-  .loading-tagline .highlight {
-    color: var(--rose-gold);
-    font-style: italic;
-  }
+  .loading-tagline .highlight { color: var(--rose-gold); font-style: italic; }
   .loading-bar-container {
-    width: 260px;
-    height: 2px;
-    background: rgba(245,230,211,0.1);
-    border-radius: 2px;
-    margin-top: 40px;
-    overflow: hidden;
-    opacity: 0;
+    width: 260px; height: 2px;
+    background: rgba(245,230,211,0.1); border-radius: 2px;
+    margin-top: 40px; overflow: hidden; opacity: 0;
     animation: fadeInUp 1s ease forwards 0.6s;
   }
   .loading-bar {
-    height: 100%;
-    width: 0%;
-    background: var(--rose-gold);
-    border-radius: 2px;
+    height: 100%; width: 0%;
+    background: var(--rose-gold); border-radius: 2px;
     animation: loadProgress 3.5s ease-in-out forwards 0.8s;
   }
   .loading-fact {
-    margin-top: 20px;
-    font-size: 0.8rem;
-    color: rgba(245,230,211,0.4);
-    font-style: italic;
-    opacity: 0;
+    margin-top: 20px; font-size: 0.8rem;
+    color: rgba(245,230,211,0.4); font-style: italic; opacity: 0;
     animation: fadeInUp 1s ease forwards 1s;
   }
 
   /* ===== MAIN CASTLE ROOM ===== */
   .castle-room {
-    position: fixed;
-    inset: 0;
-    overflow: hidden;
-    background: linear-gradient(180deg, #0a0518 0%, #1a0f2e 30%, #2d1b4e 60%, #1a0f2e 100%);
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
+    position: fixed; inset: 0; overflow: hidden;
+    background: linear-gradient(180deg, #02010a 0%, #0a0518 15%, #1a0f2e 40%, #2d1b4e 70%, #1a0f2e 100%);
+    display: flex; align-items: flex-end; justify-content: center;
     min-height: 100vh;
-    transform: scale(1.07);
-    transition: transform 3.5s cubic-bezier(0.19, 1, 0.22, 1);
   }
-  .castle-room.settled { transform: scale(1); }
 
   /* ===== CASTLE ARCHITECTURE ===== */
   .castle-arch {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
-    height: 45%;
-    z-index: 1;
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 80%; height: 45%; z-index: 1;
   }
   .arch-outer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 100%;
-    border: 3px solid rgba(201, 162, 39, 0.15);
-    border-bottom: none;
+    position: absolute; top: 0; left: 0; right: 0; height: 100%;
+    border: 3px solid rgba(201, 162, 39, 0.2); border-bottom: none;
     border-radius: 50% 50% 0 0 / 100% 100% 0 0;
-    box-shadow: 0 0 40px rgba(201, 162, 39, 0.05), inset 0 0 60px rgba(0,0,0,0.3);
+    box-shadow: 0 0 60px rgba(201, 162, 39, 0.08), inset 0 0 60px rgba(0,0,0,0.3);
   }
   .arch-inner {
-    position: absolute;
-    top: 8%;
-    left: 5%;
-    right: 5%;
-    height: 92%;
-    border: 2px solid rgba(201, 162, 39, 0.1);
-    border-bottom: none;
+    position: absolute; top: 8%; left: 5%; right: 5%; height: 92%;
+    border: 2px solid rgba(201, 162, 39, 0.12); border-bottom: none;
     border-radius: 50% 50% 0 0 / 100% 100% 0 0;
   }
   .arch-glow {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60%;
-    height: 60%;
-    background: radial-gradient(ellipse at center, rgba(123, 44, 191, 0.15) 0%, transparent 70%);
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 60%; height: 60%;
+    background: radial-gradient(ellipse at center, rgba(123, 44, 191, 0.2) 0%, transparent 70%);
     pointer-events: none;
   }
 
   /* ===== STAINED GLASS WINDOW ===== */
   .stained-window {
-    position: absolute;
-    top: 5%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 35%;
-    height: 30%;
-    z-index: 2;
+    position: absolute; top: 5%; left: 50%; transform: translateX(-50%);
+    width: 35%; height: 30%; z-index: 2;
     border-radius: 50% 50% 0 0 / 100% 100% 0 0;
     overflow: hidden;
-    border: 4px solid rgba(201, 162, 39, 0.3);
-    box-shadow: 0 0 40px rgba(201, 162, 39, 0.2), inset 0 0 40px rgba(0,0,0,0.4);
-    will-change: transform;
+    border: 4px solid rgba(201, 162, 39, 0.4);
+    box-shadow: 0 0 40px rgba(201, 162, 39, 0.15), inset 0 0 40px rgba(0,0,0,0.4);
   }
   .stained-glass-bg {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg,
-      #0a0520 0%,
-      #1a0f4e 20%,
-      #2d2080 40%,
-      #4a1a6e 60%,
-      #1a0f2e 100%);
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, #0a0520 0%, #1a0f4e 20%, #2d2080 40%, #4a1a6e 60%, #1a0f2e 100%);
   }
   .stained-pane {
     position: absolute;
-    border: 2px solid rgba(201, 162, 39, 0.5);
+    border: 2px solid rgba(201, 162, 39, 0.4);
+    background: rgba(201, 162, 39, 0.05);
+    animation: paneGlow 4s ease-in-out infinite;
   }
-  .stained-pane:nth-child(2) { top: 10%; left: 10%; width: 25%; height: 35%; border-radius: 50% 50% 0 0; background: rgba(239, 68, 68, 0.32); }
-  .stained-pane:nth-child(3) { top: 10%; right: 10%; width: 25%; height: 35%; border-radius: 50% 50% 0 0; background: rgba(59, 130, 246, 0.32); }
-  .stained-pane:nth-child(4) { top: 50%; left: 15%; width: 20%; height: 30%; border-radius: 0 0 50% 50%; background: rgba(168, 85, 247, 0.32); }
-  .stained-pane:nth-child(5) { top: 50%; right: 15%; width: 20%; height: 30%; border-radius: 0 0 50% 50%; background: rgba(34, 197, 94, 0.32); }
-  .stained-pane:nth-child(6) { top: 20%; left: 40%; width: 20%; height: 50%; border-radius: 50% 50% 50% 50%; background: rgba(234, 179, 8, 0.26); }
-
-  .glass-shimmer {
-    position: absolute;
-    top: -20%;
-    left: -60%;
-    width: 40%;
-    height: 140%;
-    background: linear-gradient(115deg, transparent, rgba(255,255,255,0.28), transparent);
-    transform: skewX(-15deg);
-    animation: shimmerSweep 6s ease-in-out infinite;
-    pointer-events: none;
-  }
-
-  .window-beam {
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 140%;
-    height: 200%;
-    background: radial-gradient(ellipse at top, rgba(168,85,247,0.12) 0%, transparent 65%);
-    pointer-events: none;
-    z-index: 1;
-  }
+  .stained-pane:nth-child(2) { top: 10%; left: 10%; width: 25%; height: 35%; border-radius: 50% 50% 0 0; background: rgba(239, 68, 68, 0.12); animation-delay: 0s; }
+  .stained-pane:nth-child(3) { top: 10%; right: 10%; width: 25%; height: 35%; border-radius: 50% 50% 0 0; background: rgba(59, 130, 246, 0.12); animation-delay: 0.5s; }
+  .stained-pane:nth-child(4) { top: 50%; left: 15%; width: 20%; height: 30%; border-radius: 0 0 50% 50%; background: rgba(168, 85, 247, 0.12); animation-delay: 1s; }
+  .stained-pane:nth-child(5) { top: 50%; right: 15%; width: 20%; height: 30%; border-radius: 0 0 50% 50%; background: rgba(34, 197, 94, 0.12); animation-delay: 1.5s; }
+  .stained-pane:nth-child(6) { top: 20%; left: 40%; width: 20%; height: 50%; border-radius: 50% 50% 50% 50%; background: rgba(234, 179, 8, 0.1); animation-delay: 2s; }
 
   .moon-glow {
-    position: absolute;
-    top: 15%;
-    right: 25%;
-    width: 28px;
-    height: 28px;
-    background: var(--cream);
-    border-radius: 50%;
-    box-shadow: 0 0 30px rgba(245,230,211,0.4), 0 0 60px rgba(245,230,211,0.15);
+    position: absolute; top: 15%; right: 25%;
+    width: 28px; height: 28px; background: var(--cream); border-radius: 50%;
+    box-shadow: 0 0 30px rgba(245,230,211,0.5), 0 0 60px rgba(245,230,211,0.2);
     animation: moonGlow 4s ease-in-out infinite;
   }
   .star-twinkle {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background: var(--cream);
-    border-radius: 50%;
+    position: absolute; width: 2px; height: 2px;
+    background: var(--cream); border-radius: 50%;
     box-shadow: 0 0 4px var(--cream), 0 0 8px rgba(255,255,220,0.5);
     animation: twinkle 3s ease-in-out infinite;
   }
@@ -307,90 +177,50 @@
 
   /* ===== CASTLE COLUMNS ===== */
   .castle-column {
-    position: absolute;
-    bottom: 0;
-    width: 60px;
-    height: 100%;
-    background: linear-gradient(90deg,
-      #1a0f2e 0%,
-      #2d1b4e 30%,
-      #3d2b5e 50%,
-      #2d1b4e 70%,
-      #1a0f2e 100%);
-    z-index: 3;
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
-    will-change: transform;
+    position: absolute; bottom: 0; width: 60px; height: 100%;
+    background: linear-gradient(90deg, #0a0518 0%, #1a0f2e 30%, #2d1b4e 50%, #1a0f2e 70%, #0a0518 100%);
+    z-index: 3; box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
   }
   .castle-column.left { left: 5%; }
   .castle-column.right { right: 5%; }
   .column-capital {
-    position: absolute;
-    top: 0;
-    left: -10px;
-    right: -10px;
-    height: 30px;
+    position: absolute; top: 0; left: -10px; right: -10px; height: 30px;
     background: linear-gradient(180deg, #3d2817 0%, #2d1b4e 100%);
-    border-radius: 4px 4px 0 0;
-    border-top: 2px solid rgba(201, 162, 39, 0.3);
+    border-radius: 4px 4px 0 0; border-top: 2px solid rgba(201, 162, 39, 0.3);
   }
   .column-glow {
-    position: absolute;
-    top: 20%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 20px;
-    height: 60%;
+    position: absolute; top: 20%; left: 50%; transform: translateX(-50%);
+    width: 20px; height: 60%;
     background: linear-gradient(180deg, transparent, rgba(201, 162, 39, 0.1), transparent);
-    border-radius: 50%;
-    filter: blur(10px);
+    border-radius: 50%; filter: blur(10px);
   }
 
   /* ===== CHANDELIER ===== */
   .chandelier {
-    position: absolute;
-    top: 8%;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 4;
-    width: 120px;
-    height: 100px;
-    will-change: transform;
+    position: absolute; top: 8%; left: 50%; transform: translateX(-50%);
+    z-index: 4; width: 120px; height: 100px;
   }
   .chandelier-chain {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 3px;
-    height: 30px;
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 3px; height: 30px;
     background: linear-gradient(180deg, rgba(201,162,39,0.5), rgba(201,162,39,0.2));
   }
   .chandelier-body {
-    position: absolute;
-    top: 28px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 40px;
+    position: absolute; top: 28px; left: 50%; transform: translateX(-50%);
+    width: 80px; height: 40px;
     background: linear-gradient(180deg, #d4af37 0%, #8b6914 100%);
     border-radius: 50% 50% 40% 40%;
     box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
   }
   .chandelier-arm {
-    position: absolute;
-    top: 50px;
-    width: 50px;
-    height: 2px;
+    position: absolute; top: 50px; width: 50px; height: 2px;
     background: linear-gradient(90deg, transparent, #d4af37, transparent);
   }
   .chandelier-arm.left { left: -20px; transform: rotate(-20deg); }
   .chandelier-arm.right { right: -20px; transform: rotate(20deg); }
   .chandelier-candle {
-    position: absolute;
-    width: 6px;
-    height: 12px;
-    background: linear-gradient(180deg, #ffeb3b, #ff9800);
-    border-radius: 2px;
+    position: absolute; width: 6px; height: 12px;
+    background: linear-gradient(180deg, #ffeb3b, #ff9800); border-radius: 2px;
     box-shadow: 0 0 15px rgba(255, 235, 59, 0.6), 0 0 30px rgba(255, 152, 0, 0.3);
     animation: candleFlicker 2s ease-in-out infinite;
   }
@@ -398,32 +228,11 @@
   .chandelier-candle:nth-child(5) { top: 45px; right: 15px; animation-delay: 0.5s; }
   .chandelier-candle:nth-child(6) { top: 55px; left: 50%; transform: translateX(-50%); animation-delay: 1s; }
 
-  .chandelier-downlight {
-    position: absolute;
-    top: 90px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(ellipse at top, rgba(255,193,7,0.08) 0%, transparent 60%);
-    pointer-events: none;
-    z-index: -1;
-  }
-
   /* ===== FAIRY DUST PARTICLES ===== */
-  .fairy-dust {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 5;
-    overflow: hidden;
-  }
+  .fairy-dust { position: absolute; inset: 0; pointer-events: none; z-index: 5; overflow: hidden; }
   .dust-particle {
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    background: var(--fairy-light);
-    border-radius: 50%;
+    position: absolute; width: 3px; height: 3px;
+    background: var(--fairy-light); border-radius: 50%;
     box-shadow: 0 0 6px var(--fairy-light), 0 0 12px rgba(255,215,100,0.3);
     animation: fairyFloat 12s ease-in-out infinite;
   }
@@ -439,230 +248,97 @@
   .dust-particle:nth-child(10) { top: 70%; left: 85%; animation-delay: 1.2s; animation-duration: 13s; width: 2px; height: 2px; }
   .dust-particle:nth-child(11) { top: 20%; left: 65%; animation-delay: 2s; animation-duration: 16s; }
   .dust-particle:nth-child(12) { top: 55%; left: 25%; animation-delay: 3.5s; animation-duration: 12s; width: 2px; height: 2px; }
-  .dust-particle:nth-child(13) { top: 8%; left: 35%; animation-delay: 0.3s; animation-duration: 13s; width: 3px; height: 3px; }
-  .dust-particle:nth-child(14) { top: 65%; left: 55%; animation-delay: 2.8s; animation-duration: 15s; width: 2px; height: 2px; }
-  .dust-particle:nth-child(15) { top: 45%; left: 15%; animation-delay: 1.7s; animation-duration: 11s; width: 3px; height: 3px; }
-  .dust-particle:nth-child(16) { top: 80%; left: 45%; animation-delay: 3.2s; animation-duration: 14s; width: 2px; height: 2px; }
 
   /* ===== MAGIC ORBS ===== */
   .magic-orb {
-    position: absolute;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 4;
+    position: absolute; border-radius: 50%;
+    pointer-events: none; z-index: 4;
     animation: orbFloat 8s ease-in-out infinite;
   }
-  .magic-orb:nth-of-type(1) {
-    top: 30%; left: 20%;
-    width: 8px; height: 8px;
-    background: radial-gradient(circle, rgba(168,85,247,0.6), transparent);
-    box-shadow: 0 0 20px rgba(168,85,247,0.4);
-    animation-delay: 0s;
-  }
-  .magic-orb:nth-of-type(2) {
-    top: 40%; right: 25%;
-    width: 6px; height: 6px;
-    background: radial-gradient(circle, rgba(59,130,246,0.6), transparent);
-    box-shadow: 0 0 15px rgba(59,130,246,0.4);
-    animation-delay: 2s;
-  }
-  .magic-orb:nth-of-type(3) {
-    top: 25%; left: 70%;
-    width: 10px; height: 10px;
-    background: radial-gradient(circle, rgba(234,179,8,0.5), transparent);
-    box-shadow: 0 0 25px rgba(234,179,8,0.3);
-    animation-delay: 4s;
-  }
-  .magic-orb:nth-of-type(4) {
-    top: 60%; left: 40%;
-    width: 7px; height: 7px;
-    background: radial-gradient(circle, rgba(74,222,128,0.55), transparent);
-    box-shadow: 0 0 18px rgba(74,222,128,0.35);
-    animation-delay: 1.2s;
-  }
-  .magic-orb:nth-of-type(5) {
-    top: 18%; left: 48%;
-    width: 5px; height: 5px;
-    background: radial-gradient(circle, rgba(232,180,184,0.6), transparent);
-    box-shadow: 0 0 16px rgba(232,180,184,0.4);
-    animation-delay: 3.4s;
-  }
+  .magic-orb:nth-child(13) { top: 30%; left: 20%; width: 8px; height: 8px; background: radial-gradient(circle, rgba(168,85,247,0.6), transparent); box-shadow: 0 0 20px rgba(168,85,247,0.4); animation-delay: 0s; }
+  .magic-orb:nth-child(14) { top: 40%; right: 25%; width: 6px; height: 6px; background: radial-gradient(circle, rgba(59,130,246,0.6), transparent); box-shadow: 0 0 15px rgba(59,130,246,0.4); animation-delay: 2s; }
+  .magic-orb:nth-child(15) { top: 25%; left: 70%; width: 10px; height: 10px; background: radial-gradient(circle, rgba(234,179,8,0.5), transparent); box-shadow: 0 0 25px rgba(234,179,8,0.3); animation-delay: 4s; }
 
   /* ===== DESK SETUP ===== */
-  .desk-area {
-    position: relative;
-    width: 100%;
-    max-width: 1100px;
-    height: 380px;
-    z-index: 10;
-    margin-bottom: 3vh;
-  }
+  .desk-area { position: relative; width: 100%; max-width: 1100px; height: 380px; z-index: 10; margin-bottom: 3vh; }
 
   /* Rug */
   .castle-rug {
-    position: absolute;
-    bottom: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    height: 60px;
-    background: linear-gradient(180deg,
-      rgba(201, 162, 39, 0.15) 0%,
-      rgba(201, 162, 39, 0.05) 100%);
-    border-radius: 50%;
-    filter: blur(2px);
+    position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%);
+    width: 90%; height: 60px;
+    background: linear-gradient(180deg, rgba(201, 162, 39, 0.15) 0%, rgba(201, 162, 39, 0.05) 100%);
+    border-radius: 50%; filter: blur(2px);
   }
-
-  /* Colored light pools cast by each monitor */
-  .screen-light {
-    position: absolute;
-    bottom: 30px;
-    width: 260px;
-    height: 140px;
-    border-radius: 50%;
-    filter: blur(20px);
-    pointer-events: none;
-    z-index: 9;
-  }
-  .screen-light.left { left: 3%; background: radial-gradient(ellipse, rgba(74,222,128,0.18) 0%, transparent 70%); }
-  .screen-light.center { left: 50%; transform: translateX(-50%); width: 360px; height: 180px; background: radial-gradient(ellipse, rgba(96,165,250,0.2) 0%, transparent 70%); }
-  .screen-light.right { right: 3%; background: radial-gradient(ellipse, rgba(239,68,68,0.16) 0%, transparent 70%); }
 
   /* Desk surface */
   .desk-surface {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 95%;
-    height: 16px;
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 95%; height: 16px;
     background: linear-gradient(180deg, #4a3728 0%, #2d1f14 100%);
     border-radius: 4px;
     box-shadow: 0 8px 30px rgba(0,0,0,0.6), 0 0 20px rgba(201,162,39,0.05);
     border-top: 1px solid rgba(201, 162, 39, 0.2);
   }
   .desk-surface::before {
-    content: '';
-    position: absolute;
-    bottom: -80px;
-    left: 60px;
-    width: 14px;
-    height: 80px;
-    background: linear-gradient(90deg, #2d1f14, #3d2817);
-    border-radius: 3px;
+    content: ''; position: absolute; bottom: -80px; left: 60px;
+    width: 14px; height: 80px;
+    background: linear-gradient(90deg, #2d1f14, #3d2817); border-radius: 3px;
   }
   .desk-surface::after {
-    content: '';
-    position: absolute;
-    bottom: -80px;
-    right: 60px;
-    width: 14px;
-    height: 80px;
-    background: linear-gradient(90deg, #2d1f14, #3d2817);
-    border-radius: 3px;
+    content: ''; position: absolute; bottom: -80px; right: 60px;
+    width: 14px; height: 80px;
+    background: linear-gradient(90deg, #2d1f14, #3d2817); border-radius: 3px;
   }
 
   /* Monitor stands */
   .monitor-stand {
-    position: absolute;
-    bottom: 16px;
-    width: 22px;
-    height: 50px;
+    position: absolute; bottom: 16px; width: 22px; height: 50px;
     background: linear-gradient(180deg, #3a3a3a, #1a1a1a);
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 3px;
+    left: 50%; transform: translateX(-50%); border-radius: 3px;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
   }
   .monitor-stand.left { left: 22%; }
   .monitor-stand.center { left: 50%; height: 60px; }
   .monitor-stand.right { left: 78%; }
   .monitor-stand::before {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 55px;
-    height: 8px;
-    background: linear-gradient(180deg, #3a3a3a, #1a1a1a);
-    border-radius: 3px;
+    content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
+    width: 55px; height: 8px;
+    background: linear-gradient(180deg, #3a3a3a, #1a1a1a); border-radius: 3px;
   }
 
   /* Monitors */
   .monitor {
-    position: absolute;
-    bottom: 66px;
-    border-radius: 8px;
-    overflow: hidden;
+    position: absolute; bottom: 66px; border-radius: 8px; overflow: hidden;
     box-shadow: 0 0 40px var(--screen-glow), 0 10px 40px rgba(0,0,0,0.5);
     border: 2px solid rgba(60, 60, 60, 0.8);
   }
-  .monitor-left {
-    left: 6%;
-    width: 260px;
-    height: 170px;
-    bottom: 60px;
-  }
-  .monitor-center {
-    left: 50%;
-    transform: translateX(-50%);
-    width: 340px;
-    height: 220px;
-    bottom: 76px;
-    box-shadow: 0 0 50px rgba(100,200,255,0.2), 0 12px 50px rgba(0,0,0,0.6);
-    border: 2px solid rgba(80, 80, 80, 0.9);
-  }
-  .monitor-right {
-    right: 6%;
-    width: 260px;
-    height: 170px;
-    bottom: 60px;
-  }
-  .monitor-screen {
-    width: 100%;
-    height: 100%;
-    position: relative;
-  }
+  .monitor-left { left: 6%; width: 260px; height: 170px; bottom: 60px; }
+  .monitor-center { left: 50%; transform: translateX(-50%); width: 340px; height: 220px; bottom: 76px; box-shadow: 0 0 50px rgba(100,200,255,0.2), 0 12px 50px rgba(0,0,0,0.6); border: 2px solid rgba(80, 80, 80, 0.9); }
+  .monitor-right { right: 6%; width: 260px; height: 170px; bottom: 60px; }
+  .monitor-screen { width: 100%; height: 100%; position: relative; }
 
   /* Left: Power BI Chart */
   .screen-chart {
     background: linear-gradient(180deg, #0f172a, #1e293b);
-    padding: 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    padding: 14px; display: flex; flex-direction: column; gap: 10px;
   }
   .chart-header {
-    font-size: 0.65rem;
-    color: var(--cream);
-    opacity: 0.8;
-    font-family: 'Inter', sans-serif;
-    letter-spacing: 1px;
+    font-size: 0.65rem; color: var(--cream); opacity: 0.8;
+    font-family: 'Inter', sans-serif; letter-spacing: 1px;
   }
   .chart-bars {
-    display: flex;
-    align-items: flex-end;
-    gap: 8px;
-    height: 100px;
-    padding-top: 10px;
+    display: flex; align-items: flex-end; gap: 8px;
+    height: 100px; padding-top: 10px;
   }
   .chart-bar {
-    flex: 1;
-    border-radius: 4px 4px 0 0;
+    flex: 1; border-radius: 4px 4px 0 0;
     animation: chartGrow 2.5s ease-out forwards;
-    position: relative;
-    box-shadow: 0 0 10px rgba(74, 222, 128, 0.2);
+    position: relative; box-shadow: 0 0 10px rgba(74, 222, 128, 0.2);
   }
   .chart-bar::after {
-    content: attr(data-label);
-    position: absolute;
-    bottom: -16px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.5rem;
-    color: rgba(245,230,211,0.5);
-    white-space: nowrap;
+    content: attr(data-label); position: absolute; bottom: -16px;
+    left: 50%; transform: translateX(-50%);
+    font-size: 0.5rem; color: rgba(245,230,211,0.5); white-space: nowrap;
   }
   .chart-bar:nth-child(1) { height: 60%; background: linear-gradient(180deg, var(--chart-green), #22c55e); animation-delay: 0.2s; }
   .chart-bar:nth-child(2) { height: 85%; background: linear-gradient(180deg, var(--chart-blue), #3b82f6); animation-delay: 0.4s; }
@@ -671,11 +347,7 @@
   .chart-bar:nth-child(5) { height: 70%; background: linear-gradient(180deg, var(--chart-green), #22c55e); animation-delay: 1s; }
   .chart-bar:nth-child(6) { height: 55%; background: linear-gradient(180deg, var(--chart-blue), #3b82f6); animation-delay: 1.2s; }
   .chart-line {
-    position: absolute;
-    top: 30%;
-    left: 10%;
-    right: 10%;
-    height: 2px;
+    position: absolute; top: 30%; left: 10%; right: 10%; height: 2px;
     background: linear-gradient(90deg, transparent, var(--rose-gold), transparent);
     opacity: 0.6;
   }
@@ -683,18 +355,12 @@
   /* Center: Code */
   .screen-code {
     background: linear-gradient(180deg, #0d1117, #161b22);
-    padding: 16px;
-    font-family: 'Fira Code', monospace;
-    font-size: 0.7rem;
-    line-height: 1.7;
-    overflow: hidden;
+    padding: 16px; font-family: 'Fira Code', monospace;
+    font-size: 0.7rem; line-height: 1.7; overflow: hidden;
   }
   .code-line-text {
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    animation: typeLine 0.6s steps(45) forwards;
-    opacity: 0;
+    display: block; white-space: nowrap; overflow: hidden;
+    animation: typeLine 0.6s steps(45) forwards; opacity: 0;
   }
   .code-line-text:nth-child(1) { animation-delay: 0.5s; color: #8b949e; }
   .code-line-text:nth-child(2) { animation-delay: 1s; color: #ff7b72; }
@@ -705,37 +371,26 @@
   .code-line-text:nth-child(7) { animation-delay: 3.5s; color: #ffa657; }
   .code-line-text:nth-child(8) { animation-delay: 4s; color: #8b949e; }
   .cursor-blink {
-    display: inline-block;
-    width: 6px;
-    height: 13px;
+    display: inline-block; width: 6px; height: 13px;
     background: var(--code-green);
     animation: blink 1s step-end infinite;
-    vertical-align: middle;
-    margin-left: 2px;
+    vertical-align: middle; margin-left: 2px;
   }
 
   /* Right: Racing Game */
   .screen-game {
     background: linear-gradient(180deg, #0a0a1a, #1a1a3a);
-    position: relative;
-    overflow: hidden;
+    position: relative; overflow: hidden;
   }
   .game-road {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60%;
-    height: 100%;
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 60%; height: 100%;
     background: linear-gradient(180deg, #1a1a3a 0%, #0a0a1a 100%);
     perspective: 200px;
   }
   .road-line {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 3px;
-    height: 20px;
+    position: absolute; left: 50%; transform: translateX(-50%);
+    width: 3px; height: 20px;
     background: rgba(255,255,255,0.3);
     animation: roadMove 0.8s linear infinite;
   }
@@ -744,68 +399,37 @@
   .road-line:nth-child(3) { top: 80px; animation-delay: 0.4s; }
   .road-line:nth-child(4) { top: 130px; animation-delay: 0.6s; }
   .game-car {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 24px;
-    height: 36px;
+    position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+    width: 24px; height: 36px;
     background: linear-gradient(180deg, #ef4444 0%, #b91c1c 100%);
     border-radius: 4px 4px 2px 2px;
     box-shadow: 0 0 15px rgba(239,68,68,0.4);
     animation: carBounce 0.5s ease-in-out infinite;
   }
   .game-car::before {
-    content: '';
-    position: absolute;
-    top: 4px;
-    left: 3px;
-    right: 3px;
-    height: 10px;
-    background: rgba(255,255,255,0.2);
-    border-radius: 2px;
+    content: ''; position: absolute; top: 4px; left: 3px; right: 3px;
+    height: 10px; background: rgba(255,255,255,0.2); border-radius: 2px;
   }
   .game-car::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: -2px;
-    width: 8px;
-    height: 4px;
-    background: #fbbf24;
-    border-radius: 2px;
+    content: ''; position: absolute; bottom: -4px; left: -2px;
+    width: 8px; height: 4px; background: #fbbf24; border-radius: 2px;
     box-shadow: 20px 0 0 #fbbf24;
   }
   .game-hud {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    right: 8px;
-    display: flex;
-    justify-content: space-between;
-    font-family: 'Fira Code', monospace;
-    font-size: 0.55rem;
-    color: var(--rose-gold);
+    position: absolute; top: 8px; left: 8px; right: 8px;
+    display: flex; justify-content: space-between;
+    font-family: 'Fira Code', monospace; font-size: 0.55rem; color: var(--rose-gold);
   }
 
   /* Keyboard */
   .keyboard {
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 300px;
-    height: 12px;
+    position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
+    width: 300px; height: 12px;
     background: linear-gradient(180deg, #2a2a2a, #1a1a1a);
-    border-radius: 4px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    border-radius: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.4);
   }
   .keyboard::before {
-    content: '';
-    position: absolute;
-    top: 2px;
-    left: 12px;
-    right: 12px;
+    content: ''; position: absolute; top: 2px; left: 12px; right: 12px;
     height: 5px;
     background: repeating-linear-gradient(90deg, #3a3a3a 0px, #3a3a3a 9px, transparent 9px, transparent 11px);
     border-radius: 1px;
@@ -813,59 +437,35 @@
 
   /* Coffee mug */
   .desk-mug {
-    position: absolute;
-    bottom: 22px;
-    right: 100px;
-    width: 20px;
-    height: 24px;
+    position: absolute; bottom: 22px; right: 100px;
+    width: 20px; height: 24px;
     background: linear-gradient(180deg, #E8D5C4 0%, #D4C4B0 100%);
-    border-radius: 0 0 6px 6px;
-    z-index: 11;
+    border-radius: 0 0 6px 6px; z-index: 11;
     box-shadow: 0 2px 8px rgba(0,0,0,0.3);
   }
   .desk-mug::before {
-    content: '';
-    position: absolute;
-    right: -8px;
-    top: 4px;
-    width: 10px;
-    height: 14px;
-    border: 2px solid #E8D5C4;
-    border-radius: 0 8px 8px 0;
-    border-left: none;
+    content: ''; position: absolute; right: -8px; top: 4px;
+    width: 10px; height: 14px;
+    border: 2px solid #E8D5C4; border-radius: 0 8px 8px 0; border-left: none;
   }
   .mug-steam {
-    position: absolute;
-    top: -14px;
-    left: 50%;
-    width: 2px;
-    height: 12px;
+    position: absolute; top: -14px; left: 50%;
+    width: 2px; height: 12px;
     background: linear-gradient(180deg, rgba(201,162,39,0.6), transparent);
-    border-radius: 50%;
-    animation: steamRise 2s ease-in-out infinite;
+    border-radius: 50%; animation: steamRise 2s ease-in-out infinite;
   }
   .mug-steam:nth-child(2) { left: 30%; animation-delay: 0.4s; height: 10px; }
   .mug-steam:nth-child(3) { left: 70%; animation-delay: 0.8s; height: 14px; }
 
   /* Magical plant */
-  .desk-plant {
-    position: absolute;
-    bottom: 20px;
-    left: 80px;
-    z-index: 11;
-  }
+  .desk-plant { position: absolute; bottom: 20px; left: 80px; z-index: 11; }
   .desk-plant-pot {
-    width: 22px;
-    height: 18px;
+    width: 22px; height: 18px;
     background: linear-gradient(180deg, #C4A484, #A08060);
-    border-radius: 0 0 5px 5px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    border-radius: 0 0 5px 5px; box-shadow: 0 2px 6px rgba(0,0,0,0.3);
   }
   .desk-plant-leaf {
-    position: absolute;
-    bottom: 14px;
-    width: 12px;
-    height: 16px;
+    position: absolute; bottom: 14px; width: 12px; height: 16px;
     background: linear-gradient(180deg, var(--sage), var(--sage-dark));
     border-radius: 50% 50% 50% 0;
     animation: leafSway 3s ease-in-out infinite;
@@ -877,203 +477,198 @@
 
   /* Magical book */
   .desk-book {
-    position: absolute;
-    bottom: 22px;
-    left: 140px;
-    width: 30px;
-    height: 22px;
+    position: absolute; bottom: 22px; left: 140px;
+    width: 30px; height: 22px;
     background: linear-gradient(90deg, #8b4513, #a0522d, #8b4513);
-    border-radius: 2px 4px 4px 2px;
-    z-index: 11;
+    border-radius: 2px 4px 4px 2px; z-index: 11;
     box-shadow: 0 2px 8px rgba(0,0,0,0.3);
   }
   .desk-book::before {
-    content: '';
-    position: absolute;
-    left: 4px;
-    top: 3px;
-    right: 4px;
-    bottom: 3px;
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    border-radius: 1px;
+    content: ''; position: absolute; left: 4px; top: 3px; right: 4px; bottom: 3px;
+    border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 1px;
   }
 
   /* Gamer chair */
   .gamer-chair {
-    position: absolute;
-    bottom: 5px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 110px;
-    height: 160px;
-    z-index: 8;
+    position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%);
+    width: 110px; height: 160px; z-index: 8;
   }
   .gamer-chair-back {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 95px;
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 80px; height: 95px;
     background: linear-gradient(180deg, #2a1a4a 0%, #1a0f2e 100%);
     border-radius: 14px 14px 6px 6px;
     box-shadow: inset 0 0 25px rgba(0,0,0,0.4), 0 0 15px rgba(123, 44, 191, 0.1);
     border: 1px solid rgba(201,162,39,0.1);
   }
   .gamer-chair-back::after {
-    content: '';
-    position: absolute;
-    top: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 50px;
-    height: 50px;
+    content: ''; position: absolute; top: 15px; left: 50%; transform: translateX(-50%);
+    width: 50px; height: 50px;
     background: linear-gradient(135deg, rgba(201,162,39,0.1), transparent);
-    border-radius: 50%;
-    filter: blur(5px);
+    border-radius: 50%; filter: blur(5px);
   }
   .gamer-chair-seat {
-    position: absolute;
-    bottom: 45px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90px;
-    height: 20px;
+    position: absolute; bottom: 45px; left: 50%; transform: translateX(-50%);
+    width: 90px; height: 20px;
     background: linear-gradient(180deg, #2a1a4a, #1a0f2e);
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   }
   .gamer-chair-base {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 45px;
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 60px; height: 45px;
     background: linear-gradient(180deg, #1a1a2e, #0d0d1a);
-    border-radius: 5px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    border-radius: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.4);
   }
 
   /* ===== HERO NAME ===== */
   .hero-name {
-    position: absolute;
-    top: 18%;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-    z-index: 20;
-    opacity: 0;
+    position: absolute; top: 18%; left: 50%; transform: translateX(-50%);
+    text-align: center; z-index: 20; opacity: 0;
     transition: opacity 2.5s ease 1s;
   }
   .hero-name.visible { opacity: 1; }
   .hero-name h1 {
-    font-family: 'Cinzel', serif;
-    font-size: 3.2rem;
-    color: var(--cream);
-    font-weight: 700;
-    letter-spacing: 5px;
-    text-shadow:
-      0 0 30px rgba(201,162,39,0.4),
-      0 0 60px rgba(201,162,39,0.15),
-      0 2px 10px rgba(0,0,0,0.5);
-    margin-bottom: 10px;
-    animation: nameGlow 3s ease-in-out infinite;
+    font-family: 'Cinzel', serif; font-size: 3.2rem; color: var(--cream);
+    font-weight: 700; letter-spacing: 5px;
+    text-shadow: 0 0 30px rgba(201,162,39,0.4), 0 0 60px rgba(201,162,39,0.15), 0 2px 10px rgba(0,0,0,0.5);
+    margin-bottom: 10px; animation: nameGlow 3s ease-in-out infinite;
   }
   .hero-name p {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem;
-    color: var(--rose-gold);
-    font-style: italic;
-    letter-spacing: 3px;
+    font-family: 'Cormorant Garamond', serif; font-size: 1.2rem;
+    color: var(--rose-gold); font-style: italic; letter-spacing: 3px;
     text-shadow: 0 0 15px rgba(201,162,39,0.3);
   }
   .enter-btn {
-    margin-top: 28px;
-    padding: 14px 40px;
-    background: transparent;
-    color: var(--cream);
-    border: 1px solid var(--rose-gold);
-    border-radius: 30px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: none;
-    transition: all 0.5s ease;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    font-family: 'Cinzel', serif;
+    margin-top: 28px; padding: 14px 40px; background: transparent;
+    color: var(--cream); border: 1px solid var(--rose-gold);
+    border-radius: 30px; font-size: 0.85rem; font-weight: 600;
+    cursor: none; transition: all 0.5s ease; letter-spacing: 4px;
+    text-transform: uppercase; font-family: 'Cinzel', serif;
     box-shadow: 0 0 20px rgba(201,162,39,0.1);
-    position: relative;
-    overflow: hidden;
+    position: relative; overflow: hidden;
   }
   .enter-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
+    content: ''; position: absolute; top: 0; left: -100%;
+    width: 100%; height: 100%;
     background: linear-gradient(90deg, transparent, rgba(201,162,39,0.2), transparent);
     transition: left 0.5s ease;
   }
-  .enter-btn:hover::before {
-    left: 100%;
-  }
+  .enter-btn:hover::before { left: 100%; }
   .enter-btn:hover {
-    background: rgba(201,162,39,0.15);
-    border-color: var(--cream);
+    background: rgba(201,162,39,0.15); border-color: var(--cream);
     box-shadow: 0 0 40px rgba(201,162,39,0.4), 0 0 80px rgba(201,162,39,0.1);
-    transform: translateY(-3px);
-    letter-spacing: 5px;
+    transform: translateY(-3px); letter-spacing: 5px;
   }
 
   /* ===== MUSIC TOGGLE ===== */
   .music-toggle {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    z-index: 1000;
+    position: fixed; bottom: 30px; right: 30px; z-index: 1000;
     padding: 12px 20px;
     background: rgba(45, 27, 78, 0.6);
     border: 1px solid rgba(201, 162, 39, 0.2);
-    border-radius: 25px;
-    color: var(--cream);
-    font-family: 'Cinzel', serif;
-    font-size: 0.75rem;
-    letter-spacing: 2px;
-    cursor: none;
-    transition: all 0.3s ease;
+    border-radius: 25px; color: var(--cream);
+    font-family: 'Cinzel', serif; font-size: 0.75rem;
+    letter-spacing: 2px; cursor: none; transition: all 0.3s ease;
     backdrop-filter: blur(10px);
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    display: flex; align-items: center; gap: 8px;
   }
   .music-toggle:hover {
-    background: rgba(201,162,39,0.15);
-    border-color: var(--rose-gold);
+    background: rgba(201,162,39,0.15); border-color: var(--rose-gold);
     box-shadow: 0 0 20px rgba(201,162,39,0.2);
   }
   .music-toggle.playing {
     border-color: var(--rose-gold);
     box-shadow: 0 0 15px rgba(201,162,39,0.3);
   }
-  .music-icon {
-    font-size: 1rem;
-    animation: musicPulse 2s ease-in-out infinite;
-  }
-  .music-toggle.playing .music-icon {
-    animation: musicBounce 1s ease-in-out infinite;
-  }
+  .music-icon { font-size: 1rem; animation: musicPulse 2s ease-in-out infinite; }
+  .music-toggle.playing .music-icon { animation: musicBounce 1s ease-in-out infinite; }
 
   /* ===== FLOOR GLOW ===== */
   .floor-glow {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 10%;
+    position: absolute; bottom: 0; left: 0; right: 0; height: 10%;
     background: linear-gradient(180deg, transparent 0%, rgba(61,40,23,0.2) 100%);
     z-index: 1;
+  }
+
+  /* ===== ATMOSPHERIC ELEMENTS ===== */
+
+  /* Fireflies */
+  .firefly {
+    position: absolute; width: 4px; height: 4px;
+    background: #aaff00; border-radius: 50%;
+    box-shadow: 0 0 10px #aaff00, 0 0 20px rgba(170,255,0,0.5);
+    pointer-events: none; z-index: 6;
+    animation: fireflyFloat 15s ease-in-out infinite;
+  }
+
+  /* Floating runes */
+  .rune {
+    position: absolute; font-family: 'Cinzel', serif; font-size: 1.2rem;
+    color: rgba(201, 162, 39, 0.15); pointer-events: none; z-index: 3;
+    animation: runeFloat 20s ease-in-out infinite;
+    text-shadow: 0 0 10px rgba(201, 162, 39, 0.3);
+  }
+
+  /* Wall sconces */
+  .sconce { position: absolute; width: 30px; height: 40px; z-index: 5; }
+  .sconce-left { left: 12%; top: 30%; }
+  .sconce-right { right: 12%; top: 30%; }
+  .sconce-bracket {
+    position: absolute; width: 4px; height: 20px;
+    background: linear-gradient(180deg, #4a3728, #2d1f14);
+    left: 50%; transform: translateX(-50%); top: 0;
+  }
+  .sconce-flame {
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 12px; height: 18px;
+    background: linear-gradient(180deg, #ff6b35, #f7931e, #ff4500);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    box-shadow: 0 0 20px rgba(255, 107, 53, 0.6), 0 0 40px rgba(255, 107, 53, 0.3);
+    animation: flameFlicker 1.5s ease-in-out infinite;
+  }
+
+  /* Floating scrolls */
+  .floating-scroll {
+    position: absolute; width: 20px; height: 28px;
+    background: linear-gradient(180deg, #d4c4a8, #c4b498);
+    border-radius: 2px; z-index: 6;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3), 0 0 10px rgba(201,162,39,0.1);
+    animation: scrollFloat 18s ease-in-out infinite;
+  }
+  .floating-scroll::before {
+    content: ''; position: absolute; top: 2px; left: 2px; right: 2px;
+    height: 2px; background: rgba(139, 69, 19, 0.3); border-radius: 1px;
+  }
+  .floating-scroll::after {
+    content: ''; position: absolute; bottom: 2px; left: 2px; right: 2px;
+    height: 2px; background: rgba(139, 69, 19, 0.3); border-radius: 1px;
+  }
+
+  /* Crystal ball on desk */
+  .crystal-ball {
+    position: absolute; bottom: 22px; right: 160px;
+    width: 18px; height: 18px;
+    background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.8), rgba(100,200,255,0.4), rgba(123,44,191,0.3));
+    border-radius: 50%; z-index: 11;
+    box-shadow: 0 0 15px rgba(100,200,255,0.3), 0 0 30px rgba(123,44,191,0.2);
+    animation: crystalPulse 3s ease-in-out infinite;
+  }
+  .crystal-ball::after {
+    content: ''; position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%);
+    width: 14px; height: 4px;
+    background: linear-gradient(180deg, #4a3728, #2d1f14); border-radius: 2px;
+  }
+
+  /* Floating data cards */
+  .data-card {
+    position: absolute; padding: 6px 10px;
+    background: rgba(10, 5, 24, 0.7);
+    border: 1px solid rgba(201, 162, 39, 0.2);
+    border-radius: 6px; font-family: 'Fira Code', monospace;
+    font-size: 0.55rem; color: var(--chart-green); z-index: 6;
+    backdrop-filter: blur(4px);
+    animation: cardFloat 25s ease-in-out infinite;
+    box-shadow: 0 0 15px rgba(74, 222, 128, 0.1);
   }
 
   /* ===== ANIMATIONS ===== */
@@ -1082,9 +677,7 @@
     to { opacity: 1; transform: translateY(0); }
   }
   @keyframes loadProgress {
-    0% { width: 0%; }
-    50% { width: 70%; }
-    100% { width: 100%; }
+    0% { width: 0%; } 50% { width: 70%; } 100% { width: 100%; }
   }
   @keyframes fairyFloat {
     0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
@@ -1105,8 +698,8 @@
     100% { opacity: 0; transform: scale(0.2) translateY(-20px); }
   }
   @keyframes moonGlow {
-    0%, 100% { box-shadow: 0 0 25px rgba(245,230,211,0.4), 0 0 50px rgba(245,230,211,0.15); }
-    50% { box-shadow: 0 0 40px rgba(245,230,211,0.5), 0 0 70px rgba(245,230,211,0.2); }
+    0%, 100% { box-shadow: 0 0 25px rgba(245,230,211,0.5), 0 0 50px rgba(245,230,211,0.2); }
+    50% { box-shadow: 0 0 40px rgba(245,230,211,0.6), 0 0 70px rgba(245,230,211,0.25); }
   }
   @keyframes twinkle {
     0%, 100% { opacity: 0.3; transform: scale(1); }
@@ -1126,17 +719,12 @@
     0%, 100% { transform: rotate(var(--r, 0deg)); }
     50% { transform: rotate(calc(var(--r, 0deg) + 8deg)); }
   }
-  @keyframes chartGrow {
-    from { height: 0; }
-  }
+  @keyframes chartGrow { from { height: 0; } }
   @keyframes typeLine {
     from { width: 0; opacity: 1; }
     to { width: 100%; opacity: 1; }
   }
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-  }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
   @keyframes roadMove {
     from { transform: translateX(-50%) translateY(-20px); opacity: 0; }
     to { transform: translateX(-50%) translateY(160px); opacity: 1; }
@@ -1154,21 +742,46 @@
     0%, 100% { text-shadow: 0 0 30px rgba(201,162,39,0.4), 0 0 60px rgba(201,162,39,0.15), 0 2px 10px rgba(0,0,0,0.5); }
     50% { text-shadow: 0 0 40px rgba(201,162,39,0.6), 0 0 80px rgba(201,162,39,0.25), 0 2px 10px rgba(0,0,0,0.5); }
   }
-  @keyframes musicPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-  }
+  @keyframes musicPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
   @keyframes musicBounce {
     0%, 100% { transform: scale(1) rotate(0deg); }
     25% { transform: scale(1.15) rotate(-5deg); }
     75% { transform: scale(1.15) rotate(5deg); }
   }
-  @keyframes shimmerSweep {
-    0% { transform: translateX(0) skewX(-15deg); opacity: 0; }
-    10% { opacity: 1; }
-    50% { transform: translateX(220%) skewX(-15deg); opacity: 0.6; }
-    51% { opacity: 0; }
-    100% { transform: translateX(220%) skewX(-15deg); opacity: 0; }
+  @keyframes paneGlow {
+    0%, 100% { box-shadow: inset 0 0 10px rgba(201,162,39,0.1); }
+    50% { box-shadow: inset 0 0 25px rgba(201,162,39,0.25); }
+  }
+  @keyframes fireflyFloat {
+    0% { transform: translate(0, 0); opacity: 0; }
+    10% { opacity: 1; } 90% { opacity: 1; }
+    100% { transform: translate(var(--tx, 100px), var(--ty, -50px)); opacity: 0; }
+  }
+  @keyframes runeFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.1; }
+    50% { transform: translateY(-20px) rotate(5deg); opacity: 0.25; }
+  }
+  @keyframes flameFlicker {
+    0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.9; }
+    25% { transform: translateX(-50%) scale(1.1) rotate(-2deg); opacity: 1; }
+    50% { transform: translateX(-50%) scale(0.95) rotate(1deg); opacity: 0.85; }
+    75% { transform: translateX(-50%) scale(1.05) rotate(-1deg); opacity: 1; }
+  }
+  @keyframes scrollFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-15px) rotate(3deg); }
+    50% { transform: translateY(-5px) rotate(-2deg); }
+    75% { transform: translateY(-20px) rotate(1deg); }
+  }
+  @keyframes crystalPulse {
+    0%, 100% { box-shadow: 0 0 15px rgba(100,200,255,0.3), 0 0 30px rgba(123,44,191,0.2); }
+    50% { box-shadow: 0 0 25px rgba(100,200,255,0.5), 0 0 50px rgba(123,44,191,0.3); }
+  }
+  @keyframes cardFloat {
+    0%, 100% { transform: translate(0, 0); opacity: 0.6; }
+    25% { transform: translate(20px, -30px); opacity: 0.9; }
+    50% { transform: translate(-10px, -15px); opacity: 0.7; }
+    75% { transform: translate(15px, -40px); opacity: 0.8; }
   }
 
   /* ===== RESPONSIVE ===== */
@@ -1183,12 +796,13 @@
     .fairy-cursor { display: none; }
     body { cursor: auto; }
     .music-toggle { bottom: 15px; right: 15px; padding: 8px 14px; font-size: 0.65rem; }
-    .screen-light { display: none; }
+    .sconce { display: none; }
+    .floating-scroll { display: none; }
+    .data-card { display: none; }
   }
 </style>
 </head>
 <body>
-
 <!-- FAIRY CURSOR -->
 <div class="fairy-cursor" id="fairyCursor">
   <div class="fairy-glow"></div>
@@ -1200,7 +814,7 @@
 <!-- LOADING SCREEN -->
 <div class="loading-screen" id="loadingScreen">
   <div class="loading-tagline">
-    "I don't trust data that looks too clean.<br>
+    "I do not trust data that looks too clean.<br>
     <span class="highlight">it usually means someone stopped asking why."</span>
   </div>
   <div class="loading-bar-container">
@@ -1212,7 +826,7 @@
 <!-- MUSIC TOGGLE -->
 <button class="music-toggle" id="musicToggle" onclick="toggleMusic()">
   <span class="music-icon">🎵</span>
-  <span id="musicText">Play Suzume</span>
+  <span id="musicText">Playing Suzume</span>
 </button>
 
 <!-- HIDDEN YOUTUBE PLAYER -->
@@ -1229,14 +843,13 @@
   </div>
 
   <!-- Stained Glass Window -->
-  <div class="stained-window" id="stainedWindow">
+  <div class="stained-window">
     <div class="stained-glass-bg"></div>
     <div class="stained-pane"></div>
     <div class="stained-pane"></div>
     <div class="stained-pane"></div>
     <div class="stained-pane"></div>
     <div class="stained-pane"></div>
-    <div class="glass-shimmer"></div>
     <div class="moon-glow"></div>
     <div class="star-twinkle"></div>
     <div class="star-twinkle"></div>
@@ -1244,20 +857,19 @@
     <div class="star-twinkle"></div>
     <div class="star-twinkle"></div>
   </div>
-  <div class="window-beam"></div>
 
   <!-- Castle Columns -->
-  <div class="castle-column left" id="columnLeft">
+  <div class="castle-column left">
     <div class="column-capital"></div>
     <div class="column-glow"></div>
   </div>
-  <div class="castle-column right" id="columnRight">
+  <div class="castle-column right">
     <div class="column-capital"></div>
     <div class="column-glow"></div>
   </div>
 
   <!-- Chandelier -->
-  <div class="chandelier" id="chandelier">
+  <div class="chandelier">
     <div class="chandelier-chain"></div>
     <div class="chandelier-body"></div>
     <div class="chandelier-arm left"></div>
@@ -1265,7 +877,16 @@
     <div class="chandelier-candle"></div>
     <div class="chandelier-candle"></div>
     <div class="chandelier-candle"></div>
-    <div class="chandelier-downlight"></div>
+  </div>
+
+  <!-- Wall Sconces -->
+  <div class="sconce sconce-left">
+    <div class="sconce-bracket"></div>
+    <div class="sconce-flame"></div>
+  </div>
+  <div class="sconce sconce-right">
+    <div class="sconce-bracket"></div>
+    <div class="sconce-flame"></div>
   </div>
 
   <!-- Fairy Dust & Magic Orbs -->
@@ -1282,16 +903,36 @@
     <div class="dust-particle"></div>
     <div class="dust-particle"></div>
     <div class="dust-particle"></div>
-    <div class="dust-particle"></div>
-    <div class="dust-particle"></div>
-    <div class="dust-particle"></div>
-    <div class="dust-particle"></div>
-    <div class="magic-orb"></div>
-    <div class="magic-orb"></div>
     <div class="magic-orb"></div>
     <div class="magic-orb"></div>
     <div class="magic-orb"></div>
   </div>
+
+  <!-- Floating Runes -->
+  <div class="rune" style="top: 15%; left: 8%; animation-delay: 0s;">&#10022;</div>
+  <div class="rune" style="top: 25%; right: 10%; animation-delay: 3s;">&#10023;</div>
+  <div class="rune" style="top: 35%; left: 18%; animation-delay: 6s;">&#10024;</div>
+  <div class="rune" style="top: 20%; right: 18%; animation-delay: 9s;">&#10025;</div>
+  <div class="rune" style="top: 45%; left: 5%; animation-delay: 12s;">&#10026;</div>
+  <div class="rune" style="top: 30%; right: 5%; animation-delay: 15s;">&#10027;</div>
+
+  <!-- Fireflies -->
+  <div class="firefly" style="top: 60%; left: 20%; --tx: 80px; --ty: -60px; animation-delay: 0s; animation-duration: 12s;"></div>
+  <div class="firefly" style="top: 70%; left: 70%; --tx: -60px; --ty: -40px; animation-delay: 3s; animation-duration: 14s;"></div>
+  <div class="firefly" style="top: 55%; left: 45%; --tx: 40px; --ty: -80px; animation-delay: 6s; animation-duration: 11s;"></div>
+  <div class="firefly" style="top: 65%; left: 85%; --tx: -40px; --ty: -30px; animation-delay: 9s; animation-duration: 13s;"></div>
+  <div class="firefly" style="top: 50%; left: 10%; --tx: 100px; --ty: -50px; animation-delay: 1s; animation-duration: 15s;"></div>
+  <div class="firefly" style="top: 75%; left: 55%; --tx: -80px; --ty: -70px; animation-delay: 4s; animation-duration: 12s;"></div>
+
+  <!-- Floating Scrolls -->
+  <div class="floating-scroll" style="top: 40%; left: 25%; animation-delay: 0s;"></div>
+  <div class="floating-scroll" style="top: 35%; right: 22%; animation-delay: 5s;"></div>
+  <div class="floating-scroll" style="top: 50%; left: 75%; animation-delay: 10s;"></div>
+
+  <!-- Floating Data Cards -->
+  <div class="data-card" style="top: 20%; left: 30%; animation-delay: 0s;">SELECT * FROM magic;</div>
+  <div class="data-card" style="top: 45%; right: 30%; animation-delay: 8s;">fraud_score: 0.87</div>
+  <div class="data-card" style="top: 30%; left: 70%; animation-delay: 16s;">pipeline: running</div>
 
   <!-- Hero Name -->
   <div class="hero-name" id="heroName">
@@ -1303,10 +944,6 @@
   <!-- Desk Setup -->
   <div class="desk-area">
     <div class="castle-rug"></div>
-
-    <div class="screen-light left"></div>
-    <div class="screen-light center"></div>
-    <div class="screen-light right"></div>
 
     <div class="gamer-chair">
       <div class="gamer-chair-back"></div>
@@ -1339,8 +976,8 @@
         <span class="code-line-text">import pandas as pd</span>
         <span class="code-line-text">from snowflake import connector</span>
         <span class="code-line-text">df = pd.read_sql(query, conn)</span>
-        <span class="code-line-text">df['fraud_score'] = model.predict(X)</span>
-        <span class="code-line-text">print(f"Processed {len(df)} records")</span>
+        <span class="code-line-text">df[&#39;fraud_score&#39;] = model.predict(X)</span>
+        <span class="code-line-text">print(f&quot;Processed {len(df)} records&quot;)</span>
         <span class="code-line-text">dbt run --models staging</span>
         <span class="code-line-text"><span class="cursor-blink"></span></span>
       </div>
@@ -1380,13 +1017,13 @@
     </div>
 
     <div class="desk-book"></div>
+    <div class="crystal-ball"></div>
 
     <div class="desk-surface"></div>
   </div>
 
   <div class="floor-glow"></div>
 </div>
-
 <script>
   // ===== FAIRY CURSOR =====
   const fairyCursor = document.getElementById('fairyCursor');
@@ -1424,59 +1061,20 @@
 
   animateFairy();
 
-  // ===== MOUSE PARALLAX (window, chandelier, columns) =====
-  const stainedWindowEl = document.getElementById('stainedWindow');
-  const chandelierEl = document.getElementById('chandelier');
-  const columnLeftEl = document.getElementById('columnLeft');
-  const columnRightEl = document.getElementById('columnRight');
-
-  let targetPX = 0, targetPY = 0, curPX = 0, curPY = 0;
-
-  document.addEventListener('mousemove', (e) => {
-    targetPX = e.clientX - window.innerWidth / 2;
-    targetPY = e.clientY - window.innerHeight / 2;
-  });
-
-  function updateParallax() {
-    curPX += (targetPX - curPX) * 0.05;
-    curPY += (targetPY - curPY) * 0.05;
-
-    if (stainedWindowEl) {
-      const x = (curPX * 0.012).toFixed(2);
-      const y = (curPY * 0.012).toFixed(2);
-      stainedWindowEl.style.transform = `translateX(calc(-50% + ${x}px)) translateY(${y}px)`;
-    }
-    if (chandelierEl) {
-      const x = (curPX * 0.02).toFixed(2);
-      const y = (curPY * 0.02).toFixed(2);
-      chandelierEl.style.transform = `translateX(calc(-50% + ${x}px)) translateY(${y}px)`;
-    }
-    if (columnLeftEl) {
-      columnLeftEl.style.transform = `translateX(${(curPX * 0.008).toFixed(2)}px)`;
-    }
-    if (columnRightEl) {
-      columnRightEl.style.transform = `translateX(${(curPX * 0.008).toFixed(2)}px)`;
-    }
-
-    requestAnimationFrame(updateParallax);
-  }
-
-  updateParallax();
-
   // ===== ENTRANCE SEQUENCE =====
   setTimeout(() => {
     document.getElementById('loadingScreen').classList.add('hidden');
-    document.getElementById('castleRoom').classList.add('settled');
     setTimeout(() => {
       document.getElementById('heroName').classList.add('visible');
     }, 800);
   }, 4000);
 
   // ===== MUSIC PLAYER =====
+  // Real unmuted autoplay (below) is attempted immediately, but browsers block that
+  // for most first-time visitors regardless of these settings. The "Enter My World"
+  // click in enterWorld() below is the guaranteed fallback that actually starts it.
   let player;
   let isPlaying = false;
-  let playerReady = false;
-  let wantsToPlay = false;
   const musicToggle = document.getElementById('musicToggle');
   const musicText = document.getElementById('musicText');
 
@@ -1492,69 +1090,131 @@
       width: '0',
       videoId: 'qal34e9v_pk',
       playerVars: {
-        'autoplay': 0,
+        'autoplay': 1,
         'loop': 1,
         'playlist': 'qal34e9v_pk',
         'controls': 0,
         'showinfo': 0,
-        'rel': 0
+        'rel': 0,
+        'mute': 0
       },
       events: {
-        'onReady': onPlayerReady
+        'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange
       }
     });
   }
 
   function onPlayerReady(event) {
-    player.setVolume(30);
-    playerReady = true;
-    // If the visitor already clicked "Enter My World" before the player finished loading,
-    // start playback now instead of requiring a second click.
-    if (wantsToPlay) {
-      startMusic();
+    player.setVolume(25);
+    // Try to play immediately (browser may block this without a prior click)
+    event.target.playVideo();
+  }
+
+  function onPlayerStateChange(event) {
+    if (event.data === YT.PlayerState.PLAYING) {
+      isPlaying = true;
+      musicToggle.classList.add('playing');
+      musicText.textContent = 'Pause Music';
+    } else if (event.data === YT.PlayerState.PAUSED) {
+      isPlaying = false;
+      musicToggle.classList.remove('playing');
+      musicText.textContent = 'Play Suzume';
     }
   }
 
-  function startMusic() {
-    if (playerReady && player && player.playVideo) {
+  function toggleMusic() {
+    if (!player || !player.playVideo) return;
+
+    if (isPlaying) {
+      player.pauseVideo();
+      musicToggle.classList.remove('playing');
+      musicText.textContent = 'Play Suzume';
+      isPlaying = false;
+    } else {
       player.playVideo();
       musicToggle.classList.add('playing');
       musicText.textContent = 'Pause Music';
       isPlaying = true;
-    } else {
-      wantsToPlay = true;
-    }
-  }
-
-  function pauseMusic() {
-    if (player && player.pauseVideo) player.pauseVideo();
-    musicToggle.classList.remove('playing');
-    musicText.textContent = 'Play Suzume';
-    isPlaying = false;
-  }
-
-  function toggleMusic() {
-    if (isPlaying) {
-      pauseMusic();
-    } else {
-      startMusic();
     }
   }
 
   // ===== ENTER WORLD =====
   function enterWorld() {
-    // Starts music on this click — the click itself satisfies the browser's
-    // autoplay-with-sound requirement, so no separate music click is needed.
-    startMusic();
+    // Guaranteed music start: this click satisfies the browser's autoplay-with-sound
+    // requirement even if the automatic attempt above got blocked.
+    if (player && player.playVideo) {
+      player.playVideo();
+    }
 
     document.getElementById('castleRoom').style.transition = 'opacity 1s ease';
     document.getElementById('castleRoom').style.opacity = '0';
-
     setTimeout(() => {
-      alert('Welcome to Niki\'s World! 🏰✨\n\n(Connect this to your chapters menu!)');
+      alert("Welcome to Niki's World! 🏰✨\n\n(Connect this to your chapters menu!)");
       document.getElementById('castleRoom').style.opacity = '1';
     }, 1000);
   }
+
+  // ===== DYNAMIC PARTICLE SYSTEM =====
+  // Add extra floating particles for more life
+  function createFloatingParticle() {
+    const particle = document.createElement('div');
+    particle.style.cssText = `
+      position: absolute;
+      width: ${Math.random() * 3 + 1}px;
+      height: ${Math.random() * 3 + 1}px;
+      background: rgba(${200 + Math.random() * 55}, ${180 + Math.random() * 75}, ${100 + Math.random() * 155}, ${0.3 + Math.random() * 0.4});
+      border-radius: 50%;
+      box-shadow: 0 0 ${Math.random() * 8 + 4}px rgba(255, 215, 100, 0.4);
+      pointer-events: none;
+      z-index: 5;
+      left: ${Math.random() * 100}%;
+      top: ${Math.random() * 100}%;
+      animation: fairyFloat ${10 + Math.random() * 10}s ease-in-out infinite;
+      animation-delay: ${Math.random() * 5}s;
+    `;
+    document.getElementById('castleRoom').appendChild(particle);
+  }
+
+  // Create 20 extra particles
+  for (let i = 0; i < 20; i++) {
+    setTimeout(createFloatingParticle, i * 200);
+  }
+
+  // ===== MOUSE PARALLAX EFFECT =====
+  document.addEventListener('mousemove', (e) => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 2;
+    const y = (e.clientY / window.innerHeight - 0.5) * 2;
+
+    // Subtle parallax on columns
+    const columns = document.querySelectorAll('.castle-column');
+    columns.forEach((col, i) => {
+      const dir = i === 0 ? 1 : -1;
+      col.style.transform = `translateX(${x * 5 * dir}px)`;
+    });
+
+    // Subtle parallax on stained window
+    const window_ = document.querySelector('.stained-window');
+    if (window_) {
+      window_.style.transform = `translateX(calc(-50% + ${x * 8}px)) translateY(${y * 5}px)`;
+    }
+
+    // Subtle parallax on chandelier
+    const chandelier = document.querySelector('.chandelier');
+    if (chandelier) {
+      chandelier.style.transform = `translateX(calc(-50% + ${x * 3}px)) translateY(${y * 2}px)`;
+    }
+  });
+
+  // ===== KEYBOARD INTERACTION =====
+  document.addEventListener('keydown', (e) => {
+    if (e.key === ' ' || e.key === 'Enter') {
+      enterWorld();
+    }
+    if (e.key === 'm' || e.key === 'M') {
+      toggleMusic();
+    }
+  });
 </script>
 
 </body>
