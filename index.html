@@ -133,41 +133,6 @@
   .light-beam:nth-of-type(3) { left: 65%; transform: rotate(7deg); width: 40px; animation-delay: 3s; }
   .light-beam:nth-of-type(4) { left: 78%; transform: rotate(12deg); width: 35px; animation-delay: 4.5s; }
 
-  /* ===== FOREST TREES ===== */
-  .forest-tree {
-    position: absolute; bottom: 0; width: 130px; height: 100%;
-    z-index: 3;
-  }
-  .forest-tree.left { left: -2%; }
-  .forest-tree.right { right: -2%; }
-  .tree-trunk {
-    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-    width: 70px; height: 100%;
-    background: repeating-linear-gradient(90deg,
-      #2d1810 0px, #3d2414 8px, #2a170d 16px, #4a2c18 24px, #2d1810 32px);
-    border-radius: 10px 30px 4px 4px / 30px 60px 4px 4px;
-    box-shadow: inset 0 0 30px rgba(0,0,0,0.5), 4px 0 20px rgba(0,0,0,0.3);
-  }
-  .forest-tree.right .tree-trunk {
-    border-radius: 30px 10px 4px 4px / 60px 30px 4px 4px;
-  }
-  .tree-canopy {
-    position: absolute; top: -6%; width: 220px; height: 55%;
-    z-index: 3;
-  }
-  .forest-tree.left .tree-canopy { left: -30px; }
-  .forest-tree.right .tree-canopy { right: -30px; }
-  .canopy-blob {
-    position: absolute; border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, #4a7a2e, #1f4013 75%);
-    box-shadow: inset -10px -10px 20px rgba(0,0,0,0.3);
-  }
-  .canopy-blob:nth-child(1) { width: 140px; height: 130px; top: 0; left: 0; }
-  .canopy-blob:nth-child(2) { width: 100px; height: 95px; top: 30px; left: 90px; }
-  .canopy-blob:nth-child(3) { width: 80px; height: 75px; top: 60px; left: 30px; background: radial-gradient(circle at 35% 30%, #5a8f3a, #234718 75%); }
-  .forest-tree.right .canopy-blob:nth-child(2) { left: auto; right: 90px; }
-  .forest-tree.right .canopy-blob:nth-child(3) { left: auto; right: 30px; }
-
   /* ===== FOREST GROUND ===== */
   .forest-ground {
     position: absolute; bottom: 0; left: 0; right: 0; height: 22%;
@@ -274,14 +239,28 @@
 
   /* Monitors */
   .monitor {
-    position: absolute; bottom: 66px; border-radius: 8px; overflow: hidden;
-    box-shadow: 0 0 40px var(--screen-glow), 0 10px 40px rgba(0,0,0,0.5);
-    border: 2px solid rgba(60, 60, 60, 0.8);
+    position: absolute; bottom: 66px; border-radius: 10px; overflow: hidden;
+    background: linear-gradient(145deg, #2c2c30, #101012);
+    padding: 9px 9px 20px;
+    box-shadow: 0 0 40px var(--screen-glow), 0 14px 40px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(255,255,255,0.05);
+    border: 1px solid rgba(0,0,0,0.7);
+  }
+  .monitor::before {
+    content: '';
+    position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+    width: 5px; height: 5px; border-radius: 50%;
+    background: #030303;
+    box-shadow: inset 0 0 2px rgba(255,255,255,0.2);
   }
   .monitor-left { left: 6%; width: 260px; height: 170px; bottom: 60px; }
-  .monitor-center { left: 50%; transform: translateX(-50%); width: 340px; height: 220px; bottom: 76px; box-shadow: 0 0 50px rgba(100,200,255,0.2), 0 12px 50px rgba(0,0,0,0.6); border: 2px solid rgba(80, 80, 80, 0.9); }
+  .monitor-center { left: 50%; transform: translateX(-50%); width: 340px; height: 220px; bottom: 76px; box-shadow: 0 0 55px rgba(100,200,255,0.22), 0 16px 50px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.06); }
   .monitor-right { right: 6%; width: 260px; height: 170px; bottom: 60px; }
-  .monitor-screen { width: 100%; height: 100%; position: relative; }
+  .monitor-screen { width: 100%; height: 100%; position: relative; border-radius: 3px; overflow: hidden; }
+  .monitor-screen::after {
+    content: '';
+    position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(135deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.03) 18%, transparent 40%);
+  }
 
   /* Left: Power BI Chart */
   .screen-chart {
@@ -454,37 +433,6 @@
     border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 1px;
   }
 
-  /* Gamer chair */
-  .gamer-chair {
-    position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%);
-    width: 110px; height: 160px; z-index: 8;
-  }
-  .gamer-chair-back {
-    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-    width: 80px; height: 95px;
-    background: linear-gradient(180deg, #2a1a4a 0%, #1a0f2e 100%);
-    border-radius: 14px 14px 6px 6px;
-    box-shadow: inset 0 0 25px rgba(0,0,0,0.4), 0 0 15px rgba(123, 44, 191, 0.1);
-    border: 1px solid rgba(201,162,39,0.1);
-  }
-  .gamer-chair-back::after {
-    content: ''; position: absolute; top: 15px; left: 50%; transform: translateX(-50%);
-    width: 50px; height: 50px;
-    background: linear-gradient(135deg, rgba(201,162,39,0.1), transparent);
-    border-radius: 50%; filter: blur(5px);
-  }
-  .gamer-chair-seat {
-    position: absolute; bottom: 45px; left: 50%; transform: translateX(-50%);
-    width: 90px; height: 20px;
-    background: linear-gradient(180deg, #2a1a4a, #1a0f2e);
-    border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  }
-  .gamer-chair-base {
-    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-    width: 60px; height: 45px;
-    background: linear-gradient(180deg, #1a1a2e, #0d0d1a);
-    border-radius: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-  }
 
   /* ===== HERO NAME ===== */
   .hero-name {
@@ -745,9 +693,6 @@
     .hero-name h1 { font-size: 2rem; letter-spacing: 2px; }
     .hero-name p { font-size: 0.9rem; }
     .enter-btn { padding: 10px 24px; font-size: 0.7rem; letter-spacing: 2px; }
-    .forest-tree { width: 90px; }
-    .tree-trunk { width: 45px; }
-    .tree-canopy { width: 150px; }
     .fairy-cursor { display: none; }
     body { cursor: auto; }
     .music-toggle { bottom: 15px; right: 15px; padding: 8px 14px; font-size: 0.65rem; }
@@ -799,23 +744,6 @@
   <div class="light-beam"></div>
   <div class="light-beam"></div>
 
-  <!-- Forest Trees -->
-  <div class="forest-tree left">
-    <div class="tree-trunk"></div>
-    <div class="tree-canopy">
-      <div class="canopy-blob"></div>
-      <div class="canopy-blob"></div>
-      <div class="canopy-blob"></div>
-    </div>
-  </div>
-  <div class="forest-tree right">
-    <div class="tree-trunk"></div>
-    <div class="tree-canopy">
-      <div class="canopy-blob"></div>
-      <div class="canopy-blob"></div>
-      <div class="canopy-blob"></div>
-    </div>
-  </div>
 
   <!-- Forest Ground: moss rocks & flowers -->
   <div class="forest-ground"></div>
@@ -861,7 +789,7 @@
 
   <!-- Floating Data Cards -->
   <div class="data-card" style="top: 20%; left: 30%; animation-delay: 0s;">SELECT * FROM magic;</div>
-  <div class="data-card" style="top: 45%; right: 30%; animation-delay: 8s;">fraud_score: 0.87</div>
+  <div class="data-card" style="top: 45%; right: 30%; animation-delay: 8s;">records: 40M+</div>
   <div class="data-card" style="top: 30%; left: 70%; animation-delay: 16s;">pipeline: running</div>
 
   <!-- Hero Name -->
@@ -875,17 +803,11 @@
   <div class="desk-area">
     <div class="castle-rug"></div>
 
-    <div class="gamer-chair">
-      <div class="gamer-chair-back"></div>
-      <div class="gamer-chair-seat"></div>
-      <div class="gamer-chair-base"></div>
-    </div>
-
     <!-- Left Monitor: Charts -->
     <div class="monitor monitor-left">
       <div class="monitor-stand left"></div>
       <div class="monitor-screen screen-chart">
-        <div class="chart-header">📊 Revenue Dashboard</div>
+        <div class="chart-header">Revenue Dashboard</div>
         <div class="chart-bars">
           <div class="chart-bar" data-label="Jan"></div>
           <div class="chart-bar" data-label="Feb"></div>
@@ -1115,13 +1037,6 @@
   document.addEventListener('mousemove', (e) => {
     const x = (e.clientX / window.innerWidth - 0.5) * 2;
     const y = (e.clientY / window.innerHeight - 0.5) * 2;
-
-    // Subtle parallax on the two trees (depth cue)
-    const trees = document.querySelectorAll('.forest-tree');
-    trees.forEach((tree, i) => {
-      const dir = i === 0 ? 1 : -1;
-      tree.style.transform = `translateX(${x * 6 * dir}px)`;
-    });
 
     // Subtle parallax on the canopy light glow
     const glow = document.querySelector('.canopy-glow');
