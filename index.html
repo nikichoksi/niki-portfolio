@@ -861,12 +861,13 @@
   }
   .scroll-content { padding: 20px 10px; }
   .chronicle-entry {
-    display: flex; gap: 20px; align-items: flex-start; padding: 20px 10px;
+    display: grid; grid-template-columns: 48px 1fr; gap: 6px 20px; align-items: start; padding: 20px 10px;
     opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease;
   }
   .chronicle-entry.revealed { opacity: 1; transform: translateY(0); }
   .wax-seal {
-    flex-shrink: 0; width: 48px; height: 48px; border-radius: 50%;
+    grid-row: 1 / 3; grid-column: 1;
+    width: 48px; height: 48px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
     box-shadow: inset -4px -4px 8px rgba(0,0,0,0.35), 0 4px 10px rgba(0,0,0,0.3);
   }
@@ -874,10 +875,11 @@
   .seal-crimson { background: radial-gradient(circle at 35% 35%, #e05a5a, #7a1f1f); }
   .seal-indigo { background: radial-gradient(circle at 35% 35%, #6a6ae0, #2a2a7a); }
   .seal-emerald { background: radial-gradient(circle at 35% 35%, #5ae08a, #1f7a3f); }
-  .chronicle-header { display: flex; flex-direction: column; margin-bottom: 10px; }
-  .chronicle-title { font-family: 'Cinzel', serif; font-size: 1.2rem; color: var(--cream); }
+  .chronicle-header { grid-column: 2; display: flex; flex-direction: column; margin-bottom: 4px; min-width: 0; }
+  .chronicle-body { grid-column: 2; min-width: 0; }
+  .chronicle-role { font-family: 'Cinzel', serif; font-size: 1.15rem; color: var(--cream); font-weight: 600; }
   .chronicle-company { color: var(--rose-gold); font-size: 0.85rem; margin-top: 4px; }
-  .chronicle-role { font-size: 0.8rem; color: rgba(245,230,211,0.7); }
+  .chronicle-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.95rem; color: var(--soft-pink); margin-top: 6px; font-weight: 400; }
   .chronicle-dates { font-size: 0.72rem; color: rgba(245,230,211,0.45); font-family: 'Cinzel', serif; margin-top: 2px; }
   .chronicle-tale {
     font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; line-height: 1.75;
@@ -1252,8 +1254,51 @@
     .plant-arc { gap: 16px; }
     .plant-pedestal { width: 110px; }
     .ancient-map { max-width: 100%; }
-    .map-parchment { padding: 24px; min-height: 500px; }
+    .map-parchment { padding: 20px; min-height: 560px; }
     .workbench { gap: 30px; }
+
+    /* Chapters menu & shared chrome */
+    .page-chapters { padding: 70px 16px 50px; }
+    .chapters-title { font-size: 1.9rem; }
+    .chapters-label { letter-spacing: 3px; font-size: 0.68rem; }
+    .chapter-card { padding: 22px 18px; }
+    .chapter-detail { padding: 78px 16px 50px; }
+    .back-btn { top: 14px; left: 14px; padding: 8px 14px; font-size: 0.68rem; }
+    .chapter-detail-title { font-size: 1.7rem; }
+    .chapter-detail-body p.lead { font-size: 1.15rem; }
+    .chapter-detail-body p { font-size: 0.95rem; }
+
+    /* Chronicles */
+    .chronicle-entry { grid-template-columns: 40px 1fr; gap: 4px 14px; padding: 16px 6px; }
+    .wax-seal { width: 40px; height: 40px; font-size: 1.05rem; }
+    .chronicle-role { font-size: 1.02rem; }
+    .chronicle-tale { font-size: 0.95rem; }
+
+    /* Education */
+    .plane-journey { max-width: 100%; margin: 40px auto; }
+    .dashed-line { left: 30px; right: 30px; }
+    .edu-cards { grid-template-columns: 1fr; }
+
+    /* Alchemy lab / conservatory / cauldron detail panels */
+    .parchment-content, .detail-content, .loc-card-content { padding: 26px 22px; }
+    .experiment-flask { transform: scale(0.85); }
+
+    /* Arsenal */
+    .arsenal-school { font-size: 0.95rem; }
+    .weapon-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+    /* Riddle Cauldron */
+    .quiz-card { padding: 22px 18px; }
+    .question-text { font-size: 1.05rem; }
+    .cauldron { transform: scale(0.85); }
+
+    /* Map */
+    .compass-rose { width: 40px; height: 40px; }
+    .terrain-mountain { border-left-width: 26px; border-right-width: 26px; border-bottom-width: 32px; }
+    .terrain-water { width: 55px; height: 14px; }
+    .map-location { max-width: 90px; }
+    .loc-label { font-size: 0.68rem; }
+    .loc-sublabel { font-size: 0.58rem; }
   }
 </style>
 </head>
@@ -1775,9 +1820,9 @@
               <span class="seal-icon">🏛️</span>
             </div>
             <div class="chronicle-header">
-              <h3 class="chronicle-title">The Trust Keeper</h3>
+              <h3 class="chronicle-role">Data Analyst</h3>
               <span class="chronicle-company">Rebecca Everlene Trust Company</span>
-              <span class="chronicle-role">Data Analyst</span>
+              <span class="chronicle-title">The Trust Keeper</span>
               <span class="chronicle-dates">Feb 2026 – Present</span>
             </div>
             <div class="chronicle-body">
@@ -1801,9 +1846,9 @@
               <span class="seal-icon">🤖</span>
             </div>
             <div class="chronicle-header">
-              <h3 class="chronicle-title">The AI Smith</h3>
+              <h3 class="chronicle-role">Data Scientist</h3>
               <span class="chronicle-company">Crewasis AI</span>
-              <span class="chronicle-role">Data Scientist</span>
+              <span class="chronicle-title">The AI Smith</span>
               <span class="chronicle-dates">Jan 2025 – Apr 2025</span>
             </div>
             <div class="chronicle-body">
@@ -1827,9 +1872,9 @@
               <span class="seal-icon">🏗️</span>
             </div>
             <div class="chronicle-header">
-              <h3 class="chronicle-title">The Pipeline Architect</h3>
+              <h3 class="chronicle-role">Senior BI Systems Analyst</h3>
               <span class="chronicle-company">Infosys Limited</span>
-              <span class="chronicle-role">Senior BI Systems Analyst</span>
+              <span class="chronicle-title">The Pipeline Architect</span>
               <span class="chronicle-dates">Nov 2020 – Sep 2023</span>
             </div>
             <div class="chronicle-body">
@@ -1854,9 +1899,9 @@
               <span class="seal-icon">📜</span>
             </div>
             <div class="chronicle-header">
-              <h3 class="chronicle-title">The First Scribe</h3>
+              <h3 class="chronicle-role">Data Analyst</h3>
               <span class="chronicle-company">Fasttrack Software</span>
-              <span class="chronicle-role">Data Analyst</span>
+              <span class="chronicle-title">The First Scribe</span>
               <span class="chronicle-dates">Feb 2020 – Oct 2020</span>
             </div>
             <div class="chronicle-body">
