@@ -281,55 +281,164 @@
     font-size: 0.65rem; color: var(--cream); opacity: 0.8;
     font-family: 'Inter', sans-serif; letter-spacing: 1px;
   }
-  .chart-bars {
-    display: flex; align-items: flex-end; gap: 8px;
-    height: 100px; padding-top: 10px;
-  }
+  .chart-bars { display: flex; align-items: flex-end; gap: 8px; height: 100px; padding-top: 10px; position: relative; }
   .chart-bar {
-    flex: 1; border-radius: 4px 4px 0 0;
-    animation: chartGrow 2.5s ease-out forwards;
-    position: relative; box-shadow: 0 0 10px rgba(74, 222, 128, 0.2);
+    flex: 1; border-radius: 4px 4px 0 0; cursor: none; position: relative;
+    height: var(--target-height, 0%);
+    box-shadow: 0 0 10px rgba(74, 222, 128, 0.2);
+    transition: filter 0.3s ease, transform 0.3s ease;
+    animation: chartGrow 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
+  .chart-bar:hover { filter: brightness(1.3); transform: scaleY(1.05); transform-origin: bottom; }
   .chart-bar::after {
     content: attr(data-label); position: absolute; bottom: -16px;
     left: 50%; transform: translateX(-50%);
     font-size: 0.5rem; color: rgba(245,230,211,0.5); white-space: nowrap;
   }
-  .chart-bar:nth-child(1) { height: 60%; background: linear-gradient(180deg, var(--chart-green), #22c55e); animation-delay: 0.2s; }
-  .chart-bar:nth-child(2) { height: 85%; background: linear-gradient(180deg, var(--chart-blue), #3b82f6); animation-delay: 0.4s; }
-  .chart-bar:nth-child(3) { height: 45%; background: linear-gradient(180deg, var(--chart-green), #22c55e); animation-delay: 0.6s; }
-  .chart-bar:nth-child(4) { height: 95%; background: linear-gradient(180deg, var(--chart-blue), #3b82f6); animation-delay: 0.8s; }
-  .chart-bar:nth-child(5) { height: 70%; background: linear-gradient(180deg, var(--chart-green), #22c55e); animation-delay: 1s; }
-  .chart-bar:nth-child(6) { height: 55%; background: linear-gradient(180deg, var(--chart-blue), #3b82f6); animation-delay: 1.2s; }
+  .chart-bar .bar-value {
+    position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
+    font-size: 0.5rem; color: var(--cream); font-weight: 600; opacity: 0;
+    transition: opacity 0.4s ease 0.8s; white-space: nowrap;
+  }
+  .chart-bar.value-visible .bar-value { opacity: 1; }
+  .chart-bar[data-color="green"] { background: linear-gradient(180deg, var(--chart-green), #22c55e); }
+  .chart-bar[data-color="blue"] { background: linear-gradient(180deg, var(--chart-blue), #3b82f6); }
+  .chart-bar[data-color="gold"] { background: linear-gradient(180deg, var(--rose-gold), #e8b4b8); }
+  .chart-bar:nth-child(1) { animation-delay: 0.2s; }
+  .chart-bar:nth-child(2) { animation-delay: 0.4s; }
+  .chart-bar:nth-child(3) { animation-delay: 0.6s; }
+  .chart-bar:nth-child(4) { animation-delay: 0.8s; }
+  .chart-bar:nth-child(5) { animation-delay: 1.0s; }
+  .chart-bar:nth-child(6) { animation-delay: 1.2s; }
   .chart-line {
     position: absolute; top: 30%; left: 10%; right: 10%; height: 2px;
     background: linear-gradient(90deg, transparent, var(--rose-gold), transparent);
     opacity: 0.6;
   }
+  .chart-tooltip {
+    position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%) translateY(4px);
+    background: rgba(10, 25, 6, 0.92); border: 1px solid rgba(201,162,39,0.25);
+    border-radius: 10px; padding: 10px 14px; pointer-events: none; z-index: 10;
+    opacity: 0; transition: all 0.25s ease; min-width: 160px; text-align: center;
+    backdrop-filter: blur(8px);
+  }
+  .chart-tooltip.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .tooltip-project { font-family: 'Cinzel', serif; font-size: 0.6rem; color: var(--rose-gold); margin-bottom: 4px; letter-spacing: 0.5px; }
+  .tooltip-tech { font-size: 0.55rem; color: rgba(245,230,211,0.6); }
+  .dash-modal {
+    position: absolute; inset: 0; z-index: 15;
+    display: none; align-items: center; justify-content: center;
+    background: rgba(5,2,16,0.85); backdrop-filter: blur(6px);
+    border-radius: 3px;
+  }
+  .dash-modal.active { display: flex; animation: termFadeIn 0.3s ease; }
+  .dash-modal-inner {
+    width: 85%; background: rgba(20,44,13,0.95);
+    border: 1px solid rgba(201,162,39,0.25); border-radius: 12px;
+    padding: 18px; position: relative; text-align: center;
+  }
+  .dash-modal-close {
+    position: absolute; top: 6px; right: 8px; background: none; border: none;
+    color: var(--rose-gold); font-size: 1rem; cursor: none; line-height: 1;
+  }
+  .dash-modal-icon { font-size: 1.4rem; margin-bottom: 6px; }
+  .dash-modal-title { font-family: 'Cinzel', serif; font-size: 0.75rem; color: var(--cream); margin-bottom: 3px; }
+  .dash-modal-tech { font-size: 0.6rem; color: var(--rose-gold); margin-bottom: 10px; }
+  .dash-modal-body {
+    font-family: 'Cormorant Garamond', serif; font-size: 0.85rem;
+    color: rgba(245,230,211,0.8); line-height: 1.6; margin-bottom: 10px;
+  }
+  .dash-modal-metric {
+    display: inline-block; background: rgba(201,162,39,0.1);
+    border: 1px solid rgba(201,162,39,0.2); border-radius: 8px;
+    padding: 6px 14px; font-family: 'Cinzel', serif; font-size: 0.65rem;
+    color: var(--rose-gold); letter-spacing: 1px;
+  }
 
-  /* Center: Code */
+  /* Center: Terminal */
   .screen-code {
-    background: linear-gradient(180deg, #0d1117, #161b22);
-    padding: 16px; font-family: 'Fira Code', monospace;
-    font-size: 0.7rem; line-height: 1.7; overflow: hidden;
+    background: linear-gradient(180deg, #0a0a12, #0f0f1a);
+    padding: 0; font-family: 'Fira Code', monospace;
+    font-size: 0.68rem; line-height: 1.6; overflow: hidden;
+    position: relative;
   }
-  .code-line-text {
-    display: block; white-space: nowrap; overflow: hidden;
-    animation: typeLine 0.6s steps(45) forwards; opacity: 0;
+  .terminal-container { padding: 14px 16px; height: 100%; overflow-y: auto; display: flex; flex-direction: column; }
+  .terminal-container::-webkit-scrollbar { width: 3px; }
+  .terminal-container::-webkit-scrollbar-thumb { background: rgba(201,162,39,0.2); border-radius: 2px; }
+  .terminal-output { flex: 1; overflow-y: auto; padding-bottom: 6px; }
+  .terminal-line { margin-bottom: 2px; word-break: break-word; animation: termFadeIn 0.15s ease forwards; }
+  .terminal-line.command-line { color: var(--cream); opacity: 0.7; }
+  .terminal-line.output-line { color: var(--code-green); margin-bottom: 6px; }
+  .terminal-line.highlight-line { color: var(--rose-gold); }
+  .terminal-line.error-line { color: #f87171; }
+  .terminal-line.info-line { color: #60a5fa; }
+  .terminal-line.welcome-line { color: var(--rose-gold); font-family: 'Cinzel', serif; font-size: 0.75rem; margin-bottom: 10px; letter-spacing: 1px; }
+  .terminal-line.divider-line { color: rgba(201,162,39,0.3); font-size: 0.55rem; letter-spacing: 2px; margin: 8px 0; }
+  .terminal-input-line { display: flex; align-items: center; gap: 6px; flex-shrink: 0; padding-top: 4px; border-top: 1px solid rgba(201,162,39,0.08); }
+  .terminal-prompt { display: flex; gap: 1px; flex-shrink: 0; }
+  .prompt-user { color: var(--code-green); }
+  .prompt-at, .prompt-sep { color: var(--cream); opacity: 0.5; }
+  .prompt-host { color: var(--rose-gold); }
+  .prompt-path { color: #60a5fa; }
+  .prompt-dollar { color: var(--cream); opacity: 0.6; margin-left: 2px; }
+  .terminal-input {
+    background: transparent; border: none; outline: none; color: var(--cream);
+    font-family: 'Fira Code', monospace; font-size: 0.68rem; flex: 1;
+    caret-color: transparent; padding: 0; margin: 0;
   }
-  .code-line-text:nth-child(1) { animation-delay: 0.5s; color: #8b949e; }
-  .code-line-text:nth-child(2) { animation-delay: 1s; color: #ff7b72; }
-  .code-line-text:nth-child(3) { animation-delay: 1.5s; color: #79c0ff; }
-  .code-line-text:nth-child(4) { animation-delay: 2s; color: #d2a8ff; }
-  .code-line-text:nth-child(5) { animation-delay: 2.5s; color: #7ee787; }
-  .code-line-text:nth-child(6) { animation-delay: 3s; color: #79c0ff; }
-  .code-line-text:nth-child(7) { animation-delay: 3.5s; color: #ffa657; }
-  .code-line-text:nth-child(8) { animation-delay: 4s; color: #8b949e; }
-  .cursor-blink {
-    display: inline-block; width: 6px; height: 13px;
-    background: var(--code-green);
-    animation: blink 1s step-end infinite;
-    vertical-align: middle; margin-left: 2px;
+  .terminal-cursor { color: var(--code-green); animation: blink 1s step-end infinite; font-size: 0.6rem; }
+  .terminal-overlay {
+    position: absolute; inset: 0; background: rgba(5,2,16,0.92);
+    display: none; align-items: center; justify-content: center; z-index: 5;
+    animation: termFadeIn 0.8s ease forwards;
+  }
+  .terminal-overlay.active { display: flex; }
+  .terminal-overlay-content { text-align: center; }
+  .overlay-icon { font-size: 2rem; margin-bottom: 12px; animation: orbFloat 3s ease-in-out infinite; }
+  .overlay-text { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--cream); letter-spacing: 2px; margin-bottom: 6px; }
+  .overlay-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--rose-gold); font-size: 0.85rem; margin-bottom: 20px; }
+  .overlay-restart {
+    background: rgba(201,162,39,0.12); border: 1px solid rgba(201,162,39,0.3);
+    color: var(--cream); font-family: 'Cinzel', serif; font-size: 0.7rem;
+    letter-spacing: 2px; padding: 10px 24px; border-radius: 20px; cursor: none;
+    transition: all 0.3s ease;
+  }
+  .overlay-restart:hover { background: rgba(201,162,39,0.25); border-color: var(--rose-gold); }
+  .help-grid { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; margin: 6px 0 8px 12px; }
+  .help-cmd { color: var(--rose-gold); font-weight: 500; }
+  .help-desc { color: rgba(245,230,211,0.6); }
+  .skill-row { display: flex; align-items: center; gap: 8px; margin: 3px 0; font-size: 0.6rem; }
+  .skill-name { width: 80px; color: var(--cream); flex-shrink: 0; }
+  .skill-bar-track { flex: 1; height: 8px; background: rgba(245,230,211,0.06); border-radius: 4px; overflow: hidden; }
+  .skill-bar-fill { height: 100%; border-radius: 4px; width: 0%; transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1); }
+  .skill-bar-fill.green { background: linear-gradient(90deg, var(--chart-green), #22c55e); }
+  .skill-bar-fill.blue { background: linear-gradient(90deg, var(--chart-blue), #3b82f6); }
+  .skill-bar-fill.gold { background: linear-gradient(90deg, var(--rose-gold), #e8b4b8); }
+  .skill-value { width: 32px; text-align: right; color: var(--rose-gold); font-weight: 500; flex-shrink: 0; }
+  .project-item { display: flex; align-items: center; gap: 8px; margin: 4px 0; cursor: none; padding: 4px 8px; border-radius: 6px; transition: background 0.2s; }
+  .project-item:hover { background: rgba(201,162,39,0.08); }
+  .project-arrow { color: var(--rose-gold); }
+  .project-name { color: var(--cream); }
+  .project-tech { color: rgba(245,230,211,0.4); font-size: 0.55rem; margin-left: auto; }
+  .toast-msg {
+    position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: rgba(10,25,6,0.9); border: 1px solid rgba(201,162,39,0.3);
+    color: var(--cream); padding: 10px 20px; border-radius: 24px; font-size: 0.75rem;
+    font-family: 'Cinzel', serif; letter-spacing: 1px; z-index: 500;
+    opacity: 0; transition: all 0.4s ease; pointer-events: none; backdrop-filter: blur(8px);
+  }
+  .toast-msg.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  @keyframes termFadeIn { from { opacity: 0; transform: translateY(2px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 768px) {
+    .terminal-container { padding: 10px 12px; font-size: 0.6rem; }
+    .terminal-input { font-size: 0.6rem; }
+    .skill-name { width: 60px; }
+    .chart-bars { height: 70px; gap: 5px; }
+    .chart-bar::after { font-size: 0.45rem; bottom: -12px; }
+    .chart-bar .bar-value { font-size: 0.45rem; top: -14px; }
+    .dash-modal-inner { padding: 14px; width: 90%; }
+    .dash-modal-body { font-size: 0.75rem; }
   }
 
   /* Right: Racing Game */
@@ -615,7 +724,7 @@
     0%, 100% { transform: rotate(var(--r, 0deg)); }
     50% { transform: rotate(calc(var(--r, 0deg) + 8deg)); }
   }
-  @keyframes chartGrow { from { height: 0; } }
+  @keyframes chartGrow { from { height: 0; } to { height: var(--target-height, 0%); } }
   @keyframes typeLine {
     from { width: 0; opacity: 1; }
     to { width: 100%; opacity: 1; }
@@ -1403,35 +1512,61 @@
   <div class="desk-area">
     <div class="castle-rug"></div>
 
-    <!-- Left Monitor: Charts -->
+    <!-- Left Monitor: Dashboard -->
     <div class="monitor monitor-left">
       <div class="monitor-stand left"></div>
-      <div class="monitor-screen screen-chart">
-        <div class="chart-header">Revenue Dashboard</div>
-        <div class="chart-bars">
-          <div class="chart-bar" data-label="Jan"></div>
-          <div class="chart-bar" data-label="Feb"></div>
-          <div class="chart-bar" data-label="Mar"></div>
-          <div class="chart-bar" data-label="Apr"></div>
-          <div class="chart-bar" data-label="May"></div>
-          <div class="chart-bar" data-label="Jun"></div>
+      <div class="monitor-screen screen-chart" id="dashboardScreen">
+        <div class="chart-header">Pipeline Metrics</div>
+        <div class="chart-bars" id="chartBars">
+          <div class="chart-bar" data-label="Jan" data-value="40M+" data-project="Insurance Fraud Detection" data-tech="Python · SQL · Anomaly Detection" data-detail="Built an end-to-end fraud detection pipeline processing 40M+ records. Reduced false positives via ensemble anomaly detection." data-color="green" style="--target-height: 60%;"></div>
+          <div class="chart-bar" data-label="Feb" data-value="80K" data-project="Crewasis Data Ingestion" data-tech="Python · Automation · APIs" data-detail="Automated ingestion of 80K records across multiple sources. Built RAG-powered chatbot serving 7 client projects with instant context retrieval." data-color="blue" style="--target-height: 85%;"></div>
+          <div class="chart-bar" data-label="Mar" data-value="30%" data-project="Reporting Optimization" data-tech="Redshift · QuickSight · SQL" data-detail="Reduced reporting latency by 30% through query optimization on Amazon Redshift." data-color="green" style="--target-height: 45%;"></div>
+          <div class="chart-bar" data-label="Apr" data-value="15" data-project="Power BI Dashboards" data-tech="Power BI · DAX · RLS" data-detail="Delivered 15 enterprise Power BI dashboards with row-level security and drill-throughs." data-color="blue" style="--target-height: 95%;"></div>
+          <div class="chart-bar" data-label="May" data-value="10" data-project="ETL Pipelines" data-tech="Snowflake · dbt · ETL" data-detail="Architected 10 ETL pipelines into Snowflake using dbt, processing 40M+ records." data-color="green" style="--target-height: 70%;"></div>
+          <div class="chart-bar" data-label="Jun" data-value="98%" data-project="Data Quality Automation" data-tech="SQL · dbt Tests" data-detail="Automated data quality tests, achieving 98% accuracy across pipelines and eliminating 5 hours of weekly manual QA." data-color="gold" style="--target-height: 55%;"></div>
         </div>
         <div class="chart-line"></div>
+        <div class="chart-tooltip" id="chartTooltip">
+          <div class="tooltip-project"></div>
+          <div class="tooltip-tech"></div>
+        </div>
+        <div class="dash-modal" id="dashModal">
+          <div class="dash-modal-inner">
+            <button class="dash-modal-close" onclick="closeDashModal()">✕</button>
+            <div class="dash-modal-header">
+              <div class="dash-modal-icon" id="dashModalIcon">📊</div>
+              <div class="dash-modal-title" id="dashModalTitle">Project</div>
+              <div class="dash-modal-tech" id="dashModalTech">Tech</div>
+            </div>
+            <div class="dash-modal-body" id="dashModalBody">Detail</div>
+            <div class="dash-modal-metric" id="dashModalMetric">Value</div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Center Monitor: Code -->
+    <!-- Center Monitor: Terminal -->
     <div class="monitor monitor-center">
       <div class="monitor-stand center"></div>
-      <div class="monitor-screen screen-code">
-        <span class="code-line-text"># Building the pipeline...</span>
-        <span class="code-line-text">import pandas as pd</span>
-        <span class="code-line-text">from snowflake import connector</span>
-        <span class="code-line-text">df = pd.read_sql(query, conn)</span>
-        <span class="code-line-text">df[&#39;fraud_score&#39;] = model.predict(X)</span>
-        <span class="code-line-text">print(f&quot;Processed {len(df)} records&quot;)</span>
-        <span class="code-line-text">dbt run --models staging</span>
-        <span class="code-line-text"><span class="cursor-blink"></span></span>
+      <div class="monitor-screen screen-code" id="terminalScreen">
+        <div class="terminal-container" id="terminalContainer">
+          <div class="terminal-output" id="terminalOutput"></div>
+          <div class="terminal-input-line" id="terminalInputLine">
+            <span class="terminal-prompt">
+              <span class="prompt-user">niki</span><span class="prompt-at">@</span><span class="prompt-host">forest</span><span class="prompt-sep">:</span><span class="prompt-path">~</span><span class="prompt-dollar">$</span>
+            </span>
+            <input type="text" class="terminal-input" id="terminalInput" autocomplete="off" spellcheck="false" />
+            <span class="terminal-cursor" id="terminalCursor">█</span>
+          </div>
+        </div>
+        <div class="terminal-overlay" id="terminalOverlay">
+          <div class="terminal-overlay-content">
+            <div class="overlay-icon">🌙</div>
+            <div class="overlay-text">Session ended</div>
+            <div class="overlay-sub">The forest welcomes you back anytime</div>
+            <button class="overlay-restart" onclick="restartTerminal()">↻ Reconnect</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1631,6 +1766,110 @@
   for (let i = 0; i < 20; i++) {
     setTimeout(createFloatingParticle, i * 200);
   }
+
+  // ===== TERMINAL (center monitor) + DASHBOARD (left monitor) =====
+  (function(){
+  var T={
+    h:[],i:-1,a:1,
+    C:{
+      help:()=>[{t:'d',x:'═══ COMMANDS ═══'},{t:'h'},{t:'d',x:'═══════════════'}],
+      about:()=>[{t:'l',x:'Niki Choksi — Data Analyst / Pipeline Builder'},{t:'o',x:'4+ years across enterprise BI & startup analytics.'},{t:'o',x:'Built pipelines processing 40M+ records.'},{t:'o',x:'Cut reporting latency by 30%.'},{t:'n',x:'Denver, CO. Open to data-driven opportunities.'}],
+      skills:()=>[{t:'d',x:'═══ SKILLS ═══'},{t:'s',n:'Python',v:93,c:'g'},{t:'s',n:'SQL',v:95,c:'g'},{t:'s',n:'Power BI',v:95,c:'b'},{t:'s',n:'Tableau',v:90,c:'b'},{t:'s',n:'Snowflake',v:85,c:'b'},{t:'s',n:'dbt',v:82,c:'y'},{t:'s',n:'AWS',v:80,c:'y'},{t:'s',n:'RAG/LLMs',v:85,c:'g'},{t:'d',x:'═══════════════'}],
+      projects:()=>[{t:'d',x:'═══ PROJECTS ═══'},{t:'p',n:'Insurance Fraud Detection',te:'Python · SQL · ML'},{t:'p',n:'Portfolio Trading Platform',te:'GPT-4 · PostgreSQL · Full-Stack'},{t:'p',n:'FIFA World Cup Predictor',te:'Web Scraping · ML · Viz'},{t:'n',x:'Type "open [0-2]" for details'},{t:'d',x:'═══════════════'}],
+      contact:()=>[{t:'d',x:'═══ CONTACT ═══'},{t:'o',x:'Email: nikichoksi03@gmail.com'},{t:'o',x:'LinkedIn: linkedin.com/in/nikichoksi'},{t:'o',x:'GitHub: github.com/nikichoksi'},{t:'o',x:'Phone: +1 (857) 763-9904'},{t:'d',x:'═══════════════'}],
+      clear:()=>[{t:'c'}],
+      racer:()=>{T.toast('🏎️ Coming soon to the right monitor!');return[{t:'o',x:'Launching racer...'},{t:'n',x:'Check the right monitor!'}];},
+      game:()=>{T.toast('🎮 Coming soon to the right monitor!');return[{t:'o',x:'Launching game...'},{t:'n',x:'Check the right monitor!'}];},
+      exit:()=>{T.end();return[];},
+      logout:()=>{T.end();return[];},
+      open:(a)=>{var id=parseInt(a[0]);if(isNaN(id)||id<0||id>2)return[{t:'e',x:'Usage: open [0-2]'}];T.openP(id);return[{t:'o',x:'Opening...'}];}
+    },
+    init(){
+      this.I=document.getElementById('terminalInput');this.O=document.getElementById('terminalOutput');this.CU=document.getElementById('terminalCursor');this.B=document.getElementById('terminalContainer');
+      if(!this.I)return;
+      this.I.addEventListener('keydown',e=>this.key(e));this.I.addEventListener('input',()=>this.uc());this.I.addEventListener('focus',()=>this.uc());
+      document.getElementById('terminalScreen').addEventListener('click',e=>{if(!e.target.closest('.terminal-overlay'))this.I.focus();});
+      [{t:'w',x:'✦ Forest Terminal ✦'},{t:'o',x:'Type "help" for commands.'},{t:'o',x:'Type "exit" to leave.'},{t:'o',x:''}].forEach((l,i)=>setTimeout(()=>this.r(l),i*120));
+    },
+    key(e){
+      if(!this.a)return;
+      if(e.key==='Enter'){e.preventDefault();var c=this.I.value.trim();if(c){this.h.push(c);this.i=this.h.length;this.cmd(c);this.exe(c);}this.I.value='';this.uc();}
+      else if(e.key==='ArrowUp'){e.preventDefault();if(this.i>0){this.i--;this.I.value=this.h[this.i];this.uc();}}
+      else if(e.key==='ArrowDown'){e.preventDefault();if(this.i<this.h.length-1){this.i++;this.I.value=this.h[this.i];}else{this.i=this.h.length;this.I.value='';}this.uc();}
+      else if(e.key==='Tab'){e.preventDefault();var v=this.I.value.trim().toLowerCase();var m=Object.keys(this.C).filter(c=>c.startsWith(v));if(m.length===1){this.I.value=m[0];this.uc();}else if(m.length>1)this.r({t:'o',x:m.join('  ')});}
+      else if(e.key==='l'&&e.ctrlKey){e.preventDefault();this.exe('clear');}
+    },
+    uc(){this.CU.style.marginLeft=(this.I.value.length*6.8)+'px';},
+    cmd(c){this.r({t:'m',x:c});},
+    exe(s){
+      var p=s.split(/\s+/),c=p[0].toLowerCase(),a=p.slice(1);
+      if(this.C[c])this.C[c](a).forEach((l,i)=>setTimeout(()=>this.r(l),i*40));
+      else this.r({t:'e',x:'Not found: "'+c+'". Try "help".'});
+    },
+    r(l){
+      if(l.t==='c'){this.O.innerHTML='';return;}
+      if(l.t==='h'){
+        var g=document.createElement('div');g.className='help-grid';
+        [['help','Show commands'],['about','Short bio'],['skills','Skill bars'],['projects','List projects'],['contact','Email, LinkedIn, GitHub'],['clear','Wipe terminal'],['racer/game','Alert on right monitor'],['exit/logout','End session']].forEach(([c,d])=>{var x=document.createElement('span');x.className='help-cmd';x.textContent=c;var y=document.createElement('span');y.className='help-desc';y.textContent=d;g.appendChild(x);g.appendChild(y);});
+        var w=document.createElement('div');w.className='terminal-line';w.appendChild(g);this.O.appendChild(w);this.s();return;
+      }
+      if(l.t==='s'){
+        var r=document.createElement('div');r.className='skill-row';
+        r.innerHTML='<span class="skill-name">'+l.n+'</span><div class="skill-bar-track"><div class="skill-bar-fill '+({g:'green',b:'blue',y:'gold'}[l.c])+'" style="width:0%" data-t="'+l.v+'%"></div></div><span class="skill-value">'+l.v+'%</span>';
+        var w=document.createElement('div');w.className='terminal-line';w.appendChild(r);this.O.appendChild(w);
+        setTimeout(()=>{var f=r.querySelector('.skill-bar-fill');if(f)f.style.width=f.dataset.t;},50);this.s();return;
+      }
+      if(l.t==='p'){
+        var r=document.createElement('div');r.className='project-item';r.innerHTML='<span class="project-arrow">→</span><span class="project-name">'+l.n+'</span><span class="project-tech">'+l.te+'</span>';
+        var w=document.createElement('div');w.className='terminal-line';w.appendChild(r);this.O.appendChild(w);this.s();return;
+      }
+      var el=document.createElement('div');
+      el.className='terminal-line '+({m:'command-line',w:'welcome-line',d:'divider-line',l:'highlight-line',e:'error-line',n:'info-line',o:'output-line'}[l.t]||'output-line');
+      el.textContent=l.x||'';this.O.appendChild(el);this.s();
+    },
+    s(){this.B.scrollTop=this.B.scrollHeight;},
+    toast(m){
+      var t=document.getElementById('terminalToast');if(!t){t=document.createElement('div');t.id='terminalToast';t.className='toast-msg';document.body.appendChild(t);}
+      t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);
+    },
+    openP(id){
+      // Navigate into the chapters -> Alchemy Lab, then reuse the existing openFlask()
+      // so the modal content stays in sync with the one source of truth (the `experiments` array).
+      if(typeof goToPage==='function') goToPage('pageChapters');
+      if(typeof openChapter==='function') openChapter('chapter4');
+      setTimeout(()=>{ if(typeof openFlask==='function') openFlask(id); }, 450);
+    },
+    end(){this.a=0;document.getElementById('terminalOverlay').classList.add('active');}
+  };
+  window.restartTerminal=function(){
+    document.getElementById('terminalOverlay').classList.remove('active');
+    document.getElementById('terminalOutput').innerHTML='';
+    T.a=1;T.h=[];T.i=-1;T.I.value='';T.uc();
+    setTimeout(()=>[{t:'w',x:'✦ Forest Terminal ✦'},{t:'o',x:'Type "help" for commands.'},{t:'o',x:'Type "exit" to leave.'},{t:'o',x:''}].forEach((l,i)=>setTimeout(()=>T.r(l),i*120)),300);
+  };
+
+  var D={
+    tt:null,md:null,
+    init(){
+      this.tt=document.getElementById('chartTooltip');this.md=document.getElementById('dashModal');
+      document.querySelectorAll('#chartBars .chart-bar').forEach((b,i)=>{
+        var v=document.createElement('span');v.className='bar-value';v.textContent=b.dataset.value||'';b.appendChild(v);
+        setTimeout(()=>b.classList.add('value-visible'),800+i*200);
+        b.addEventListener('mouseenter',e=>this.showT(e,b));
+        b.addEventListener('mouseleave',()=>this.hideT());
+        b.addEventListener('mousemove',e=>this.moveT(e));
+        b.addEventListener('click',()=>this.openM(b));
+      });
+    },
+    showT(e,b){if(!this.tt)return;this.tt.querySelector('.tooltip-project').textContent=b.dataset.project||'';this.tt.querySelector('.tooltip-tech').textContent=b.dataset.tech||'';this.tt.classList.add('visible');this.moveT(e);},
+    hideT(){if(this.tt)this.tt.classList.remove('visible');},
+    moveT(e){if(!this.tt)return;var r=document.getElementById('dashboardScreen').getBoundingClientRect();this.tt.style.left=(e.clientX-r.left)+'px';this.tt.style.top=(e.clientY-r.top-10)+'px';},
+    openM(b){if(!this.md)return;var i={green:'📊',blue:'⚡',gold:'🏆'};var c=b.dataset.color||'green';document.getElementById('dashModalIcon').textContent=i[c]||'📊';document.getElementById('dashModalTitle').textContent=b.dataset.project||'';document.getElementById('dashModalTech').textContent=b.dataset.tech||'';document.getElementById('dashModalBody').textContent=b.dataset.detail||'';document.getElementById('dashModalMetric').textContent=b.dataset.value||'';this.md.classList.add('active');}
+  };
+  window.closeDashModal=function(){document.getElementById('dashModal').classList.remove('active');};
+
+  setTimeout(()=>{T.init();D.init();},4200);
+  })();
 
   // ===== MOUSE PARALLAX EFFECT =====
   document.addEventListener('mousemove', (e) => {
