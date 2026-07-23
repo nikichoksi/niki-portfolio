@@ -1234,7 +1234,32 @@
     display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;
     margin-top: 70px; position: relative; z-index: 2;
   }
-  .plant-pedestal { display: flex; flex-direction: column; align-items: center; cursor: none; width: 140px; }
+  .plant-pedestal {
+    display: flex; flex-direction: column; align-items: center; cursor: none; width: 140px;
+    position: relative; transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .plant-pedestal::before {
+    content: ''; position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+    width: 80px; height: 80px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,162,39,0.1) 0%, transparent 70%);
+    opacity: 0.5; animation: pedestalIdleGlow 3s ease-in-out infinite;
+    pointer-events: none; z-index: -1;
+  }
+  .plant-pedestal:hover { transform: translateY(-6px); }
+  .plant-pedestal:hover::before { opacity: 1; animation: pedestalHoverGlow 1.5s ease-in-out infinite; }
+  .plant-pedestal:active { transform: scale(0.97) translateY(-2px); }
+  .plant-pedestal:hover .orb-ring { border-color: rgba(201,162,39,0.4); animation-duration: 1s; }
+  .plant-pedestal:hover .orb-icon { color: var(--rose-gold); transform: scale(1.15); transition: all 0.3s ease; }
+  .plant-pedestal:hover .pedestal-name { color: var(--rose-gold); transition: color 0.3s ease; }
+  .plant-pedestal:hover .pedestal-desc { color: rgba(245,230,211,0.7); }
+  @keyframes pedestalIdleGlow {
+    0%, 100% { opacity: 0.3; transform: translateX(-50%) scale(1); }
+    50% { opacity: 0.6; transform: translateX(-50%) scale(1.08); }
+  }
+  @keyframes pedestalHoverGlow {
+    0%, 100% { opacity: 0.7; transform: translateX(-50%) scale(1); }
+    50% { opacity: 1; transform: translateX(-50%) scale(1.15); }
+  }
   .pedestal-glow {
     position: absolute; width: 80px; height: 80px; border-radius: 50%;
     background: radial-gradient(circle, rgba(201,162,39,0.15) 0%, transparent 70%);
