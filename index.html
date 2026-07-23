@@ -823,6 +823,7 @@
     gap: 20px;
   }
   .chapter-card {
+    position: relative; overflow: hidden;
     background: rgba(10, 25, 6, 0.55); border: 1px solid rgba(201,162,39,0.15);
     border-radius: 18px; padding: 28px 24px; cursor: none;
     backdrop-filter: blur(10px);
@@ -834,6 +835,26 @@
     border-color: rgba(201,162,39,0.4);
     box-shadow: 0 16px 40px rgba(0,0,0,0.35), 0 0 30px rgba(201,162,39,0.1);
     transform: translateY(-4px);
+  }
+  .chapter-card:active { transform: translateY(-4px) scale(0.97); }
+  .chapter-card::before {
+    content: ''; position: absolute; inset: -2px; border-radius: 20px;
+    background: radial-gradient(circle at 50% 50%, rgba(201,162,39,0.15) 0%, transparent 70%);
+    opacity: 0.4; animation: cardIdleGlow 3s ease-in-out infinite;
+    pointer-events: none; z-index: -1;
+  }
+  .chapter-card:hover::before {
+    opacity: 0.9;
+    background: radial-gradient(circle at 50% 50%, rgba(201,162,39,0.3) 0%, transparent 60%);
+    animation: cardHoverGlow 1.5s ease-in-out infinite;
+  }
+  @keyframes cardIdleGlow {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.02); }
+  }
+  @keyframes cardHoverGlow {
+    0%, 100% { opacity: 0.7; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.04); }
   }
   .chapter-icon { font-size: 1.8rem; display: block; margin-bottom: 14px; }
   .chapter-number {
@@ -978,7 +999,29 @@
     display: flex; justify-content: center; gap: 60px; flex-wrap: wrap;
     padding: 40px 0;
   }
-  .experiment-flask { display: flex; flex-direction: column; align-items: center; cursor: none; }
+  .experiment-flask {
+    display: flex; flex-direction: column; align-items: center; cursor: none;
+    position: relative; transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .experiment-flask::before {
+    content: ''; position: absolute; inset: -20px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,162,39,0.08) 0%, transparent 70%);
+    opacity: 0; transition: opacity 0.4s ease; pointer-events: none; z-index: -1;
+  }
+  .experiment-flask:hover { transform: translateY(-6px); }
+  .experiment-flask:hover::before { opacity: 1; animation: flaskHoverPulse 2s ease-in-out infinite; }
+  .experiment-flask:active { transform: translateY(-6px) scale(0.97); }
+  .experiment-flask:hover .flask-name { color: var(--rose-gold); }
+  .experiment-flask:hover .flask-icon { animation: iconWiggle 0.6s ease-in-out; }
+  @keyframes flaskHoverPulse {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.08); }
+  }
+  @keyframes iconWiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-8deg); }
+    75% { transform: rotate(8deg); }
+  }
   .flask-glass { position: relative; width: 70px; height: 90px; }
   .flask-neck {
     position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
@@ -1733,19 +1776,19 @@
     C:{
       help:()=>[{t:'d',x:'═══ COMMANDS ═══'},{t:'h'},{t:'d',x:'═══════════════'}],
       about:()=>[{t:'l',x:'Niki Choksi — Data Analyst / Pipeline Builder'},{t:'o',x:'4+ years across enterprise BI & startup analytics.'},{t:'o',x:'Built pipelines processing 40M+ records.'},{t:'o',x:'Cut reporting latency by 30%.'},{t:'n',x:'Denver, CO. Open to data-driven opportunities.'}],
-      skills:()=>[{t:'d',x:'═══ SKILLS ═══'},{t:'s',n:'Python',v:93,c:'g'},{t:'s',n:'SQL',v:95,c:'g'},{t:'s',n:'Power BI',v:95,c:'b'},{t:'s',n:'Tableau',v:90,c:'b'},{t:'s',n:'Snowflake',v:85,c:'b'},{t:'s',n:'dbt',v:82,c:'y'},{t:'s',n:'AWS',v:80,c:'y'},{t:'s',n:'RAG/LLMs',v:85,c:'g'},{t:'d',x:'═══════════════'}],
-      projects:()=>[{t:'d',x:'═══ PROJECTS ═══'},{t:'p',n:'Insurance Fraud Detection',te:'Python · SQL · ML'},{t:'p',n:'Portfolio Trading Platform',te:'GPT-4 · PostgreSQL · Full-Stack'},{t:'p',n:'FIFA World Cup Predictor',te:'Web Scraping · ML · Viz'},{t:'n',x:'Type "open [0-2]" for details'},{t:'d',x:'═══════════════'}],
+      skills:()=>[{t:'d',x:'═══ SKILLS ═══'},{t:'s',n:'Python',v:93,c:'g'},{t:'s',n:'SQL',v:95,c:'g'},{t:'s',n:'Power BI',v:95,c:'b'},{t:'s',n:'Tableau',v:90,c:'b'},{t:'s',n:'Snowflake',v:85,c:'b'},{t:'s',n:'dbt',v:82,c:'y'},{t:'s',n:'Airflow',v:78,c:'y'},{t:'s',n:'AWS',v:80,c:'y'},{t:'s',n:'RAG/LLMs',v:85,c:'g'},{t:'d',x:'═══════════════'}],
+      projects:()=>[{t:'d',x:'═══ PROJECTS ═══'},{t:'p',n:'Insurance Fraud Detection',te:'Python · SQL · ML'},{t:'p',n:'Portfolio Trading Platform',te:'GPT-4 · PostgreSQL · Full-Stack'},{t:'p',n:'FIFA World Cup Predictor',te:'Web Scraping · ML · Viz'},{t:'p',n:'The Cartographer',te:'Kafka · Airflow · Spark · ClickHouse'},{t:'p',n:'The Archivist',te:'Python · SQL Parser · Neo4j · Streamlit'},{t:'n',x:'Type "open [0-4]" for details'},{t:'d',x:'═══════════════'}],
       contact:()=>[{t:'d',x:'═══ CONTACT ═══'},{t:'o',x:'Email: nikichoksi03@gmail.com'},{t:'o',x:'LinkedIn: linkedin.com/in/nikichoksi'},{t:'o',x:'GitHub: github.com/nikichoksi'},{t:'o',x:'Phone: +1 (857) 763-9904'},{t:'d',x:'═══════════════'}],
       ls:()=>[{t:'o',x:'about.txt    skills.json    projects/'},{t:'o',x:'contact.md   status.log     README.md'}],
-      cat:(a)=>{var f=a[0];if(!f)return[{t:'e',x:'Usage: cat <file>'}];var F={'about.txt':'Niki Choksi — Data Analyst. 4+ years. 40M+ records. Denver, CO.','skills.json':'{python: 93, sql: 95, powerbi: 95, tableau: 90, snowflake: 85, dbt: 82, aws: 80, rag: 85}','contact.md':'Email: nikichoksi03@gmail.com | LinkedIn: /in/nikichoksi','status.log':'All systems operational. Pipeline uptime: 99.9%.','README.md':'Welcome to my forest terminal. Type "help" to explore.'};return F[f]?[{t:'o',x:F[f]}]:[{t:'e',x:'cat: '+f+': No such file'}];},
-      tree:()=>[{t:'a',x:'portfolio/\n├── about.txt\n├── skills.json\n├── projects/\n│   ├── fraud-detection/\n│   ├── trading-platform/\n│   └── fifa-predictor/\n├── contact.md\n└── status.log'}],
+      cat:(a)=>{var f=a[0];if(!f)return[{t:'e',x:'Usage: cat <file>'}];var F={'about.txt':'Niki Choksi — Data Analyst. 4+ years. 40M+ records. Denver, CO.','skills.json':'{python: 93, sql: 95, powerbi: 95, tableau: 90, snowflake: 85, dbt: 82, airflow: 78, aws: 80, rag: 85}','contact.md':'Email: nikichoksi03@gmail.com | LinkedIn: /in/nikichoksi','status.log':'All systems operational. Pipeline uptime: 99.9%.','README.md':'Welcome to my forest terminal. Type "help" to explore.'};return F[f]?[{t:'o',x:F[f]}]:[{t:'e',x:'cat: '+f+': No such file'}];},
+      tree:()=>[{t:'a',x:'portfolio/\n├── about.txt\n├── skills.json\n├── projects/\n│   ├── fraud-detection/\n│   ├── trading-platform/\n│   ├── fifa-predictor/\n│   ├── cartographer/\n│   └── archivist/\n├── contact.md\n└── status.log'}],
       status:()=>[{t:'o',x:'System:    🟢 operational'},{t:'o',x:'Uptime:    4y 2mo 14d'},{t:'o',x:'Pipelines: 10 active'},{t:'o',x:'Records:   40M+ processed'},{t:'o',x:'Location:  Denver, CO'},{t:'n',x:'All forest systems green.'}],
       clear:()=>[{t:'c'}],
       reboot:()=>[{t:'c'},{t:'w',x:'✦ Forest Terminal ✦'},{t:'o',x:'Type "help" for commands.'},{t:'o',x:'Type "exit" to leave.'},{t:'o',x:''}],
       racer:()=>{T.toast('🏎️ Coming soon to the right monitor!');return[{t:'o',x:'Launching racer...'},{t:'n',x:'Check the right monitor!'}];},
       game:()=>{T.toast('🎮 Coming soon to the right monitor!');return[{t:'o',x:'Launching game...'},{t:'n',x:'Check the right monitor!'}];},
       exit:()=>{T.end();return[];},
-      open:(a)=>{var id=parseInt(a[0]);if(isNaN(id)||id<0||id>2)return[{t:'e',x:'Usage: open [0-2]'}];T.openP(id);return[{t:'o',x:'Opening...'}];}
+      open:(a)=>{var id=parseInt(a[0]);if(isNaN(id)||id<0||id>4)return[{t:'e',x:'Usage: open [0-4]'}];T.openP(id);return[{t:'o',x:'Opening...'}];}
     },
     init(){
       this.I=document.getElementById('terminalInput');this.O=document.getElementById('terminalOutput');this.CU=document.getElementById('terminalCursor');this.B=document.getElementById('terminalContainer');
@@ -1773,7 +1816,7 @@
       if(l.t==='c'){this.O.innerHTML='';return;}
       if(l.t==='h'){
         var g=document.createElement('div');g.className='help-grid';
-        [['help','Show commands'],['about','Short bio'],['skills','Skill bars'],['projects','List projects'],['contact','Email, LinkedIn, GitHub'],['ls','List files'],['cat <file>','Read a file'],['tree','Project structure'],['status','System status'],['clear','Wipe terminal'],['reboot','Restart terminal'],['racer/game','Alert on right monitor'],['exit','End session']].forEach(([c,d])=>{var x=document.createElement('span');x.className='help-cmd';x.textContent=c;var y=document.createElement('span');y.className='help-desc';y.textContent=d;g.appendChild(x);g.appendChild(y);});
+        [['help','Show commands'],['about','Short bio'],['skills','Skill bars'],['projects','List 5 projects'],['contact','Email, LinkedIn, GitHub'],['ls','List files'],['cat <file>','Read a file'],['tree','Project structure'],['status','System status'],['clear','Wipe terminal'],['reboot','Restart terminal'],['racer/game','Alert on right monitor'],['exit','End session']].forEach(([c,d])=>{var x=document.createElement('span');x.className='help-cmd';x.textContent=c;var y=document.createElement('span');y.className='help-desc';y.textContent=d;g.appendChild(x);g.appendChild(y);});
         var w=document.createElement('div');w.className='terminal-line';w.appendChild(g);this.O.appendChild(w);this.s();return;
       }
       if(l.t==='s'){
@@ -2189,6 +2232,44 @@
           <div class="flask-label">
             <span class="flask-icon">🔮</span>
             <span class="flask-name">The Oracle's Draught</span>
+          </div>
+        </div>
+
+        <div class="experiment-flask" data-flask="3" onclick="openFlask(3)">
+          <div class="flask-glass">
+            <div class="flask-liquid liquid-crimson">
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+            </div>
+            <div class="flask-neck"></div>
+            <div class="flask-rim"></div>
+            <div class="flask-glow"></div>
+          </div>
+          <div class="flask-label">
+            <span class="flask-icon">🗺️</span>
+            <span class="flask-name">The Cartographer</span>
+          </div>
+        </div>
+
+        <div class="experiment-flask" data-flask="4" onclick="openFlask(4)">
+          <div class="flask-glass">
+            <div class="flask-liquid liquid-gold">
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+              <div class="bubble"></div>
+            </div>
+            <div class="flask-neck"></div>
+            <div class="flask-rim"></div>
+            <div class="flask-glow"></div>
+          </div>
+          <div class="flask-label">
+            <span class="flask-icon">📜</span>
+            <span class="flask-name">The Archivist</span>
           </div>
         </div>
 
@@ -2776,6 +2857,26 @@
         { value: "Interactive", label: "Dashboard" }
       ],
       spells: ["Web Scraping", "Machine Learning", "Sports Analytics", "Visualization"]
+    },
+    {
+      title: "The Cartographer",
+      subtitle: "Real-Time Stream Analytics with Airflow",
+      tale: "I built a living map of data in motion. A Kafka stream ingests ten thousand events per second, Spark Streaming computes rolling windows, and Airflow DAGs guard the realm — reconciling streams hourly, checking schema evolution, and alerting when the flow stutters. ClickHouse serves sub-second queries to live dashboards. The conversion funnel breathes in real time.",
+      metrics: [
+        { value: "10K/s", label: "Event Ingestion" },
+        { value: "<2s", label: "Dashboard Latency" }
+      ],
+      spells: ["Kafka", "Airflow", "Spark Streaming", "ClickHouse", "Python"]
+    },
+    {
+      title: "The Archivist",
+      subtitle: "Automated Data Lineage & Impact Analyzer",
+      tale: "In the labyrinth of tables and dashboards, I built a compass. The Archivist parses SQL and dbt models to trace every column's journey — from raw source to final viz. Neo4j holds the graph of dependencies. Ask it: 'If I change this column, what breaks?' and it answers in two hundred milliseconds. Incident investigation time fell by eighty percent.",
+      metrics: [
+        { value: "200ms", label: "Lineage Query" },
+        { value: "80%", label: "Faster Investigation" }
+      ],
+      spells: ["Python", "SQL Parser", "Neo4j", "Streamlit", "NetworkX"]
     }
   ];
 
