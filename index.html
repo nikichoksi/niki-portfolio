@@ -281,79 +281,38 @@
     font-size: 0.65rem; color: var(--cream); opacity: 0.8;
     font-family: 'Inter', sans-serif; letter-spacing: 1px;
   }
+  /* ===== LIVE DASHBOARD (non-interactive) ===== */
   .chart-bars { display: flex; align-items: flex-end; gap: 8px; height: 100px; padding-top: 10px; position: relative; }
-  .chart-bar {
-    flex: 1; border-radius: 4px 4px 0 0; cursor: none; position: relative;
-    height: var(--target-height, 0%);
-    box-shadow: 0 0 10px rgba(74, 222, 128, 0.2);
-    transition: filter 0.3s ease, transform 0.3s ease;
-    animation: chartGrow 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  .live-bar {
+    flex: 1; border-radius: 4px 4px 0 0; position: relative;
+    height: var(--base-h);
+    animation: barBreathe var(--speed) ease-in-out infinite alternate;
+    pointer-events: none;
   }
-  .chart-bar:hover { filter: brightness(1.3); transform: scaleY(1.05); transform-origin: bottom; }
-  .chart-bar::after {
+  .live-bar::after {
     content: attr(data-label); position: absolute; bottom: -16px;
     left: 50%; transform: translateX(-50%);
-    font-size: 0.5rem; color: rgba(245,230,211,0.5); white-space: nowrap;
+    font-size: 0.5rem; color: rgba(245,230,211,0.45); white-space: nowrap;
   }
-  .chart-bar .bar-value {
-    position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
-    font-size: 0.5rem; color: var(--cream); font-weight: 600; opacity: 0;
-    transition: opacity 0.4s ease 0.8s; white-space: nowrap;
-  }
-  .chart-bar.value-visible .bar-value { opacity: 1; }
-  .chart-bar[data-color="green"] { background: linear-gradient(180deg, var(--chart-green), #22c55e); }
-  .chart-bar[data-color="blue"] { background: linear-gradient(180deg, var(--chart-blue), #3b82f6); }
-  .chart-bar[data-color="gold"] { background: linear-gradient(180deg, var(--rose-gold), #e8b4b8); }
-  .chart-bar:nth-child(1) { animation-delay: 0.2s; }
-  .chart-bar:nth-child(2) { animation-delay: 0.4s; }
-  .chart-bar:nth-child(3) { animation-delay: 0.6s; }
-  .chart-bar:nth-child(4) { animation-delay: 0.8s; }
-  .chart-bar:nth-child(5) { animation-delay: 1.0s; }
-  .chart-bar:nth-child(6) { animation-delay: 1.2s; }
+  .live-bar:nth-child(1) { background: linear-gradient(180deg, var(--chart-green), #22c55e); animation-delay: 0s; }
+  .live-bar:nth-child(2) { background: linear-gradient(180deg, var(--chart-blue), #3b82f6); animation-delay: 0.3s; }
+  .live-bar:nth-child(3) { background: linear-gradient(180deg, var(--chart-green), #22c55e); animation-delay: 0.6s; }
+  .live-bar:nth-child(4) { background: linear-gradient(180deg, var(--chart-blue), #3b82f6); animation-delay: 0.9s; }
+  .live-bar:nth-child(5) { background: linear-gradient(180deg, var(--chart-green), #22c55e); animation-delay: 1.2s; }
+  .live-bar:nth-child(6) { background: linear-gradient(180deg, var(--rose-gold), #e8b4b8); animation-delay: 1.5s; }
   .chart-line {
     position: absolute; top: 30%; left: 10%; right: 10%; height: 2px;
     background: linear-gradient(90deg, transparent, var(--rose-gold), transparent);
     opacity: 0.6;
   }
-  .chart-tooltip {
-    position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%) translateY(4px);
-    background: rgba(10, 25, 6, 0.92); border: 1px solid rgba(201,162,39,0.25);
-    border-radius: 10px; padding: 10px 14px; pointer-events: none; z-index: 10;
-    opacity: 0; transition: all 0.25s ease; min-width: 160px; text-align: center;
-    backdrop-filter: blur(8px);
+  .live-status-row { display: flex; align-items: center; gap: 6px; margin-top: 18px; padding-left: 2px; }
+  .live-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--chart-green); box-shadow: 0 0 6px var(--chart-green);
+    animation: liveDotPulse 1.5s ease-in-out infinite;
   }
-  .chart-tooltip.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
-  .tooltip-project { font-family: 'Cinzel', serif; font-size: 0.6rem; color: var(--rose-gold); margin-bottom: 4px; letter-spacing: 0.5px; }
-  .tooltip-tech { font-size: 0.55rem; color: rgba(245,230,211,0.6); }
-  .dash-modal {
-    position: absolute; inset: 0; z-index: 15;
-    display: none; align-items: center; justify-content: center;
-    background: rgba(5,2,16,0.85); backdrop-filter: blur(6px);
-    border-radius: 3px;
-  }
-  .dash-modal.active { display: flex; animation: termFadeIn 0.3s ease; }
-  .dash-modal-inner {
-    width: 85%; background: rgba(20,44,13,0.95);
-    border: 1px solid rgba(201,162,39,0.25); border-radius: 12px;
-    padding: 18px; position: relative; text-align: center;
-  }
-  .dash-modal-close {
-    position: absolute; top: 6px; right: 8px; background: none; border: none;
-    color: var(--rose-gold); font-size: 1rem; cursor: none; line-height: 1;
-  }
-  .dash-modal-icon { font-size: 1.4rem; margin-bottom: 6px; }
-  .dash-modal-title { font-family: 'Cinzel', serif; font-size: 0.75rem; color: var(--cream); margin-bottom: 3px; }
-  .dash-modal-tech { font-size: 0.6rem; color: var(--rose-gold); margin-bottom: 10px; }
-  .dash-modal-body {
-    font-family: 'Cormorant Garamond', serif; font-size: 0.85rem;
-    color: rgba(245,230,211,0.8); line-height: 1.6; margin-bottom: 10px;
-  }
-  .dash-modal-metric {
-    display: inline-block; background: rgba(201,162,39,0.1);
-    border: 1px solid rgba(201,162,39,0.2); border-radius: 8px;
-    padding: 6px 14px; font-family: 'Cinzel', serif; font-size: 0.65rem;
-    color: var(--rose-gold); letter-spacing: 1px;
-  }
+  .live-status { font-size: 0.55rem; color: rgba(245,230,211,0.5); font-family: 'Fira Code', monospace; letter-spacing: 0.5px; }
+  .live-pulse { font-size: 0.5rem; color: var(--chart-green); animation: liveDotPulse 1.5s ease-in-out infinite; margin-left: auto; }
 
   /* Center: Terminal */
   .screen-code {
@@ -435,10 +394,8 @@
     .terminal-input { font-size: 0.6rem; }
     .skill-name { width: 60px; }
     .chart-bars { height: 70px; gap: 5px; }
-    .chart-bar::after { font-size: 0.45rem; bottom: -12px; }
-    .chart-bar .bar-value { font-size: 0.45rem; top: -14px; }
-    .dash-modal-inner { padding: 14px; width: 90%; }
-    .dash-modal-body { font-size: 0.75rem; }
+    .live-bar::after { font-size: 0.45rem; bottom: -12px; }
+    .live-status-row { margin-top: 14px; }
   }
 
   /* Right: Racing Game */
@@ -724,7 +681,15 @@
     0%, 100% { transform: rotate(var(--r, 0deg)); }
     50% { transform: rotate(calc(var(--r, 0deg) + 8deg)); }
   }
-  @keyframes chartGrow { from { height: 0; } to { height: var(--target-height, 0%); } }
+  @keyframes barBreathe {
+    0% { transform: scaleY(1); filter: brightness(1); }
+    50% { transform: scaleY(1.08); filter: brightness(1.15); }
+    100% { transform: scaleY(0.95); filter: brightness(0.92); }
+  }
+  @keyframes liveDotPulse {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.3); }
+  }
   @keyframes typeLine {
     from { width: 0; opacity: 1; }
     to { width: 100%; opacity: 1; }
@@ -1512,35 +1477,24 @@
   <div class="desk-area">
     <div class="castle-rug"></div>
 
-    <!-- Left Monitor: Dashboard -->
+    <!-- Left Monitor: Live Dashboard -->
     <div class="monitor monitor-left">
       <div class="monitor-stand left"></div>
-      <div class="monitor-screen screen-chart" id="dashboardScreen">
-        <div class="chart-header">Pipeline Metrics</div>
-        <div class="chart-bars" id="chartBars">
-          <div class="chart-bar" data-label="Jan" data-value="40M+" data-project="Insurance Fraud Detection" data-tech="Python · SQL · Anomaly Detection" data-detail="Built an end-to-end fraud detection pipeline processing 40M+ records. Reduced false positives via ensemble anomaly detection." data-color="green" style="--target-height: 60%;"></div>
-          <div class="chart-bar" data-label="Feb" data-value="80K" data-project="Crewasis Data Ingestion" data-tech="Python · Automation · APIs" data-detail="Automated ingestion of 80K records across multiple sources. Built RAG-powered chatbot serving 7 client projects with instant context retrieval." data-color="blue" style="--target-height: 85%;"></div>
-          <div class="chart-bar" data-label="Mar" data-value="30%" data-project="Reporting Optimization" data-tech="Redshift · QuickSight · SQL" data-detail="Reduced reporting latency by 30% through query optimization on Amazon Redshift." data-color="green" style="--target-height: 45%;"></div>
-          <div class="chart-bar" data-label="Apr" data-value="15" data-project="Power BI Dashboards" data-tech="Power BI · DAX · RLS" data-detail="Delivered 15 enterprise Power BI dashboards with row-level security and drill-throughs." data-color="blue" style="--target-height: 95%;"></div>
-          <div class="chart-bar" data-label="May" data-value="10" data-project="ETL Pipelines" data-tech="Snowflake · dbt · ETL" data-detail="Architected 10 ETL pipelines into Snowflake using dbt, processing 40M+ records." data-color="green" style="--target-height: 70%;"></div>
-          <div class="chart-bar" data-label="Jun" data-value="98%" data-project="Data Quality Automation" data-tech="SQL · dbt Tests" data-detail="Automated data quality tests, achieving 98% accuracy across pipelines and eliminating 5 hours of weekly manual QA." data-color="gold" style="--target-height: 55%;"></div>
+      <div class="monitor-screen screen-chart">
+        <div class="chart-header">Live Pipeline Monitor</div>
+        <div class="chart-bars live-bars" id="liveBars">
+          <div class="live-bar" data-label="Ingestion" style="--base-h: 55%; --speed: 2.1s;"></div>
+          <div class="live-bar" data-label="Transform" style="--base-h: 72%; --speed: 1.7s;"></div>
+          <div class="live-bar" data-label="Quality" style="--base-h: 88%; --speed: 3.2s;"></div>
+          <div class="live-bar" data-label="Storage" style="--base-h: 45%; --speed: 2.6s;"></div>
+          <div class="live-bar" data-label="Serve" style="--base-h: 63%; --speed: 1.9s;"></div>
+          <div class="live-bar" data-label="Alerts" style="--base-h: 38%; --speed: 2.4s;"></div>
         </div>
         <div class="chart-line"></div>
-        <div class="chart-tooltip" id="chartTooltip">
-          <div class="tooltip-project"></div>
-          <div class="tooltip-tech"></div>
-        </div>
-        <div class="dash-modal" id="dashModal">
-          <div class="dash-modal-inner">
-            <button class="dash-modal-close" onclick="closeDashModal()">✕</button>
-            <div class="dash-modal-header">
-              <div class="dash-modal-icon" id="dashModalIcon">📊</div>
-              <div class="dash-modal-title" id="dashModalTitle">Project</div>
-              <div class="dash-modal-tech" id="dashModalTech">Tech</div>
-            </div>
-            <div class="dash-modal-body" id="dashModalBody">Detail</div>
-            <div class="dash-modal-metric" id="dashModalMetric">Value</div>
-          </div>
+        <div class="live-status-row">
+          <span class="live-dot"></span>
+          <span class="live-status">pipeline running</span>
+          <span class="live-pulse">●</span>
         </div>
       </div>
     </div>
@@ -1848,27 +1802,7 @@
     setTimeout(()=>[{t:'w',x:'✦ Forest Terminal ✦'},{t:'o',x:'Type "help" for commands.'},{t:'o',x:'Type "exit" to leave.'},{t:'o',x:''}].forEach((l,i)=>setTimeout(()=>T.r(l),i*120)),300);
   };
 
-  var D={
-    tt:null,md:null,
-    init(){
-      this.tt=document.getElementById('chartTooltip');this.md=document.getElementById('dashModal');
-      document.querySelectorAll('#chartBars .chart-bar').forEach((b,i)=>{
-        var v=document.createElement('span');v.className='bar-value';v.textContent=b.dataset.value||'';b.appendChild(v);
-        setTimeout(()=>b.classList.add('value-visible'),800+i*200);
-        b.addEventListener('mouseenter',e=>this.showT(e,b));
-        b.addEventListener('mouseleave',()=>this.hideT());
-        b.addEventListener('mousemove',e=>this.moveT(e));
-        b.addEventListener('click',()=>this.openM(b));
-      });
-    },
-    showT(e,b){if(!this.tt)return;this.tt.querySelector('.tooltip-project').textContent=b.dataset.project||'';this.tt.querySelector('.tooltip-tech').textContent=b.dataset.tech||'';this.tt.classList.add('visible');this.moveT(e);},
-    hideT(){if(this.tt)this.tt.classList.remove('visible');},
-    moveT(e){if(!this.tt)return;var r=document.getElementById('dashboardScreen').getBoundingClientRect();this.tt.style.left=(e.clientX-r.left)+'px';this.tt.style.top=(e.clientY-r.top-10)+'px';},
-    openM(b){if(!this.md)return;var i={green:'📊',blue:'⚡',gold:'🏆'};var c=b.dataset.color||'green';document.getElementById('dashModalIcon').textContent=i[c]||'📊';document.getElementById('dashModalTitle').textContent=b.dataset.project||'';document.getElementById('dashModalTech').textContent=b.dataset.tech||'';document.getElementById('dashModalBody').textContent=b.dataset.detail||'';document.getElementById('dashModalMetric').textContent=b.dataset.value||'';this.md.classList.add('active');}
-  };
-  window.closeDashModal=function(){document.getElementById('dashModal').classList.remove('active');};
-
-  setTimeout(()=>{T.init();D.init();},4200);
+  setTimeout(()=>{T.init();},4200);
   })();
 
   // ===== MOUSE PARALLAX EFFECT =====
